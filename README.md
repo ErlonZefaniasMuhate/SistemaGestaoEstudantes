@@ -23,9 +23,9 @@ Não haverá interface gráfica de usuário (GUI), portanto, todas as interaçõ
 #Tecnologias Utilizadas
 Programa desenvolvimento da linguagem de programação Java.
 
-#Autores
+#Desenvolvido por: 
 Erlon Zefanias [Github de Erlon](https://github.com/ErlonZefaniasMuhate)
 Leuso Nguenha  [Github de Leuso](https://github.com/leusonguenha)
 Glen Jonas     [Github de Glen](https://github.com/contribuidor)
 
-##[Consulte o diagrama uml do programa](https://github.com/ErlonZefaniasMuhate/POO1_S1_G6/Diagrams)
+##[Consulte o diagrama uml do sistema](https://github.com/ErlonZefaniasMuhate/SistemaGestaoEstudantes/blob/main/Diagrams/Diagrama1.0.drawio)
