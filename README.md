@@ -28,4 +28,4 @@ Erlon Zefanias [Github de Erlon](https://github.com/ErlonZefaniasMuhate)
 Leuso Nguenha  [Github de Leuso](https://github.com/leusonguenha)
 Glen Jonas     [Github de Glen](https://github.com/contribuidor)
 
-##[Consulte o diagrama uml do programa no](https://github.com/ErlonZefaniasMuhate/POO1_S1_G6/Diagrams)
+##[Consulte o diagrama uml do programa](https://github.com/ErlonZefaniasMuhate/POO1_S1_G6/Diagrams)
