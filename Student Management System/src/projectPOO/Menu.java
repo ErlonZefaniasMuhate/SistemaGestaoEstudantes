@@ -12,9 +12,9 @@ import java.io.FileWriter;
  *
  * @author Leuso Nguenha
  */
-public class Menu{
+public class Menu extends User{
     
-    //private User user;
+    private User user;
     private Validacao validacao;
     
     
@@ -25,7 +25,12 @@ public class Menu{
         
         arrayUser = new User[20]; //Criacao do array
         validacao = new Validacao();
-        System.out.println("Menu\n 1- Login \n  2- Cadastrar \n 3- Sair ");
+        System.out.println("""
+                           Menu
+                           1- Login
+                           2- Cadastrar
+                           3- Sair
+                           """);
         int opcao;
         opcao = new Validacao().validarInt(1, 3, "Introduza a Opcao: ");
         switch(opcao){
@@ -47,7 +52,12 @@ public class Menu{
     public void login() throws IOException{
 //        
         
-        System.out.println("1- ESTUDANTE\n 2- DOCENTE\n 3- ADMINISTRADOR \n 4- SAIR");
+        System.out.println("""
+                           1- ESTUDANTE
+                           2- DOCENTE
+                           3- ADMINISTRADOR
+                           4- SAIR
+                           """);
         int log;
         log = new Validacao().validarInt(1, 3, "ESCOLHA O USER: ");
         switch (log) {
@@ -75,7 +85,13 @@ public class Menu{
     }
     
     public void estudante() throws IOException{
-        System.out.println("1- CADEIRAS\n 2- DADOS PESSOAIS\n 3- SAIR");
+        System.out.println("""
+                           1- CADEIRAS
+/*                                AVALIACOES MARCADAS NO SEMESTRE
+                                  EXAME */                                                                                 
+                           2- DADOS PESSOAIS
+                           3- SAIR
+                           """);
         int dadoEst;
         dadoEst = new Validacao().validarInt(1, 4, "ESCOLHA: ");
         switch (dadoEst) {
@@ -93,7 +109,11 @@ public class Menu{
     }
     
     public void docente() throws IOException{
-        System.out.println("1- TURMAS\n 2- DADOS PESSOAIS\n 3- SAIR");
+        System.out.println("""
+                           1- TURMAS                                                                                 
+                           2- DADOS PESSOAIS
+                           3- SAIR
+                           """);
         int dadoDoc;
         dadoDoc = new Validacao().validarInt(1, 4, "ESCOLHA: ");
         switch (dadoDoc) {
@@ -111,7 +131,12 @@ public class Menu{
     }
     
     public void admin() throws IOException{
-        System.out.println("1- REGISTAR NOVO USER\n 2- ALTERAR DADOS DO USER\n 3- ELIMINAR USER\n 4- SAIR");
+        System.out.println("""
+                           1- REGISTAR NOVO USER                                                                                 
+                           2- ALTERAR DADOS DO USER
+                           3- ELIMINAR USER
+                           4- SAIR
+                           """);
         int dadoAd;
         dadoAd = new Validacao().validarInt(1, 4, "ESCOLHA: ");
         switch (dadoAd) {
