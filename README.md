@@ -5,7 +5,7 @@ O objetivo deste programa é gerenciar as informações dos estudantes, professo
 
 O programa oferece as seguintes funcionalidades:
 
-#Cadastro de alunos, professores, disciplinas e turmas;
+Cadastro de alunos, professores, disciplinas e turmas;
 Matrícula de alunos em turmas;
 Registro de notas e faltas dos alunos nas avaliações;
 Consulta de informações dos alunos, professores, disciplinas e turmas;
