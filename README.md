@@ -24,8 +24,8 @@ Não haverá interface gráfica de usuário (GUI), portanto, todas as interaçõ
 Programa desenvolvimento da linguagem de programação Java.
 
 #Desenvolvido por: 
-Erlon Zefanias [Github de Erlon](https://github.com/ErlonZefaniasMuhate)
-Leuso Nguenha  [Github de Leuso](https://github.com/leusonguenha)
+Erlon Zefanias [Github de Erlon](https://github.com/ErlonZefaniasMuhate) 
 Glen Jonas     [Github de Glen](https://github.com/contribuidor)
+Leuso Nguenha  [Github de Leuso](https://github.com/leusonguenha)
 
 ##[Consulte o diagrama uml do sistema](https://github.com/ErlonZefaniasMuhate/SistemaGestaoEstudantes/blob/main/Diagrams/Diagrama1.0.drawio)
