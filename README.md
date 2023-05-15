@@ -24,7 +24,6 @@ Programa desenvolvimento da linguagem de programação Java.
 
 ## 5. Desenvolvido por:
 * [Erlon Zefanias](https://github.com/ErlonZefaniasMuhate) 
-* [Glen Jonas ](https://github.com/contribuidor)
 * [Leuso Nguenha](https://github.com/leusonguenha)
 
 ### [Consulte o diagrama uml do sistema](https://github.com/ErlonZefaniasMuhate/SistemaGestaoEstudantes/blob/main/Diagrams/Diagrama1.0.drawio)
