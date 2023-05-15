@@ -22,7 +22,7 @@ Não haverá interface gráfica de usuário (GUI), portanto, todas as interaçõ
 ## 4. Tecnologias Utilizadas
 Programa desenvolvimento da linguagem de programação Java.
 
-## 5. Desenvolvido por: 
+## 5. Desenvolvido por:
 * [Erlon Zefanias](https://github.com/ErlonZefaniasMuhate) 
 * [Glen Jonas ](https://github.com/contribuidor)
 * [Leuso Nguenha](https://github.com/leusonguenha)
