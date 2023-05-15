@@ -4,76 +4,166 @@
  */
 package projectPOO;
 
+import java.util.Calendar;
+import erlon.utils.Email;
 /**
- *
+ * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
 public class User {
     protected String nome;
-    protected String dataascimento;
+    protected Calendar dataNascimento;
     protected String numeroBI;
     protected int nuit;
     protected char sexo;
     protected String endereco;
     protected String telefone;
-    protected String emailInstitucional;
-    protected String emainPessoal;
-    protected String userID;
+    protected Email emailInstitucional;
+    protected Email emainPessoal;
+    protected String codigoInstituicional;
     protected String anoIngresso;
-    protected String pin;
+    protected String senha;
     protected boolean status;
-
-    public User() {
-    }
-
-    public User(String nome, String dataascimento, String numeroBI, int nuit, char sexo, String endereco, String telefone, String emailInstitucional, String emainPessoal, String userID, String anoIngresso, String pin, boolean status) {
+    protected Departamento departamento;
+    
+    public User(String nome, Calendar dataNascimento, String numeroBI, int nuit, String telefone) {
         this.nome = nome;
-        this.dataascimento = dataascimento;
+        this.dataNascimento = dataNascimento;
         this.numeroBI = numeroBI;
         this.nuit = nuit;
-        this.sexo = sexo;
-        this.endereco = endereco;
         this.telefone = telefone;
-        this.emailInstitucional = emailInstitucional;
-        this.emainPessoal = emainPessoal;
-        this.userID = userID;
-        this.anoIngresso = anoIngresso;
-        this.pin = pin;
-        this.status = status;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    public Calendar getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Calendar dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public String getNumeroBI() {
+        return numeroBI;
+    }
+
+    public void setNumeroBI(String numeroBI) {
+        this.numeroBI = numeroBI;
+    }
+
+    public int getNuit() {
+        return nuit;
+    }
+
+    public void setNuit(int nuit) {
+        this.nuit = nuit;
+    }
+
+    public char getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(char sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getTelefone() {
+        return telefone;
     }
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
-    public void setEmainPessoal(String emainPessoal) {
+    public Email getEmailInstitucional() {
+        return emailInstitucional;
+    }
+
+    public void setEmailInstitucional(Email emailInstitucional) {
+        this.emailInstitucional = emailInstitucional;
+    }
+
+    public Email getEmainPessoal() {
+        return emainPessoal;
+    }
+
+    public void setEmainPessoal(Email emainPessoal) {
         this.emainPessoal = emainPessoal;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
+    public String getCodigoInstituicional() {
+        return codigoInstituicional;
+    }
+
+    public void setCodigoInstituicional(String codigoInstituicional) {
+        this.codigoInstituicional = codigoInstituicional;
+    }
+
+    public String getAnoIngresso() {
+        return anoIngresso;
+    }
+
+    public void setAnoIngresso(String anoIngresso) {
+        this.anoIngresso = anoIngresso;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public boolean isStatus() {
+        return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "nome=" + nome + ", dataascimento=" + dataascimento + ", numeroBI=" + numeroBI + ", nuit=" + nuit + ", sexo=" + sexo + ", endereco=" + endereco + ", telefone=" + telefone + ", emailInstitucional=" + emailInstitucional + ", emainPessoal=" + emainPessoal + ", userID=" + userID + ", anoIngresso=" + anoIngresso + ", pin=" + pin + ", status=" + status + '}';
+    public Departamento getDepartamento() {
+        return departamento;
     }
 
-   
-
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
     
-    
-    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("User{");
+        sb.append("nome=").append(nome);
+        sb.append(", dataNascimento=").append(dataNascimento);
+        sb.append(", numeroBI=").append(numeroBI);
+        sb.append(", nuit=").append(nuit);
+        sb.append(", sexo=").append(sexo);
+        sb.append(", endereco=").append(endereco);
+        sb.append(", telefone=").append(telefone);
+        sb.append(", emailInstitucional=").append(emailInstitucional);
+        sb.append(", emainPessoal=").append(emainPessoal);
+        sb.append(", codigoInstituicional=").append(codigoInstituicional);
+        sb.append(", anoIngresso=").append(anoIngresso);
+        sb.append(", senha=").append(senha);
+        sb.append(", status=").append(status);
+        sb.append('}');
+        return sb.toString();
+    }
 }
