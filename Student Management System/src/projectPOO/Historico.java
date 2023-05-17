@@ -87,11 +87,11 @@ public class Historico {
         this.who = who;
     }
 
-    // método para imprimir o histórico
+    // mÃ©todo para imprimir o histÃ³rico
     public void imprimir() {
-        System.out.println("Ação: " + acao);
+        System.out.println("AÃ§Ã£o: " + acao);
         System.out.println("Data/Hora: " + dataHora);
-        System.out.println("Pessoa: " + who.getClass().getNome() + " (" + admin.getCodigoInstituicional() + ")");
+       // System.out.println("Pessoa: " + who.getClass().getNome() + " (" + admin.getCodigoInstituicional() + ")");
         System.out.println("Detalhes da pessoa: " + admin.toString());
     }
 }
