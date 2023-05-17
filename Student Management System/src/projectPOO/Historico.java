@@ -4,16 +4,18 @@
  */
 package projectPOO;
 
-import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  *
  * @author Erlon Z. Muhate
  */
 public class Historico {
-
+    
+    private List<Historico> actividades;
     private String acao;
-    private LocalDateTime dataHora;
+    private Calendar dataHora;
     private Admin admin;
     private Docente docente;
     private Estudante estudante;
@@ -34,9 +36,18 @@ public class Historico {
         }
     }
 
-    public Historico(String acao, LocalDateTime dataHora, Object who) {
+    public Historico(String acao, Calendar dataHora, Object who) {
         this.acao = acao;
         this.dataHora = dataHora;
+        if (who instanceof Estudante) {
+            this.estudante = (Estudante) who;
+        } else {
+            if (who instanceof Admin) {
+                this.admin = (Admin) who;
+            } else {
+                this.docente = (Docente) who;
+            }
+        }
     }
 
     public String getAcao() {
@@ -47,11 +58,11 @@ public class Historico {
         this.acao = acao;
     }
 
-    public LocalDateTime getDataHora() {
+    public Calendar getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(LocalDateTime dataHora) {
+    public void setDataHora(Calendar dataHora) {
         this.dataHora = dataHora;
     }
 
@@ -91,7 +102,7 @@ public class Historico {
     public void imprimir() {
         System.out.println("Ação: " + acao);
         System.out.println("Data/Hora: " + dataHora);
-        System.out.println("Pessoa: " + who.getClass().getNome() + " (" + admin.getCodigoInstituicional() + ")");
+        System.out.println("Pessoa: " + " (" + admin.getCodigoInstituicional() + ")");
         System.out.println("Detalhes da pessoa: " + admin.toString());
     }
 }

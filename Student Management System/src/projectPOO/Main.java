@@ -4,12 +4,13 @@
  */
 package projectPOO;
 import java.io.*;
+import java.time.LocalDateTime;
 /**
  *
  * @author Leuso Nguenha
  */
 public class Main {
     public static void main(String[] args) throws IOException{
-        
+        System.out.println(LocalDateTime.now());
     }
 }
