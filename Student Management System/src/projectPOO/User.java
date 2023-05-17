@@ -10,7 +10,7 @@ import erlon.utils.Email;
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class User {
+public abstract class User {
     protected String nome;
     protected Calendar dataNascimento;
     protected String numeroBI;
@@ -33,6 +33,8 @@ public class User {
         this.nuit = nuit;
         this.telefone = telefone;
     }
+    
+    public abstract void realizarActividade();
 
     public String getNome() {
         return nome;
