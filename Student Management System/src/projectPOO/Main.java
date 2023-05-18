@@ -5,6 +5,7 @@
 package projectPOO;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Erlon Z. Muhate
@@ -16,7 +17,7 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println(LocalDateTime.now());
+        System.out.println("Data/Hora: " + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE));
     }
     
 }

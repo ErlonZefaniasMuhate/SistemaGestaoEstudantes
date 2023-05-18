@@ -126,6 +126,15 @@ public class Admin extends User {
     }
 
     @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Admin{");
+        sb.append("nivelPermissao=").append(nivelPermissao);
+        sb.append('}');
+        return sb.toString();
+    }
+    
+    @Override
     public void realizarActividade() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

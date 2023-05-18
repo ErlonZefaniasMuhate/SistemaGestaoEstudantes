@@ -80,12 +80,17 @@ public class Estudante extends User{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Estudante{");
-        sb.append("nivel=").append(nivel);
-        sb.append(", curso=").append(curso);
-        sb.append(", regime=").append(regime);
-        sb.append(", bolsista=").append(bolsista);
-        sb.append(", disciplinasInscritas=").append(disciplinasInscritas);
-        sb.append(", disciplinasConcluidas=").append(disciplinasConcluidas);
+        sb.append("nivel: ").append(nivel);
+        sb.append(", curso: ").append(curso);
+        sb.append(", regime: ").append(regime);
+        sb.append(", bolsista: ").append(bolsista);
+        sb.append(", disciplinasInscritas: ");
+        for (var temp : this.disciplinasInscritas){
+            sb.append(disciplinasInscritas);
+        }
+        for (var temp : this.disciplinasConcluidas){
+            sb.append(disciplinasConcluidas);
+        }
         sb.append('}');
         return sb.toString();
     }

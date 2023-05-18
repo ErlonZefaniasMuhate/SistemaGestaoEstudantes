@@ -5,6 +5,7 @@
 package projectPOO;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -19,27 +20,21 @@ public class Historico {
     private Estudante estudante;
     private Object who;
 
-    Object getUsuario() {
+    public Historico(String acao, LocalDateTime dataHora, Object who) {
+        this.acao = acao;
+        this.dataHora = dataHora;
         if (who instanceof Estudante) {
             this.estudante = (Estudante) who;
-            return estudante;
         } else {
             if (who instanceof Admin) {
                 this.admin = (Admin) who;
-                return admin;
             } else {
                 this.docente = (Docente) who;
-                return docente;
             }
         }
     }
 
-    public Historico(String acao, LocalDateTime dataHora, Object who) {
-        this.acao = acao;
-        this.dataHora = dataHora;
-    }
-
-    public String getAcao() {
+    public String getAcao(){
         return acao;
     }
 
@@ -79,19 +74,19 @@ public class Historico {
         this.estudante = estudante;
     }
 
-    public Object getWho() {
-        return who;
-    }
-
-    public void setWho(Object who) {
-        this.who = who;
-    }
-
     // mÃ©todo para imprimir o histÃ³rico
-    public void imprimir() {
+    public void imprimir(Historico historicoUser) {
         System.out.println("AÃ§Ã£o: " + acao);
-        System.out.println("Data/Hora: " + dataHora);
-       // System.out.println("Pessoa: " + who.getClass().getNome() + " (" + admin.getCodigoInstituicional() + ")");
-        System.out.println("Detalhes da pessoa: " + admin.toString());
+        System.out.println("Data/Hora: " + this.dataHora.format(DateTimeFormatter.ISO_DATE) +"__" + this.dataHora.getHour() +":"+this.dataHora.getMinute());
+        if (who instanceof Estudante) {
+                    System.out.println("Estudante " + this.estudante.getNome() + " (" + this.estudante.getCodigoInstituicional() + ")");
+        } else {
+            if (who instanceof Admin) {
+                System.out.println("Admin " + this.admin.getNome() + ") (" + this.admin.getCodigoInstituicional() + ")");
+                System.out.println("Nivel de acesso: " + this.admin.getNivelPermissao());
+            } else {
+                System.out.println("Docente: " + this.docente.getNome() + ") (" + this.docente.getCodigoInstituicional() + ")");
+            }
+        }
     }
 }
