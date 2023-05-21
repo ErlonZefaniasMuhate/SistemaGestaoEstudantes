@@ -14,6 +14,7 @@ import java.util.List;
 public class Docente extends User {
     private List<Disciplina> disciplinas;
     private String titulo;
+    private List<Historico> actividades;
     public static final String[] TITULO = {"Regente", "Assistente"};
 
     public Docente(List<Disciplina> disciplinas, String titulo, String nome, Calendar dataNascimento, String numeroBI, int nuit, String telefone) {
@@ -24,6 +25,14 @@ public class Docente extends User {
 
     public List<Disciplina> getDisciplinas() {
         return disciplinas;
+    }
+
+    public List<Historico> getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(List<Historico> actividades) {
+        this.actividades = actividades;
     }
 
     public void setDisciplinas(List<Disciplina> disciplinas) {
@@ -49,7 +58,8 @@ public class Docente extends User {
     }
 
     @Override
-    public void realizarActividade() {
-        
+    public void realizarActividade(String acao, Object docente) {
+        var actTemp = new Historico(acao, docente);
+        this.actividades.add(actTemp);
     }
 }

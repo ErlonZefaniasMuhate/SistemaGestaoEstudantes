@@ -6,6 +6,7 @@ package projectPOO;
 
 import java.util.Calendar;
 import erlon.utils.Email;
+
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
@@ -34,7 +35,11 @@ public abstract class User {
         this.telefone = telefone;
     }
     
-    public abstract void realizarActividade();
+    /**
+     * @param acao
+     * @param who
+     */
+    public abstract void realizarActividade(String acao, Object who);
 
     public String getNome() {
         return nome;

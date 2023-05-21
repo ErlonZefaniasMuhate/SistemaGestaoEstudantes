@@ -4,7 +4,6 @@
  */
 package projectPOO;
 
-import erlon.utils.Email;
 import java.util.Calendar;
 import java.util.List;
 
@@ -18,6 +17,7 @@ public class Estudante extends User{
     private Curso curso;
     private String regime;
     private boolean bolsista;
+    private List<Historico> historico;
     private List<Disciplina> disciplinasInscritas;
     private List<Disciplina> disciplinasConcluidas;
 
@@ -26,6 +26,14 @@ public class Estudante extends User{
         this.curso = curso;
         this.regime = regime;
         this.bolsista = false;
+    }
+
+    public List<Historico> getHistorico() {
+        return historico;
+    }
+
+    public void setHistorico(List<Historico> historico) {
+        this.historico = historico;
     }
 
     public byte getNivel() {
@@ -96,8 +104,9 @@ public class Estudante extends User{
     }
 
     @Override
-    public void realizarActividade() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void realizarActividade(String acao, Object estudante) {
+       var actTemp = new Historico (acao, estudante);
+       this.historico.add(actTemp);
     }
     
 }

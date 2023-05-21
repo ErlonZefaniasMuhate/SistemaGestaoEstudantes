@@ -6,6 +6,8 @@ package projectPOO;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.List;
 
 /**
  *
@@ -20,9 +22,10 @@ public class Historico {
     private Estudante estudante;
     private Object who;
 
-    public Historico(String acao, LocalDateTime dataHora, Object who) {
+    public Historico(String acao, Object who) {
         this.acao = acao;
-        this.dataHora = dataHora;
+        this.dataHora = LocalDateTime.now();
+        this.who = who;
         if (who instanceof Estudante) {
             this.estudante = (Estudante) who;
         } else {
@@ -34,7 +37,7 @@ public class Historico {
         }
     }
 
-    public String getAcao(){
+    public String getAcao() {
         return acao;
     }
 
@@ -75,18 +78,28 @@ public class Historico {
     }
 
     // mÃ©todo para imprimir o histÃ³rico
-    public void imprimir(Historico historicoUser) {
-        System.out.println("AÃ§Ã£o: " + acao);
-        System.out.println("Data/Hora: " + this.dataHora.format(DateTimeFormatter.ISO_DATE) +"__" + this.dataHora.getHour() +":"+this.dataHora.getMinute());
-        if (who instanceof Estudante) {
-                    System.out.println("Estudante " + this.estudante.getNome() + " (" + this.estudante.getCodigoInstituicional() + ")");
-        } else {
-            if (who instanceof Admin) {
-                System.out.println("Admin " + this.admin.getNome() + ") (" + this.admin.getCodigoInstituicional() + ")");
-                System.out.println("Nivel de acesso: " + this.admin.getNivelPermissao());
+    public void imprimir(List<Historico> actividades, Object who) {
+        for (var temp : actividades) {
+            System.out.println("Data/Hora: " + temp.getDataHora().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)) + ", ");
+            System.out.println("AÃ§Ã£o: " + acao);
+            if (who instanceof Estudante) {
+                System.out.println(", Estudante " + temp.estudante.getNome() + " (" + temp.estudante.getCodigoInstituicional() + ")");
             } else {
-                System.out.println("Docente: " + this.docente.getNome() + ") (" + this.docente.getCodigoInstituicional() + ")");
+                if (temp.who instanceof Admin) {
+                    System.out.println(", Admin " + temp.admin.getNome() + " (" + temp.admin.getCodigoInstituicional() + ")");
+                    System.out.println(" Nivel de acesso: " + temp.admin.getNivelPermissao());
+                } else {
+                    System.out.println("Docente: " + temp.docente.getNome() + " (" + temp.docente.getCodigoInstituicional() + ")");
+                }
             }
         }
+    }
+
+    public Object getWho() {
+        return who;
+    }
+
+    public void setWho(Object who) {
+        this.who = who;
     }
 }

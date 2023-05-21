@@ -6,6 +6,7 @@ package projectPOO;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 /**
  * @author Erlon Z. Muhate
@@ -17,7 +18,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("Data/Hora: " + LocalDateTime.now().format(DateTimeFormatter.ISO_DATE));
+        System.out.println("Data/Hora: " + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)));
+        System.out.println();
     }
     
 }

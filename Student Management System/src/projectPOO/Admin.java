@@ -5,6 +5,7 @@
 package projectPOO;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * @author Erlon Z. Muhate
@@ -13,7 +14,7 @@ import java.util.Calendar;
 public class Admin extends User {
 
     private String nivelPermissao;
-    //default Historico historico;
+    private List<Historico> actividades;
     public static final String[] NIVEL_PERMISSAO = {"SuperAdmin", "Departamento", "Curso", "Turma"};
 
     public Admin(String nivelPermissao, String nome, Calendar dataNascimento, String numeroBI, int nuit, String telefone) {
@@ -125,6 +126,14 @@ public class Admin extends User {
         this.nivelPermissao = nivelPermissao;
     }
 
+    public List<Historico> getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(List<Historico> actividades) {
+        this.actividades = actividades;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -133,9 +142,10 @@ public class Admin extends User {
         sb.append('}');
         return sb.toString();
     }
-    
+
     @Override
-    public void realizarActividade() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void realizarActividade(String acao, Object admin) {
+        var actTemp = new Historico(acao, admin);
+        this.actividades.add(actTemp);
     }
 }
