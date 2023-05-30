@@ -4,16 +4,17 @@
  */
 package projectPOO;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import erlon.utils.Email;
+import java.io.Serializable;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public abstract class User {
+public abstract class User implements Serializable{
     protected String nome;
-    protected Calendar dataNascimento;
+    protected LocalDate dataNascimento;
     protected String numeroBI;
     protected int nuit;
     protected char sexo;
@@ -21,13 +22,13 @@ public abstract class User {
     protected String telefone;
     protected Email emailInstitucional;
     protected Email emainPessoal;
-    protected String codigoInstituicional;
+    protected Integer codigoInstituicional;
     protected String anoIngresso;
     protected String senha;
     protected boolean status;
     protected Departamento departamento;
     
-    public User(String nome, Calendar dataNascimento, String numeroBI, int nuit, String telefone) {
+    public User(String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.numeroBI = numeroBI;
@@ -40,7 +41,7 @@ public abstract class User {
      * @param who
      */
     public abstract void realizarActividade(String acao, Object who);
-
+    
     public String getNome() {
         return nome;
     }
@@ -49,11 +50,11 @@ public abstract class User {
         this.nome = nome;
     }
 
-    public Calendar getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Calendar dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -113,11 +114,11 @@ public abstract class User {
         this.emainPessoal = emainPessoal;
     }
 
-    public String getCodigoInstituicional() {
+    public Integer getCodigoInstituicional() {
         return codigoInstituicional;
     }
 
-    public void setCodigoInstituicional(String codigoInstituicional) {
+    public void setCodigoInstituicional(Integer codigoInstituicional) {
         this.codigoInstituicional = codigoInstituicional;
     }
 

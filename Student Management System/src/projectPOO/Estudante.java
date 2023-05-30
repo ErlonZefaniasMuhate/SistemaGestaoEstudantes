@@ -4,14 +4,14 @@
  */
 package projectPOO;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class Estudante extends User{
+public final class Estudante extends User{
     
     private byte nivel;
     private Curso curso;
@@ -21,7 +21,7 @@ public class Estudante extends User{
     private List<Disciplina> disciplinasInscritas;
     private List<Disciplina> disciplinasConcluidas;
 
-    public Estudante(Curso curso, String regime, String nome, Calendar dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Estudante(Curso curso, String regime, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.curso = curso;
         this.regime = regime;

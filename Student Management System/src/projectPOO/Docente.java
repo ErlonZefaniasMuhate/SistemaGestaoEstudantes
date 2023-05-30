@@ -4,25 +4,25 @@
  */
 package projectPOO;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class Docente extends User {
+public final class Docente extends User {
     private List<Disciplina> disciplinas;
     private String titulo;
     private List<Historico> actividades;
     public static final String[] TITULO = {"Regente", "Assistente"};
 
-    public Docente(List<Disciplina> disciplinas, String titulo, String nome, Calendar dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Docente(List<Disciplina> disciplinas, String titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.disciplinas = disciplinas;
         this.titulo = titulo;
     }
-
+    
     public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }

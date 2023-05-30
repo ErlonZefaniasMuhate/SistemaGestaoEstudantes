@@ -4,7 +4,7 @@
  */
 package projectPOO;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 /**
  * @author Erlon Z. Muhate
@@ -16,10 +16,10 @@ public class Avaliacao {
     private String tipoAvaliacao;
     private double peso;
     private double nota;
-    private Calendar dataMarcada;
+    private LocalDateTime dataMarcada;
     public static final String [] TIPO = {"Teste", "Exame Normal", "Exame Recorrencia", "Trabalho para casa"};
 
-    public Avaliacao(String nome, double peso, Calendar dataMarcada) {
+    public Avaliacao(String nome, double peso, LocalDateTime dataMarcada) {
         this.nome = nome;
         this.peso = peso;
         this.dataMarcada = dataMarcada;
@@ -57,11 +57,11 @@ public class Avaliacao {
         this.nota = nota;
     }
 
-    public Calendar getDataMarcada() {
+    public LocalDateTime getDataMarcada() {
         return dataMarcada;
     }
 
-    public void setDataMarcada(Calendar dataMarcada) {
+    public void setDataMarcada(LocalDateTime dataMarcada) {
         this.dataMarcada = dataMarcada;
     }
 

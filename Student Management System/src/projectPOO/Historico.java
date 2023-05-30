@@ -10,7 +10,6 @@ import java.time.format.FormatStyle;
 import java.util.List;
 
 /**
- *
  * @author Erlon Z. Muhate
  */
 public class Historico {
@@ -21,20 +20,16 @@ public class Historico {
     private Docente docente;
     private Estudante estudante;
     private Object who;
-
+    
     public Historico(String acao, Object who) {
-        this.acao = acao;
-        this.dataHora = LocalDateTime.now();
-        this.who = who;
         if (who instanceof Estudante) {
             this.estudante = (Estudante) who;
+        } else if (who instanceof Admin) {
+            this.admin = (Admin) who;
         } else {
-            if (who instanceof Admin) {
-                this.admin = (Admin) who;
-            } else {
-                this.docente = (Docente) who;
-            }
+            this.docente = (Docente) who;
         }
+        this.dataHora = LocalDateTime.now();
     }
 
     public String getAcao() {

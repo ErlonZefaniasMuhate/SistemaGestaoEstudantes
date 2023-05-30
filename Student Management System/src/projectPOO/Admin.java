@@ -4,26 +4,40 @@
  */
 package projectPOO;
 
-import java.util.Calendar;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class Admin extends User {
+public final class Admin extends User {
 
     private String nivelPermissao;
     private List<Historico> actividades;
     public static final String[] NIVEL_PERMISSAO = {"SuperAdmin", "Departamento", "Curso", "Turma"};
 
-    public Admin(String nivelPermissao, String nome, Calendar dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Admin(String nivelPermissao, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.nivelPermissao = nivelPermissao;
     }
 
-    public void registarEstudante() {
-        //codigo por implementar
+    @SuppressWarnings("CallToPrintStackTrace")
+    public void registarEstudante() {//(Curso curso, String regime, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone)
+        String nome, regime, numeroBI, telefone, nuit, curso;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
+            System.out.println("Forneca os detalhes do estudante");
+            System.out.println("--------------------------------");
+            System.out.println("1. Nome: ");
+            reader.readLine();
+        }catch (IOException e ){
+            e.printStackTrace();
+        }
+
+        
     }
 
     public void atualizarEstudante() {
