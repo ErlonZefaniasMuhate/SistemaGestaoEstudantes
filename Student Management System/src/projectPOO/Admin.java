@@ -18,7 +18,7 @@ public final class Admin extends User {
 
     private String nivelPermissao;
     private List<Historico> actividades;
-    public static final String[] NIVEL_PERMISSAO = {"SuperAdmin", "Departamento", "Curso", "Turma"};
+    //public static final String[] NIVEL_PERMISSAO = {"SuperAdmin", "Departamento", "Curso", "Turma"};
 
     public Admin(String nivelPermissao, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
@@ -26,8 +26,8 @@ public final class Admin extends User {
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
-    public void registarEstudante() {//(Curso curso, String regime, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone)
-        String nome, regime, numeroBI, telefone, nuit, curso;
+    public void registarEstudante() {
+        String nome, regime, numeroBI, telefone, nuit, curso, dataNascimento;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
             System.out.println("Forneca os detalhes do estudante");
             System.out.println("--------------------------------");

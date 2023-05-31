@@ -17,7 +17,7 @@ public class Avaliacao {
     private double peso;
     private double nota;
     private LocalDateTime dataMarcada;
-    public static final String [] TIPO = {"Teste", "Exame Normal", "Exame Recorrencia", "Trabalho para casa"};
+   
 
     public Avaliacao(String nome, double peso, LocalDateTime dataMarcada) {
         this.nome = nome;

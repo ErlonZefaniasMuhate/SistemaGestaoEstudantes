@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class Turma {
     
+    private String nomeTurma; //Turma_De_DISCIPLINA_do_ANO_REGIME
+    private String regime;
     private Disciplina disciplina;
     private Curso curso;
     private List<Estudante> estudantes;
@@ -20,6 +22,7 @@ public class Turma {
     public Turma(Disciplina disciplina, Curso curso) {
         this.disciplina = disciplina;
         this.curso = curso;
+        
     }
 
     public Disciplina getDisciplina() {

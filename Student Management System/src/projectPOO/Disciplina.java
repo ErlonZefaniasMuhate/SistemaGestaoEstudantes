@@ -17,7 +17,6 @@ public class Disciplina {
     private String descricao;
     private String tipo;
     private List<Avaliacao> avaliacoes;
-    public static final String [] TIPOS_DE_DISCIPLINA = {"Nuclear", "Livre", "Complementar"};
 
     public Disciplina(String nome, String tipo) {
         this.nome = nome;

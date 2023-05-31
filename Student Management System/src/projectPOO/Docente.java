@@ -15,7 +15,6 @@ public final class Docente extends User {
     private List<Disciplina> disciplinas;
     private String titulo;
     private List<Historico> actividades;
-    public static final String[] TITULO = {"Regente", "Assistente"};
 
     public Docente(List<Disciplina> disciplinas, String titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
