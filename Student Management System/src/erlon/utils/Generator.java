@@ -68,8 +68,7 @@ public class Generator {
             int s = (int) (Math.random() * alphaNumericString.length());
             aleatoria += alphaNumericString.charAt(s);
         }
-        int number = Integer.parseInt(aleatoria);
-        return number;
+        return Integer.parseInt(aleatoria);
     }
     
     /**
