@@ -25,16 +25,13 @@ public class Menu{
         
         arrayUser = new User[20]; //Criacao do array
         validacao = new Validacao();
-        System.out.println("Menu\n 1- Login \n  2- Cadastrar \n 3- Sair ");
+        System.out.println("Menu\n 1- Login \n 2- Sair ");
+        System.out.println("ENTRE EM CONTACTO COM A \nADMINISTRACAO PARA EFECTUAR O DASATRO!");
         int opcao;
-        opcao = new Validacao().validarInt(1, 3, "Introduza a Opcao: ");
+        opcao = new Validacao().validarInt(1, 2, "Introduza a Opcao: ");
         switch(opcao){
             case 1:{
                 login();
-            }
-            break;
-            case 2:{
-                cadastrar();
             }
             break;
             default: {
@@ -44,23 +41,26 @@ public class Menu{
         }
     }
     
+    
     public void login() throws IOException{
-//        
-        
-        System.out.println("1- ESTUDANTE\n 2- DOCENTE\n 3- ADMINISTRADOR \n 4- SAIR");
+//                
+        System.out.println(" 1- ESTUDANTE\n 2- DOCENTE\n 3- ADMINISTRADOR \n 4- SAIR");
         int log;
         log = new Validacao().validarInt(1, 3, "ESCOLHA O USER: ");
         switch (log) {
             case 1:{
-                estudante();
+//                estudante();
+                loginEstudante();
             }break;
             
             case 2:{
-                docente();
+//                docente();
+                loginDocente();
             }break;
                 
             case 3:{
-                admin();
+//                admin();
+                loginAdmin();
             }
                 break;
             default:
@@ -69,13 +69,99 @@ public class Menu{
         
     }
     
-    
-    public void cadastrar() throws IOException{
-        System.out.println("ENTRE EM CONTACTO COM A ADMINISTRACAO PARA EFECTUAR O DASATRO!");
+    public void loginEstudante() throws IOException{
+        
+        BufferedReader t = new BufferedReader (new InputStreamReader (System.in));
+        System.out.println("Digite o seu nome: ");
+        String nameInput = t.readLine();
+        System.out.println("Digite a sua senha: ");
+        String passwordInput = t.readLine();
+        
+        try(    BufferedReader x = new BufferedReader (new FileReader ("New User.txt"))){
+            String lime;
+            while((lime = x.readLine()) != null){
+                String[] part = lime.split(";");
+                String userName = part[2];
+                String password = part[11];
+                if(userName.equals(nameInput) && password.equals(passwordInput)){
+                    System.out.println("Bem Vindo!");
+                    docente();
+                } else{
+                    System.out.println("Nome ou senha incoretos");
+                }
+                
+            }
+        }    
+         catch(IOException e){
+            e.printStackTrace();
+        }
+       
     }
     
+    public void loginDocente() throws IOException{
+        
+        BufferedReader t = new BufferedReader (new InputStreamReader (System.in));
+        System.out.println("Digite o seu nome: ");
+        String nameInput = t.readLine();
+        System.out.println("Digite a sua senha: ");
+        String passwordInput = t.readLine();
+        
+        try(    BufferedReader x = new BufferedReader (new FileReader ("New User.txt"))){
+            String lime;
+            while((lime = x.readLine()) != null){
+                String[] part = lime.split(";");
+                String userName = part[2];
+                String password = part[11];
+                if(userName.equals(nameInput) && password.equals(passwordInput)){
+                    System.out.println("Bem Vindo!");
+                    docente();
+                } else{
+                    System.out.println("Nome ou senha incoretos");
+                }
+                
+            }
+        }    
+         catch(IOException e){
+            e.printStackTrace();
+        }
+       
+    }
+    
+    public void loginAdmin() throws IOException{
+        
+        BufferedReader t = new BufferedReader (new InputStreamReader (System.in));
+        System.out.println("Digite o seu nome: ");
+        String nameInput = t.readLine();
+        System.out.println("Digite a sua senha: ");
+        String passwordInput = t.readLine();
+        
+        try(    BufferedReader x = new BufferedReader (new FileReader ("New User.txt"))){
+            String lime;
+            while((lime = x.readLine()) != null){
+                String[] part = lime.split(";");
+                String userName = part[2];
+                String password = part[11];
+                if(userName.equals(nameInput) && password.equals(passwordInput)){
+                    System.out.println("Bem Vindo!");
+                    admin();
+                } else{
+                    System.out.println("Nome ou senha incoretos");
+                }
+                
+            }
+        }    
+         catch(IOException e){
+            e.printStackTrace();
+        }
+       
+    }
+    
+//    public void cadastrar() throws IOException{
+//        System.out.println("ENTRE EM CONTACTO COM A ADMINISTRACAO PARA EFECTUAR O DASATRO!");
+//    }
+    
     public void estudante() throws IOException{
-        System.out.println("1- CADEIRAS\n 2- DADOS PESSOAIS\n 3- SAIR");
+        System.out.println(" 1- CADEIRAS\n 2- DADOS PESSOAIS\n 3- SAIR");
         int dadoEst;
         dadoEst = new Validacao().validarInt(1, 4, "ESCOLHA: ");
         switch (dadoEst) {
@@ -93,12 +179,12 @@ public class Menu{
     }
     
     public void docente() throws IOException{
-        System.out.println("1- TURMAS\n 2- DADOS PESSOAIS\n 3- SAIR");
+        System.out.println(" 1- TURMAS\n 2- DADOS PESSOAIS\n 3- SAIR");
         int dadoDoc;
         dadoDoc = new Validacao().validarInt(1, 4, "ESCOLHA: ");
         switch (dadoDoc) {
             case 1:{
-//                turmas();
+                Turmas.turmax();
             }break;
             
             case 2:{
@@ -111,10 +197,10 @@ public class Menu{
     }
     
     public void admin() throws IOException{
-        System.out.println("1- REGISTAR NOVO USER\n 2- ALTERAR DADOS DO USER\n 3- ELIMINAR USER\n 4- SAIR");
+        System.out.println(" 1- REGISTAR NOVO USER\n 2- ALTERAR DADOS DO USER\n 3- ELIMINAR USER\n 4- SAIR");
         int dadoAd;
         dadoAd = new Validacao().validarInt(1, 4, "ESCOLHA: ");
-        switch (dadoAd) {
+        switch (dadoAd){
             case 1:{
                 newUser();
             }break;
@@ -133,7 +219,7 @@ public class Menu{
     }
     
     public void newUser() throws IOException{
-        FileWriter writer = new FileWriter("Login.txt");
+        FileWriter writer = new FileWriter("New User.txt");
         BufferedWriter ficheiro = new BufferedWriter(writer);
         
         

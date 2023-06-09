@@ -9,5 +9,15 @@ package projectPOO;
  * @author Leuso Nguenha
  */
 public class Turmas {
+
+    static void turmax() {
+        System.out.println("Ola!");
+    }
     
+//    private Estudante estudante;
+//    private Disciplina disciplina;
+//    private Avaliacao avaliacoes;
+    
+
 }
+
