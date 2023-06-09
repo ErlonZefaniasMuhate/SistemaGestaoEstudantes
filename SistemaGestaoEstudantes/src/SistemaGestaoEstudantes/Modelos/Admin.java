@@ -25,9 +25,10 @@ public final class Admin extends User {
         this.nivelPermissao = nivelPermissao;
     }
 
-    @SuppressWarnings("CallToPrintStackTrace")
+    @SuppressWarnings("CallToPrintStackTrace, Local variable hides a field")
     public void registarEstudante() {
-        String nome, regime, numeroBI, telefone, nuit, curso, dataNascimento;
+        String nomeCompleto, regimeEstudo, bi, celular, NUIT, nomeCurso, dataNasc;
+        
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))){
             System.out.println("Forneca os detalhes do estudante");
             System.out.println("--------------------------------");
