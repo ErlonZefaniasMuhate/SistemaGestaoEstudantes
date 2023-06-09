@@ -3,6 +3,7 @@ package SistemaGestaoEstudantes.Utilitarios;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 /**
@@ -246,23 +247,33 @@ public abstract class Validate {
             return false;
         }
 
-        try {
-            int dia = Integer.parseInt(date.substring(0, 2));
-            int mes = Integer.parseInt(date.substring(2, 4));
-            int ano = Integer.parseInt(date.substring(4));
+        final int MIN_DAY = 1;
+        final int MAX_DAY = 31;
+        final int MIN_MONTH = 1;
+        final int MAX_MONTH = 12;
+        final int MAX_YEAR_DIFF = 100;
 
-            if (dia < 1 || dia > 31 || mes < 1 || mes > 12 || ano < 1960 || ano > 2023) {
+        try {
+            int day = Integer.parseInt(date.substring(0, 2));
+            int month = Integer.parseInt(date.substring(2, 4));
+            int year = Integer.parseInt(date.substring(4));
+
+            if (day < MIN_DAY || day > MAX_DAY || month < MIN_MONTH || month > MAX_MONTH) {
                 return false;
             }
 
-            // Verifica se a data é válida
-            LocalDate.parse(date, DateTimeFormatter.ofPattern("ddMMuuuu"));
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("ddMMuuuu");
+            LocalDate parsedDate = LocalDate.parse(date, dateFormatter);
 
-            return true;
+            LocalDate currentDate = LocalDate.now();
+            long yearDiff = ChronoUnit.YEARS.between(parsedDate, currentDate);
+
+            return yearDiff < MAX_YEAR_DIFF;
         } catch (NumberFormatException | DateTimeParseException e) {
             return false;
         }
     }
+
     
     /**
     * Verifica se uma string contém apenas letras ou dígitos.
@@ -290,5 +301,35 @@ public abstract class Validate {
     public static boolean isValidOption(int min, int max, int option) {
         return isInteger(String.valueOf(min)) && isInteger(String.valueOf(max)) && isInteger(String.valueOf(option)) && option >= min && option <= max;
     }
+    
+    /**
+    * Verifica se uma string de entrada representa um BI válido.
+    * Um BI válido deve ter 13 caracteres e a última letra deve ser maiúscula.
+    *
+    * @param input a string a ser validada como BI
+    * @return true se o BI for válido, false caso contrário
+    */
+    public static boolean validarBI(String input) {
+        return input.length() == 13 && Character.isUpperCase(input.charAt(12));
+    }
+    
+    /**
+    * Verifica se uma string de entrada representa um NUIT válido.
+    * Um NUIT válido deve ter 9 dígitos.
+    *
+    * @param input a string a ser validada como NUIT
+    * @return true se o NUIT for válido, false caso contrário
+    */
+    public static boolean validarNUIT(String input) {
+        if (input.length() != 9) {
+            return false;
+        }
 
+        for (int i = 0; i < input.length(); i++) {
+            if (!Character.isDigit(input.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
