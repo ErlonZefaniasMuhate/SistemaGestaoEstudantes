@@ -12,6 +12,7 @@ import java.util.List;
  * @author Leuso Nguenha
  */
 public final class Docente extends User {
+
     private List<Disciplina> disciplinas;
     private String titulo;
     private List<Historico> actividades;
@@ -21,7 +22,7 @@ public final class Docente extends User {
         this.disciplinas = disciplinas;
         this.titulo = titulo;
     }
-    
+
     public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
@@ -57,8 +58,7 @@ public final class Docente extends User {
     }
 
     @Override
-    public void realizarActividade(String acao, Object docente) {
-        var actTemp = new Historico(acao, docente);
-        this.actividades.add(actTemp);
+    public void realizarActividade(String acao) {
+        this.actividades.add(new Historico(acao, this));
     }
 }

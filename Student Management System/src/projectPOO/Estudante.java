@@ -104,9 +104,8 @@ public final class Estudante extends User{
     }
 
     @Override
-    public void realizarActividade(String acao, Object estudante) {
-       var actTemp = new Historico (acao, estudante);
-       this.historico.add(actTemp);
+    public void realizarActividade(String acao) {
+        this.historico.add(new Historico(acao, this));
     }
     
 }

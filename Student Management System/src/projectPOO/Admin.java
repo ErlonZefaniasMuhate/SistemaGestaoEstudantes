@@ -158,8 +158,7 @@ public final class Admin extends User {
     }
 
     @Override
-    public void realizarActividade(String acao, Object admin) {
-        var actTemp = new Historico(acao, admin);
-        this.actividades.add(actTemp);
+    public void realizarActividade(String acao) {
+        this.actividades.add(new Historico(acao, this));
     }
 }

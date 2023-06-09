@@ -27,7 +27,7 @@ public abstract class User implements Serializable{
     protected String senha;
     protected boolean status;
     protected Departamento departamento;
-    
+
     public User(String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
@@ -35,13 +35,12 @@ public abstract class User implements Serializable{
         this.nuit = nuit;
         this.telefone = telefone;
     }
-    
+
     /**
      * @param acao
-     * @param who
      */
-    public abstract void realizarActividade(String acao, Object who);
-    
+    public abstract void realizarActividade(String acao);
+
     public String getNome() {
         return nome;
     }
@@ -153,7 +152,7 @@ public abstract class User implements Serializable{
     public void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
