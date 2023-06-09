@@ -52,21 +52,22 @@ public abstract class Validate {
          */
         NUCLEAR,
         /**
-         * Representa uma disciplina livre. Disciplinas opcionais para o aluno,
-         * cuja certificação não depende delas.
+         * Representa uma disciplina livre. 
+         * 
+         * Disciplinas opcionais para o aluno, cuja certificação não depende delas.
          */
         LIVRE,
         /**
-         * Representa uma disciplina complementar.
-         */
-        COMPLEMENTAR,
-        /**
-         * Representa um regime de estudo noturno. 
+         * Representa uma disciplina complementar.  
          * 
          * Disciplinas complementares
          * são disciplinas obrigatórias que abrangem áreas distintas do curso
          * principal, proporcionando aos estudantes conhecimentos adicionais e
          * aprofundamento em temas complementares ao campo de estudo principal.
+         */
+        COMPLEMENTAR,
+        /**
+         * Representa um regime de estudo noturno.          *
          */
         NOCTURNO,
         /**
@@ -78,30 +79,40 @@ public abstract class Validate {
          */
         A_DISTANCIA,
         /**
-         * Representa um nível de acesso de super administrador. Administradores
-         * com este nível de acesso terão acesso completo ao sistema.
+         * Representa um nível de acesso de super administrador. 
+         * 
+         * Administradores com este nível de acesso terão acesso completo ao sistema.
          */
         SUPER_ADMIN,
         /**
-         * Representa um nível de acesso de departamento. Os administradores com
-         * este nível de acesso poderão fazer alterações no nível do
-         * departamento que lhes foi designado.
+         * Representa um nível de acesso de departamento. 
+         * 
+         * Os administradores com este nível de acesso poderão fazer alterações 
+         * ao nível do departamento que lhes foi designado.
          */
         DEPARTAMENTO,
         /**
-         * Representa um nível de acesso de curso. Os administradores com este
-         * nível de acesso só poderão fazer alterações a nível do curso que lhes
-         * foi designado.
+         * Representa um nível de acesso de curso. 
+         * 
+         * Os administradores com este nível de acesso só poderão fazer alterações 
+         * a nível do curso que lhes foi designado.
          */
         CURSO,
         /**
-         * Representa um nível de acesso de turma. Os administradores com este
-         * nível de acesso só poderão fazer alterações ao nível da turma que
-         * lhes foi designada.
+         * Representa um nível de acesso de turma. 
+         * 
+         * Os administradores com este nível de acesso só poderão fazer alterações
+         * ao nível da turma que lhes foi designada.
          */
         TURMA
     }
-
+    
+    /**
+    * Valida um número de telefone, removendo espaços em branco e traços e verificando se está no formato correto.
+    *
+    * @param numero O número de telefone a ser validado.
+    * @return true se o número de telefone for válido, false caso contrário.
+    */
     public static boolean validarNumeroTelefone(String numero) {
         // remover espaços em branco e traços do número
         numero = numero.replaceAll("\\s", "").replaceAll("-", "");
@@ -120,7 +131,13 @@ public abstract class Validate {
         // se todas as condições acima forem satisfeitas, o número é válido
         return Arrays.asList("84", "82", "83", "85", "86", "87").contains(prefixo);
     }
-
+    
+    /**
+    * Verifica se um nome é válido, seguindo os critérios especificados.
+    *
+    * @param nome O nome a ser verificado.
+    * @return true se o nome for válido, false caso contrário.
+    */
     public static boolean isName(String nome) {
         // verificar se o nome está vazio ou é nulo
         if (nome == null || nome.trim().isEmpty()) {
@@ -148,7 +165,13 @@ public abstract class Validate {
         // se todas as condições acima forem satisfeitas, o nome é válido
         return true;
     }
-
+    
+    /**
+    * Verifica se uma string representa um número inteiro válido.
+    *
+    * @param numero A string a ser verificada.
+    * @return true se a string representa um número inteiro válido, false caso contrário.
+    */
     public static boolean isInteger(String numero) {
         // verificar se o número é nulo ou vazio
         if (numero == null || numero.trim().isEmpty()) {
@@ -171,7 +194,13 @@ public abstract class Validate {
         // se nenhuma das condições acima for satisfeita, o número é válido
         return true;
     }
-
+    
+    /**
+     * Verifica se uma string representa um número double válido.
+     *
+     * @param numero A string a ser verificada.
+     * @return true se a string representa um número double válido, false caso contrário.
+     */
     public static boolean isDouble(String numero) {
         // verificar se o número é nulo ou vazio
         if (numero == null || numero.trim().isEmpty()) {
@@ -195,12 +224,23 @@ public abstract class Validate {
         return true;
     }
 
-    public boolean isEmail(String email) {
+    /**
+    * Verifica se uma string representa um endereço de email válido.
+    *
+    * @param email O endereço de email a ser verificado.
+    * @return true se a string representa um endereço de email válido, false caso contrário.
+    */
+    public static boolean isEmail(String email) {
         String emailRegex = "^[\\w\\.-]+@[\\w\\.-]+\\.[a-zA-Z]{2,}$";
         return email.matches(emailRegex);
     }
 
-    // Verifica se uma string é uma data válida no formato "DDMMAAAA"
+    /**
+    * Verifica se uma string representa uma data válida no formato "ddMMyyyy".
+    *
+    * @param date A string a ser verificada.
+    * @return true se a string representa uma data válida, false caso contrário.
+    */
     public static boolean isDate(String date) {
         if (date == null || date.length() != 8) {
             return false;
@@ -223,7 +263,13 @@ public abstract class Validate {
             return false;
         }
     }
-
+    
+    /**
+    * Verifica se uma string contém apenas letras ou dígitos.
+    *
+    * @param input A string a ser verificada.
+    * @return true se a string contém apenas letras ou dígitos, false caso contrário.
+    */
     public static boolean containsLettersOrDigits(String input) {
         for (char ch : input.toCharArray()) {
             if (!Character.isLetterOrDigit(ch)) {
@@ -232,8 +278,16 @@ public abstract class Validate {
         }
         return true;
     }
-
-    public static boolean optionIsValid(int min, int max, int option) {
+    
+    /**
+    * Verifica se uma opção é válida dentro de um intervalo de valores inteiros.
+    *
+    * @param min O valor mínimo do intervalo.
+    * @param max O valor máximo do intervalo.
+    * @param option A opção a ser verificada.
+    * @return true se a opção é válida dentro do intervalo, false caso contrário.
+    */
+    public static boolean isValidOption(int min, int max, int option) {
         return isInteger(String.valueOf(min)) && isInteger(String.valueOf(max)) && isInteger(String.valueOf(option)) && option >= min && option <= max;
     }
 
