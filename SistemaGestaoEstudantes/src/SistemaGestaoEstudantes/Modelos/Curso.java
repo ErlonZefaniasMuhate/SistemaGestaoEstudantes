@@ -4,13 +4,14 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class Curso {
+public class Curso implements Serializable {
     
     private String nome;
     //Disciplinas obrigatórias: devem ser cursadas pelo estudante para completar o programa de estudos.

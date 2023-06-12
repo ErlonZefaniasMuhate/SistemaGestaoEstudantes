@@ -17,7 +17,8 @@ public class Menu {
      */
     public static void main(String[] args) {
         try {
-            var userType = new SystemUtils(){}.login();
+            var userType = new DataManager() {
+            }.login();
             switch (userType.getClass().getSimpleName()) {
                 case "Docente" -> {
                     //adicionar a interacao para docente
@@ -29,8 +30,10 @@ public class Menu {
                     //adicionar a interacao para admin
                 }
             }
-        } catch (SecurityException | NoSuchFileException e) {
+        } catch (SecurityException e) {
             System.out.println(e.getMessage());
+        }catch(NoSuchFileException e){
+            CRUD.primeiroAdmin();
         }
     }
 

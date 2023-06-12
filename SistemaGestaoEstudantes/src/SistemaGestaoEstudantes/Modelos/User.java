@@ -7,12 +7,14 @@ package SistemaGestaoEstudantes.Modelos;
 import java.time.LocalDate;
 import SistemaGestaoEstudantes.Utilitarios.Email;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public abstract class User implements Serializable{
+public abstract class User implements Serializable {
+
     protected String nome;
     protected LocalDate dataNascimento;
     protected String numeroBI;
@@ -27,6 +29,7 @@ public abstract class User implements Serializable{
     protected String senha;
     protected boolean status;
     protected Departamento departamento;
+    private List<Historico> actividades;
 
     public User(String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         this.nome = nome;
@@ -39,124 +42,133 @@ public abstract class User implements Serializable{
     /**
      * @param acao
      */
-    public abstract void realizarActividade(String acao);
+    public void realizarActividade(String acao){
+        this.actividades.add(new Historico(acao, this));
+    }
 
-    public String getNome() {
+    public final String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public final void setNome(String nome) {
         this.nome = nome;
     }
 
-    public LocalDate getDataNascimento() {
+    public final LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
+    public final void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getNumeroBI() {
+    public final String getNumeroBI() {
         return numeroBI;
     }
 
-    public void setNumeroBI(String numeroBI) {
+    public final void setNumeroBI(String numeroBI) {
         this.numeroBI = numeroBI;
     }
 
-    public int getNuit() {
+    public final int getNuit() {
         return nuit;
     }
 
-    public void setNuit(int nuit) {
+    public final void setNuit(int nuit) {
         this.nuit = nuit;
     }
 
-    public char getSexo() {
+    public final char getSexo() {
         return sexo;
     }
 
-    public void setSexo(char sexo) {
+    public final void setSexo(char sexo) {
         this.sexo = sexo;
     }
 
-    public String getEndereco() {
+    public final String getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public final void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-    public String getTelefone() {
+    public final String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public final void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
-    public Email getEmailInstitucional() {
+    public final Email getEmailInstitucional() {
         return emailInstitucional;
     }
 
-    public void setEmailInstitucional(Email emailInstitucional) {
+    public final void setEmailInstitucional(Email emailInstitucional) {
         this.emailInstitucional = emailInstitucional;
     }
 
-    public Email getEmainPessoal() {
+    public final Email getEmainPessoal() {
         return emainPessoal;
     }
 
-    public void setEmainPessoal(Email emainPessoal) {
+    public final void setEmainPessoal(Email emainPessoal) {
         this.emainPessoal = emainPessoal;
     }
 
-    public Integer getCodigoInstituicional() {
+    public final Integer getCodigoInstituicional() {
         return codigoInstituicional;
     }
 
-    public void setCodigoInstituicional(Integer codigoInstituicional) {
+    public final void setCodigoInstituicional(Integer codigoInstituicional) {
         this.codigoInstituicional = codigoInstituicional;
     }
 
-    public String getAnoIngresso() {
+    public final String getAnoIngresso() {
         return anoIngresso;
     }
 
-    public void setAnoIngresso(String anoIngresso) {
+    public final void setAnoIngresso(String anoIngresso) {
         this.anoIngresso = anoIngresso;
     }
 
-    public String getSenha() {
+    public final String getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public final void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public boolean isStatus() {
+    public final boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public final void setStatus(boolean status) {
         this.status = status;
     }
 
-    public Departamento getDepartamento() {
+    public final Departamento getDepartamento() {
         return departamento;
     }
 
-    public void setDepartamento(Departamento departamento) {
+    public final void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public final List<Historico> getActividades() {
+        return actividades;
+    }
+
+    public final void setActividades(List<Historico> actividades) {
+        this.actividades = actividades;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("User{");
         sb.append("nome=").append(nome);
         sb.append(", dataNascimento=").append(dataNascimento);
         sb.append(", numeroBI=").append(numeroBI);
@@ -170,7 +182,7 @@ public abstract class User implements Serializable{
         sb.append(", anoIngresso=").append(anoIngresso);
         sb.append(", senha=").append(senha);
         sb.append(", status=").append(status);
-        sb.append('}');
         return sb.toString();
     }
+
 }

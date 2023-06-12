@@ -1,9 +1,8 @@
 package SistemaGestaoEstudantes.Utilitarios;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 /**
@@ -151,7 +150,7 @@ public abstract class Validate {
         }
 
         // verificar se o nome tem pelo menos duas partes (ex: "Maria Silva")
-        if (!nome.contains(" ")) {
+        if ((!nome.contains(" "))||(nome.split(" ").length<3)) {
             return false;
         }
 
@@ -237,42 +236,27 @@ public abstract class Validate {
     }
 
     /**
-    * Verifica se uma string representa uma data válida no formato "ddMMyyyy".
-    *
-    * @param date A string a ser verificada.
-    * @return true se a string representa uma data válida, false caso contrário.
-    */
-    public static boolean isDate(String date) {
-        if (date == null || date.length() != 8) {
-            return false;
-        }
-
-        final int MIN_DAY = 1;
-        final int MAX_DAY = 31;
-        final int MIN_MONTH = 1;
-        final int MAX_MONTH = 12;
-        final int MAX_YEAR_DIFF = 100;
-
+     * Verifica se uma string representa uma data válida no formato "ddmmyyyy".
+     *
+     * @param dateString a string a ser validada
+     * @return true se a string representa uma data válida, caso contrário, false
+     */
+    @Deprecated
+    public static boolean isDate(String dateString) {
         try {
-            int day = Integer.parseInt(date.substring(0, 2));
-            int month = Integer.parseInt(date.substring(2, 4));
-            int year = Integer.parseInt(date.substring(4));
-
-            if (day < MIN_DAY || day > MAX_DAY || month < MIN_MONTH || month > MAX_MONTH) {
-                return false;
-            }
-
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("ddMMuuuu");
-            LocalDate parsedDate = LocalDate.parse(date, dateFormatter);
-
-            LocalDate currentDate = LocalDate.now();
-            long yearDiff = ChronoUnit.YEARS.between(parsedDate, currentDate);
-
-            return yearDiff < MAX_YEAR_DIFF;
-        } catch (NumberFormatException | DateTimeParseException e) {
+            LocalDate date = LocalDate.parse(dateString, dateFormatter);
+            
+            // Verifica se a data é válida
+            return date.getDayOfMonth() == Integer.parseInt(dateString.substring(0, 2))
+                    && date.getMonthValue() == Integer.parseInt(dateString.substring(2, 4))
+                    && date.getYear() == Integer.parseInt(dateString.substring(4, 8));
+            
+        } catch (DateTimeException | NumberFormatException e) {
             return false;
         }
     }
+
 
     
     /**

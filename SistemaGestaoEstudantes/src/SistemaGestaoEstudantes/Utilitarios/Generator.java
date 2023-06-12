@@ -13,7 +13,7 @@ import SistemaGestaoEstudantes.Modelos.User;
  * 
  * @author Erlon Z. Muhate
  */
-public class Generator {
+public abstract class Generator {
 
     private static final String[] NOMES = {"Ana Maria Sousa", "Pedro Jose Mateus", "Mariana Carlos Almeida", "João Alberto Jonas", "Juliana de Sousa", "Lucas Daniel Matsinhe", "Camila Juliao Mangue",
         "Marcelo Rebelo Sousa", "Amanda Rafael Novela", "Rafael Armindo Mindo", "Gabriela Jose Carlos", "Felipe Ricardo Gomes", "Carla Franciso Gomes", "Ricardo Jose Pinho", "Renata Humberto Manguezy",
@@ -81,7 +81,7 @@ public class Generator {
         int numeroInteiro = gerarNumeroAleatorio(4);
 
         String codigoInstituicional = String.valueOf(anoAtual) + String.valueOf(numeroInteiro);
-        User user = new SystemUtils() {}
+        User user = new DataManager() {}
             .findUserByCode(Integer.parseInt(codigoInstituicional), userType);
         return user == null ? Integer.parseInt(codigoInstituicional) : null;
     }

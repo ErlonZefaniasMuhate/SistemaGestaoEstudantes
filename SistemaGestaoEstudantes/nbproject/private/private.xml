@@ -3,22 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Sala.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/erlon/utils/Email.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Disciplina.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Docente.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Main.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Historico.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Estudante.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/erlon/utils/Generator.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Curso.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/SystemUtils.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/User.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Departamento.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Admin.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Avaliacao.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/erlon/utils/Validate.java</file>
-            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/Student%20Management%20System/src/projectPOO/Turma.java</file>
+            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/SistemaGestaoEstudantes/src/SistemaGestaoEstudantes/Utilitarios/Menu.java</file>
+            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/SistemaGestaoEstudantes/src/SistemaGestaoEstudantes/Utilitarios/SystemUtils.java</file>
+            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/SistemaGestaoEstudantes/src/SistemaGestaoEstudantes/Modelos/Admin.java</file>
+            <file>file:/C:/Users/Erlon%20Z.%20Muhate/Documents/NetBeansProjects/POO1_S1_G6/SistemaGestaoEstudantes/src/SistemaGestaoEstudantes/Utilitarios/Validate.java</file>
         </group>
     </open-files>
 </project-private>

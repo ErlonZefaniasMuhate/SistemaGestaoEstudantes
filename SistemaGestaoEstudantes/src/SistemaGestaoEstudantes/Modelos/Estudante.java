@@ -5,6 +5,7 @@
 package SistemaGestaoEstudantes.Modelos;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +18,6 @@ public final class Estudante extends User{
     private Curso curso;
     private String regime;
     private boolean bolsista;
-    private List<Historico> historico;
     private List<Disciplina> disciplinasInscritas;
     private List<Disciplina> disciplinasConcluidas;
 
@@ -26,68 +26,64 @@ public final class Estudante extends User{
         this.curso = curso;
         this.regime = regime;
         this.bolsista = false;
+        this.nivel = 1;
+        this.disciplinasInscritas = new ArrayList<>();
+        this.disciplinasConcluidas = new ArrayList<>();
     }
 
-    public List<Historico> getHistorico() {
-        return historico;
-    }
-
-    public void setHistorico(List<Historico> historico) {
-        this.historico = historico;
-    }
-
-    public byte getNivel() {
+    public final byte getNivel() {
         return nivel;
     }
 
-    public void setNivel(byte nivel) {
+    public final void setNivel(byte nivel) {
         this.nivel = nivel;
     }
 
-    public Curso getCurso() {
+    public final Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public final void setCurso(Curso curso) {
         this.curso = curso;
     }
 
-    public String getRegime() {
+    public final String getRegime() {
         return regime;
     }
 
-    public void setRegime(String regime) {
+    public final void setRegime(String regime) {
         this.regime = regime;
     }
 
-    public boolean isBolsista() {
+    public final boolean isBolsista() {
         return bolsista;
     }
 
-    public void setBolsista(boolean bolsista) {
+    public final void setBolsista(boolean bolsista) {
         this.bolsista = bolsista;
     }
 
-    public List<Disciplina> getDisciplinasInscritas() {
+    public final List<Disciplina> getDisciplinasInscritas() {
         return disciplinasInscritas;
     }
 
-    public void setDisciplinasInscritas(List<Disciplina> disciplinasInscritas) {
+    public final void setDisciplinasInscritas(List<Disciplina> disciplinasInscritas) {
         this.disciplinasInscritas = disciplinasInscritas;
     }
 
-    public List<Disciplina> getDisciplinasConcluidas() {
+    public final List<Disciplina> getDisciplinasConcluidas() {
         return disciplinasConcluidas;
     }
 
-    public void setDisciplinasConcluidas(List<Disciplina> disciplinasConcluidas) {
+    public final void setDisciplinasConcluidas(List<Disciplina> disciplinasConcluidas) {
         this.disciplinasConcluidas = disciplinasConcluidas;
     }
 
     @Override
-    public String toString() {
+    public final String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Estudante{");
+        sb.append(super.toString());
         sb.append("nivel: ").append(nivel);
         sb.append(", curso: ").append(curso);
         sb.append(", regime: ").append(regime);
@@ -102,10 +98,4 @@ public final class Estudante extends User{
         sb.append('}');
         return sb.toString();
     }
-
-    @Override
-    public void realizarActividade(String acao) {
-        this.historico.add(new Historico(acao, this));
-    }
-    
 }

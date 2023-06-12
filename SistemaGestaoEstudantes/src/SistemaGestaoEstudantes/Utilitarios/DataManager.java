@@ -18,7 +18,7 @@ import java.util.logging.*;
  * @param <Usuario> represents the user of the system
  * @param <Entity> the type of entity, which can represent classrooms, departments, classes, assessments, disciplines, or other components of the system that are not users (they do not extend the User class) or activity logs
  */
-public abstract class SystemUtils<Usuario extends User & Serializable, Entity extends Serializable> {
+public abstract class DataManager<Usuario extends User & Serializable, Entity extends Serializable> {
 
     private final String currentProjectPath;
     private final Path filesDirectoryPath;
@@ -29,7 +29,7 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
      * Se o diretório de arquivos não existe, ele é criado. 
      * Caso ocorra algum erro ao criar o diretório, uma mensagem de erro é exibida e o programa é encerrado.
      */
-    public SystemUtils() {
+    public DataManager() {
         // Obter o caminho do diretório atual do projeto
         currentProjectPath = System.getProperty("user.dir");
 
@@ -43,7 +43,7 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
                 Files.createDirectories(filesDirectoryPath);
             } catch (IOException e) {
                 // Lidar com a exceção em caso de falha na criação do diretório
-                Logger.getLogger(SystemUtils.class.getName()).log(Level.SEVERE, "Failed to create the directory", e);
+                Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, "Failed to create the directory", e);
             } finally {
                 // Exibir uma mensagem de erro e encerrar o programa
                 System.out.println("Please, re-run the program!");
@@ -60,8 +60,7 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
      */
     public Usuario findUserByCode(int userCode, String userType) throws NoSuchElementException {
         try {
-            String fileName = userType + ".ser";
-            var existingUsers = loadUsersFromFile(fileName);
+            var existingUsers = loadUsersFromFile(getFileName(userType));
             if (existingUsers.containsKey(userCode)) {
                 return existingUsers.get(userCode);
             } else {
@@ -82,9 +81,9 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
     * @return a entidade encontrada ou null se não for encontrada
     */
     public Entity findEntityByName(String entityType, String entityName) {
-        String fileName = entityType + ".ser";
+        
         try {
-            var existingEntities = loadEntitiesFromFile(fileName);
+            var existingEntities = loadEntitiesFromFile(getFileName(entityName));
             for (Entity e : existingEntities) {
                 try {
                     Class<?> classe = Class.forName(entityType);
@@ -125,20 +124,28 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
      * @param userType o tipo de usuário
      */
     public void saveUserToFile(Usuario u, String userType) {
-
-        String fileName = userType + ".ser";
-        Path filePath = filesDirectoryPath.resolve(fileName);
+        Path filePath = getDirectoryPath(getFileName(userType));
 
         try ( ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING))) {
-            var existingUsers = loadUsersFromFile(fileName);
+            var existingUsers = loadUsersFromFile(getFileName(userType));
             if (!existingUsers.containsKey(u.getCodigoInstituicional())) {
                 existingUsers.put(u.getCodigoInstituicional(), u);
                 oos.writeObject(existingUsers);
                 oos.flush();
             }
         } catch (IOException e) {
-            Logger.getLogger(SystemUtils.class.getName()).log(Level.SEVERE, "Exception encountered: ", e);
+            Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, "Exception encountered: ", e);
         }
+    }
+
+    private Path getDirectoryPath(String fileName) {
+        Path filePath = filesDirectoryPath.resolve(fileName);
+        return filePath;
+    }
+
+    private String getFileName(String userType) {
+        String fileName = userType + ".ser";
+        return fileName;
     }
 
     /**
@@ -150,7 +157,7 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
      * @throws FileNotFoundException se o arquivo não for encontrado
      */
     private HashMap<Integer, Usuario> loadUsersFromFile(String fileName) throws NoSuchFileException, FileNotFoundException {
-        Path filePath = filesDirectoryPath.resolve(fileName);
+        Path filePath = getDirectoryPath(fileName);
 
         try ( ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(filePath, StandardOpenOption.READ))) {
 
@@ -162,7 +169,7 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
             throw e;
         } catch (EOFException e) {
         } catch (IOException | ClassNotFoundException e) {
-            Logger.getLogger(SystemUtils.class.getName()).log(Level.SEVERE, " Excepcao encontrada ", e);
+            Logger.getLogger(DataManager.class.getName()).log(Level.SEVERE, " Excepcao encontrada ", e);
         }
         return new HashMap<>();
     }
@@ -174,11 +181,11 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
     * @param entityName o nome da entidade
     */
     public void saveEntityToFile(Entity entity, String entityName) {
-        String fileName = entityName + ".ser";
-        Path filePath = filesDirectoryPath.resolve(fileName);
+        
+        Path filePath = getDirectoryPath(getFileName(entityName));
 
         try ( ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING))) {
-            var existingEntities = loadEntitiesFromFile(fileName);
+            var existingEntities = loadEntitiesFromFile(getFileName(entityName));
             existingEntities.add(entity);
             if (!existingEntities.contains(entity)) {
                 oos.writeObject(existingEntities);
@@ -197,9 +204,9 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
     * @throws NoSuchFileException     se o arquivo não existe
     * @throws FileNotFoundException se o arquivo não foi encontrado
     */
-    private List<Entity> loadEntitiesFromFile(String fileName) throws NoSuchFileException, FileNotFoundException {
+    public List<Entity> loadEntitiesFromFile(String fileName) throws NoSuchFileException, FileNotFoundException {
 
-        Path filePath = filesDirectoryPath.resolve(fileName);
+        Path filePath = getDirectoryPath(fileName);
         try ( ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(filePath, StandardOpenOption.READ))) {
             List<Entity> entity = (List) ois.readObject();
             ois.close();
@@ -220,7 +227,7 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
     * @param userType   o tipo de usuário
     */
     public void saveLoginInfo(Integer userCode, String password, String userType) {
-        Path filePath = filesDirectoryPath.resolve("login.txt");
+        Path filePath = getDirectoryPath("login.txt");
         try ( BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND)) {
             writer.write(userCode + "||" + password);
             writer.newLine();
@@ -235,9 +242,10 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
     * @return o objeto User correspondente ao usuário logado
     * @throws SecurityException     se as credenciais de login forem inválidas
     * @throws NoSuchFileException   se os dados de login não estiverem disponíveis
+    * @since 09/06/2023
     */
     public User login() throws SecurityException, NoSuchFileException {
-        Path filePath = filesDirectoryPath.resolve("login.txt");
+        Path filePath = getDirectoryPath("login.txt");
 
         if (!Files.exists(filePath)) {
             throw new NoSuchFileException("Login data is not available");
@@ -264,7 +272,7 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
                 reader.close();
                 throw new SecurityException("Access denied");
             } else {
-                String userType = getUserType(Integer.parseInt(code), password) + ".ser";
+                String userType = getFileName(getUserType(Integer.parseInt(code), password));
                 return findUserByCode(Integer.parseInt(code), userType);
             }
         } catch (IOException e) {
@@ -311,7 +319,7 @@ public abstract class SystemUtils<Usuario extends User & Serializable, Entity ex
     * @return o tipo de usuário correspondente ao código e senha fornecidos, ou null se não for encontrado
     */
     private String getUserType(int codigoInstitucional, String password) {
-        Path filePath = filesDirectoryPath.resolve("login.txt");
+        Path filePath = getDirectoryPath("login.txt");
         try ( BufferedReader reader = new BufferedReader(Files.newBufferedReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
