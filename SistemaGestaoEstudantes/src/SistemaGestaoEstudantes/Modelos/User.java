@@ -169,20 +169,21 @@ public abstract class User implements Serializable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("nome=").append(nome);
-        sb.append(", dataNascimento=").append(dataNascimento);
-        sb.append(", numeroBI=").append(numeroBI);
-        sb.append(", nuit=").append(nuit);
-        sb.append(", sexo=").append(sexo);
-        sb.append(", endereco=").append(endereco);
-        sb.append(", telefone=").append(telefone);
-        sb.append(", emailInstitucional=").append(emailInstitucional);
-        sb.append(", emainPessoal=").append(emainPessoal);
-        sb.append(", codigoInstituicional=").append(codigoInstituicional);
-        sb.append(", anoIngresso=").append(anoIngresso);
-        sb.append(", senha=").append(senha);
-        sb.append(", status=").append(status);
+        sb.append("Nome: ").append(nome).append("\n");
+        sb.append("Data de Nascimento: ").append(dataNascimento).append("\n");
+        sb.append("Número BI: ").append(numeroBI).append("\n");
+        sb.append("Nuit: ").append(nuit).append("\n");
+        sb.append("Sexo: ").append(sexo).append("\n");
+        sb.append("Endereço: ").append(endereco).append("\n");
+        sb.append("Telefone: ").append(telefone).append("\n");
+        sb.append("Email Institucional: ").append(this.emailInstitucional.getEmailAdress()).append("\n");
+        sb.append("Email Pessoal: ").append(emainPessoal).append("\n");
+        sb.append("Código Institucional: ").append(codigoInstituicional).append("\n");
+        sb.append("Ano de Ingresso: ").append(anoIngresso).append("\n");
+        sb.append("Senha: ").append(senha).append("\n");
+        sb.append("Status: ").append(status).append("\n");
         return sb.toString();
     }
+
 
 }

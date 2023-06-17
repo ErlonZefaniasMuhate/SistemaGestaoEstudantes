@@ -15,37 +15,39 @@ public final class Docente extends User {
 
     private List<Disciplina> disciplinas;
     private String titulo;
-    
+
     public Docente(List<Disciplina> disciplinas, String titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.disciplinas = disciplinas;
         this.titulo = titulo;
     }
 
-    public final  List<Disciplina> getDisciplinas() {
+    public final List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
 
-    public final  void setDisciplinas(List<Disciplina> disciplinas) {
+    public final void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
 
-    public final  String getTitulo() {
+    public final String getTitulo() {
         return titulo;
     }
 
-    public final  void setTitulo(String titulo) {
+    public final void setTitulo(String titulo) {
         this.titulo = titulo;
     }
 
     @Override
-    public final  String toString() {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Docente{");
+        sb.append("Docente{\n");
         sb.append(super.toString());
-        sb.append("disciplinas=").append(disciplinas);
-        sb.append(", titulo=").append(titulo);
-        sb.append('}');
+        for (var disciplina : disciplinas) {
+            sb.append("\t").append(disciplina).append("\n");
+        }
+        sb.append("Título: ").append(titulo).append("\n");
+        sb.append("}");
         return sb.toString();
-    }  
+    }
 }

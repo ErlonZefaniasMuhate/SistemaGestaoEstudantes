@@ -28,12 +28,13 @@ public final class Admin extends User {
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Admin{");
-        sb.append(super.toString());
-        sb.append("nivelPermissao=").append(nivelPermissao);
-        sb.append('}');
+        sb.append("Admin{")
+                .append(super.toString())
+                .append(", Nível de Permissão: ")
+                .append(nivelPermissao)
+                .append('}');
         return sb.toString();
     }
 }

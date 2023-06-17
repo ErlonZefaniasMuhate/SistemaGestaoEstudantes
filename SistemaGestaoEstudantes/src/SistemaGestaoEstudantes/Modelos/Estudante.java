@@ -80,22 +80,24 @@ public final class Estudante extends User{
     }
 
     @Override
-    public final String toString() {
+    public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Estudante{");
-        sb.append(super.toString());
-        sb.append("nivel: ").append(nivel);
-        sb.append(", curso: ").append(curso);
-        sb.append(", regime: ").append(regime);
-        sb.append(", bolsista: ").append(bolsista);
-        sb.append(", disciplinasInscritas: ");
-        for (var temp : this.disciplinasInscritas){
-            sb.append(disciplinasInscritas);
+        sb.append("Estudante{\n");
+        sb.append(super.toString()).append("\n");
+        sb.append("Nível: ").append(nivel).append("\n");
+        sb.append("Curso: ").append(curso).append("\n");
+        sb.append("Regime: ").append(regime).append("\n");
+        sb.append("Bolsista: ").append(bolsista).append("\n");
+        sb.append("Disciplinas Inscritas: \n");
+        for (var disciplina : disciplinasInscritas) {
+            sb.append("\t").append(disciplina).append("\n");
         }
-        for (var temp : this.disciplinasConcluidas){
-            sb.append(disciplinasConcluidas);
+        sb.append("Disciplinas Concluídas: \n");
+        for (var disciplina : disciplinasConcluidas) {
+            sb.append("\t").append(disciplina).append("\n");
         }
-        sb.append('}');
+        sb.append("}");
         return sb.toString();
     }
+
 }
