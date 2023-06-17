@@ -22,6 +22,7 @@ import java.util.List;
  */
 public abstract class CRUD {
     
+    private static BufferedReader x = new BufferedReader(new InputStreamReader(System.in));
     /**
      * Registra um novo estudante no sistema.Solicita os detalhes do estudante,
        valida as entradas e salva o estudante no arquivo.
@@ -192,12 +193,15 @@ public abstract class CRUD {
         new DataManager<Admin, Estudante>() {
             {
                 saveUserToFile(novo, "Admin");
+                saveLoginInfo(novo.getCodigoInstituicional(), novo.getSenha(), "Admin");
             }
         };
+        
     }        
     public static String registarNome() {
-        try ( BufferedReader x = new BufferedReader(new InputStreamReader(System.in))) {
-            String nome;
+        String nome = null;
+        try  {
+            
             System.out.println("""
                 Forneca os detalhes do usuario
                 1. Nome Completo:
@@ -211,14 +215,15 @@ public abstract class CRUD {
                    """);
                 nome = x.readLine();
             }
-            return nome;
+            
         } catch (IOException e) {
         }
-       return null; 
+       return nome; 
     }
     private static String registarBI() {
-        try ( BufferedReader x = new BufferedReader(new InputStreamReader(System.in))) {
-            String BI;
+        String BI = null;
+        try  {
+            
             System.out.println("""
                                
                 Forneca os detalhes do usuario
@@ -233,14 +238,15 @@ public abstract class CRUD {
                    """);
                 BI = x.readLine();
             }
-            return BI;
+            
         } catch (IOException e) {
         }
-        return null;
+        return BI;
     }
     private static String registarNUIT() {
-        try ( BufferedReader x = new BufferedReader(new InputStreamReader(System.in))) {
-            String NUIT;
+        String NUIT = null;
+        try {
+            
             System.out.println("""
                                
                 Forneca os detalhes do usuario
@@ -255,42 +261,43 @@ public abstract class CRUD {
                 """);
                 NUIT = x.readLine();
             }
-        } catch (IOException e) {
-
-        }
-        return null;
+            
+        } catch (IOException e) {}
+        return NUIT;
     }
     private static LocalDate registarData() {
-        try ( BufferedReader x = new BufferedReader(new InputStreamReader(System.in))) {
-            LocalDate nascimento = null;
+        LocalDate nascimento = null;
+        try {
+            
             String dataNascimento;
             while (nascimento == null) {
                 try {
                     System.out.println("""
                                
-                        Forneca os detalhes do usuario.
-                        4. Data de nascimento (DiaMesAno) apenas digitos     
+                    Forneca os detalhes do usuario.
+                    4. Data de nascimento (DiaMesAno) apenas digitos     
                     """);
                     dataNascimento = x.readLine();
 
                     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("ddMMuuuu");
                     nascimento = LocalDate.parse(dataNascimento, dateFormatter);
-                    return nascimento;
+                    
                 } catch (DateTimeParseException e) {
                     System.out.println("Formato de data inválido. Tente novamente.");
                 }
             }
         } catch (IOException e) {
         }
-        return null;
+        return nascimento;
     }
     private static String registarTelefone() {
-        try ( BufferedReader x = new BufferedReader(new InputStreamReader(System.in))) {
-            String telefone;
+        String telefone = null;
+        try {
+            
             System.out.println("""
-                                   
-                    Forneca os detalhes do usuario.
-                    5. Forneca o numero de telefone do usuario:           
+
+                Forneca os detalhes do usuario.
+                5. Forneca o numero de telefone do usuario:           
                 """);
             telefone = x.readLine();
             while (!Validate.validarNumeroTelefone(telefone)) {
@@ -300,23 +307,22 @@ public abstract class CRUD {
                     5. Forneca o numero de telefone do usuario:           
                 """);
                 telefone = x.readLine();
-            }
-            return telefone;
+            }     
         } catch (IOException e) {
         }
-        return null;
+        return telefone;
     }
     private static String definirNivelAcesso() {
-        try ( BufferedReader x = new BufferedReader(new InputStreamReader(System.in))) {
+        try {
             String nivelPermissao;
             System.out.println("""
-                                
-                       Selecione o nivel de permissao para o novo administrador.
-                       
-                       1. Acesso completo ao sistema.
-                       2. Acesso nivel do departamento.
-                       3. Acesso ao nivel de curso.
-                       4. Acesso a nivel de turma.                
+
+                Selecione o nivel de permissao para o novo administrador.
+
+                1. Acesso completo ao sistema.
+                2. Acesso nivel do departamento.
+                3. Acesso ao nivel de curso.
+                4. Acesso a nivel de turma.                
                                    
                 """);
             int answer = Integer.parseInt(x.readLine());
@@ -345,6 +351,7 @@ public abstract class CRUD {
                 case 4 ->
                     nivelPermissao = Validate.Constantes.TURMA.name();
             }
+            
             return nivelPermissao;
         } catch (IOException e) {
         }
@@ -357,9 +364,10 @@ public abstract class CRUD {
         System.out.println("---------------------------------");
         System.out.println("Guarde as informacoes, use as credenciais fornecidas para poder aceder ao sistema.");
     }
-    private static String definirRegime(){
-        try(BufferedReader x = new BufferedReader (new InputStreamReader (System.in))){
-            String regimeEstudo;
+    private static String definirRegime(){         
+        String regimeEstudo = null;
+
+        try {
                         System.out.println("/nEscolha o regime");
             System.out.println("1. " + Validate.Constantes.DIURNO);
             System.out.println("2. " + Validate.Constantes.NOCTURNO);
@@ -382,12 +390,13 @@ public abstract class CRUD {
                 case "3" ->
                     regimeEstudo = Validate.Constantes.A_DISTANCIA.name();
             }
-            return regimeEstudo;
-        }catch(IOException e){}
-        return null;
+        } catch(IOException e){}
+        
+        return regimeEstudo;
     }
     private static Curso escolherCurso(){
-        try ( BufferedReader x = new BufferedReader(new InputStreamReader(System.in))) {
+        try {
+            
             String nomeCurso;
             var cursosExistentes = (List<Curso>) new DataManager<Estudante, Curso>() {
             }.loadEntitiesFromFile("Curso.ser");
@@ -413,6 +422,7 @@ public abstract class CRUD {
                 System.out.println("Escolha o Curso: ");
                 nomeCurso = x.readLine();
             }
+            
             return cursosExistentes.get(Integer.parseInt(nomeCurso));
         } catch (IOException e) {
         }
