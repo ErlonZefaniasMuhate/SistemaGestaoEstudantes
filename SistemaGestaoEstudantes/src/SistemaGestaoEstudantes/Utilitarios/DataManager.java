@@ -22,6 +22,7 @@ public abstract class DataManager<Usuario extends User & Serializable, Entity ex
 
     private final String currentProjectPath;
     private final Path filesDirectoryPath;
+    private static BufferedReader x = new BufferedReader (new InputStreamReader (System.in));
 
     /**
      * Construtor da classe SystemUtils. 
@@ -229,7 +230,7 @@ public abstract class DataManager<Usuario extends User & Serializable, Entity ex
     public void saveLoginInfo(Integer userCode, String password, String userType) {
         Path filePath = getDirectoryPath("login.txt");
         try ( BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND)) {
-            writer.write(userCode + "||" + password);
+            writer.write(userCode + "||" + password + "||" + userType);
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
@@ -252,19 +253,9 @@ public abstract class DataManager<Usuario extends User & Serializable, Entity ex
         }
 
         try ( BufferedReader reader = Files.newBufferedReader(filePath)) {
-            System.out.println("Enter your institutional code: ");
-            String code = reader.readLine();
-            while (!Validate.isInteger(code)) {
-                System.out.println("Invalid code, please try again: ");
-                code = reader.readLine();
-            }
-
-            System.out.println("Enter your password: ");
-            String password = reader.readLine();
-            while (!Validate.containsLettersOrDigits(password)) {
-                System.out.println("Invalid password, please try again: ");
-                password = reader.readLine();
-            }
+            
+            String code = readUserCode();
+            String password = readPassword();
 
             boolean welcomeMessagePrinted = validateUserCredentials(code, password, reader);
 
@@ -279,6 +270,26 @@ public abstract class DataManager<Usuario extends User & Serializable, Entity ex
             //handle the exception
         }
         return null;
+    }
+
+    private String readPassword() throws IOException {
+        System.out.println("Enter your password: ");
+        String password = x.readLine();
+        while (!Validate.containsLettersOrDigits(password)) {
+            System.out.println("Invalid password, please try again: ");
+            password = x.readLine();
+        }
+        return password;
+    }
+
+    private String readUserCode() throws IOException {
+        System.out.println("Enter your institutional code: ");
+        String code = x.readLine();
+        while (!Validate.isInteger(code)) {
+            System.out.println("Invalid code, please try again: ");
+            code = x.readLine();
+        }
+        return code;
     }
     
     /**
