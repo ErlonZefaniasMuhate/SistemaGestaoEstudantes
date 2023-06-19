@@ -104,7 +104,7 @@ public class Constants {
          * @return Os detalhes do tipo de avaliação.
          */
         public String getDetalhes() {
-            return detalhes;
+            return detalhes+"\n";
         }
 
         /**
@@ -113,7 +113,11 @@ public class Constants {
          * @return A descrição do tipo de avaliação.
          */
         public String getDescricao() {
-            return descricao;
+            return descricao+"\n";
+        }
+        @Override
+        public String toString(){
+            return getDescricao()+getDetalhes();
         }
     }
 
@@ -160,7 +164,7 @@ public class Constants {
          * @return a descrição do tipo de disciplina.
          */
         public String getDescricao() {
-            return descricao;
+            return descricao+"\n";
         }
 
         /**
@@ -169,7 +173,11 @@ public class Constants {
          * @return os detalhes do tipo de disciplina.
          */
         public String getDetalhes() {
-            return detalhes;
+            return detalhes+"\n";
+        }
+        @Override
+        public String toString() {
+            return getDescricao() + getDetalhes();
         }
     }
 

@@ -4,6 +4,7 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.TipoDeDocente;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,9 +15,9 @@ import java.util.List;
 public final class Docente extends User {
 
     private List<Disciplina> disciplinas;
-    private String titulo;
+    private TipoDeDocente titulo;
 
-    public Docente(List<Disciplina> disciplinas, String titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Docente(List<Disciplina> disciplinas, TipoDeDocente titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.disciplinas = disciplinas;
         this.titulo = titulo;
@@ -30,24 +31,24 @@ public final class Docente extends User {
         this.disciplinas = disciplinas;
     }
 
-    public final String getTitulo() {
+    public final TipoDeDocente getTitulo() {
         return titulo;
     }
 
-    public final void setTitulo(String titulo) {
+    public final void setTitulo(TipoDeDocente titulo) {
         this.titulo = titulo;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Docente{\n");
-        sb.append(super.toString());
+        sb.append("Detalhes do Docente\n\n")
+            .append(super.toString());
         for (var disciplina : disciplinas) {
             sb.append("\t").append(disciplina).append("\n");
         }
-        sb.append("Título: ").append(titulo).append("\n");
-        sb.append("}");
+        sb.append("Título: ").append(titulo.getDescricao()).append("\n\t")
+                .append(titulo.getDetalhes());
         return sb.toString();
     }
 }

@@ -25,7 +25,7 @@ public abstract class Generator {
     * @return a String aleatória gerada
     */
     public static String gerarString(int size) {
-        String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String alphaNumericString = "c2RNOPfh6jL3mAHeo5vQwZtpbYXVKW8GqzxgfTClSB1DnJIU94u0Ey7skrdaixvF";
         StringBuilder aleatoria = new StringBuilder();
 
         for (int i = 0; i < size; i++) {
@@ -43,7 +43,7 @@ public abstract class Generator {
      * @return a String aleatória gerada
      */
     public static String gerarStringNumerosMinusculas(int size) {
-        String alphaNumericString = "abcdefghijklmnopqrstuvwxyz0123456789";//determines the universe of allowed characters to use
+        String alphaNumericString = "wh3s6vp2q4a0e7it1cdygjlnrfxz5u8o9bkvm";//determines the universe of allowed characters to use
         String aleatoria = null;
 
         for (int i = 0; i < size; i++) {
@@ -60,7 +60,7 @@ public abstract class Generator {
      * @return the generated random integer
      */
     public static int gerarNumeroAleatorio(int size) {
-        String alphaNumericString = "0123456789";
+        String alphaNumericString = "7693450128";
         StringBuilder aleatoria = new StringBuilder();
 
         Random random = new Random();

@@ -4,9 +4,15 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants;
+import SistemaGestaoEstudantes.Utilitarios.Constants.EstadoUsuario;
 import java.time.LocalDate;
 import SistemaGestaoEstudantes.Utilitarios.Email;
+import SistemaGestaoEstudantes.Utilitarios.Generator;
 import java.io.Serializable;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 /**
@@ -19,15 +25,14 @@ public abstract class User implements Serializable {
     protected LocalDate dataNascimento;
     protected String numeroBI;
     protected int nuit;
-    protected char sexo;
     protected String endereco;
     protected String telefone;
     protected Email emailInstitucional;
-    protected Email emainPessoal;
+    protected Email emailPessoal;
     protected Integer codigoInstituicional;
     protected String anoIngresso;
     protected String senha;
-    protected boolean status;
+    protected EstadoUsuario status;
     protected Departamento departamento;
     private List<Historico> actividades;
 
@@ -37,6 +42,10 @@ public abstract class User implements Serializable {
         this.numeroBI = numeroBI;
         this.nuit = nuit;
         this.telefone = telefone;
+        this.senha = Generator.gerarString(6);
+        this.emailPessoal = new Email (Constants.TipoDeEmail.STANDARD_EMAIL.getEmail());
+        this.anoIngresso = String.valueOf(Year.now().getValue());
+        this.status = Constants.EstadoUsuario.ATIVO;
     }
 
     /**
@@ -78,16 +87,8 @@ public abstract class User implements Serializable {
         this.nuit = nuit;
     }
 
-    public final char getSexo() {
-        return sexo;
-    }
-
-    public final void setSexo(char sexo) {
-        this.sexo = sexo;
-    }
-
     public final String getEndereco() {
-        return endereco;
+        return endereco = (endereco == null) ? "undefined" : endereco;
     }
 
     public final void setEndereco(String endereco) {
@@ -110,12 +111,12 @@ public abstract class User implements Serializable {
         this.emailInstitucional = emailInstitucional;
     }
 
-    public final Email getEmainPessoal() {
-        return emainPessoal;
+    public final Email getEmailPessoal() {
+        return emailPessoal;
     }
 
-    public final void setEmainPessoal(Email emainPessoal) {
-        this.emainPessoal = emainPessoal;
+    public final void setEmailPessoal(Email emailPessoal) {
+        this.emailPessoal = emailPessoal;
     }
 
     public final Integer getCodigoInstituicional() {
@@ -142,11 +143,11 @@ public abstract class User implements Serializable {
         this.senha = senha;
     }
 
-    public final boolean isStatus() {
+    public final EstadoUsuario getStatus() {
         return status;
     }
 
-    public final void setStatus(boolean status) {
+    public final void setStatus(EstadoUsuario status) {
         this.status = status;
     }
 
@@ -162,28 +163,23 @@ public abstract class User implements Serializable {
         return actividades;
     }
 
-    public final void setActividades(List<Historico> actividades) {
-        this.actividades = actividades;
-    }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Nome: ").append(nome).append("\n");
-        sb.append("Data de Nascimento: ").append(dataNascimento).append("\n");
-        sb.append("Número BI: ").append(numeroBI).append("\n");
-        sb.append("Nuit: ").append(nuit).append("\n");
-        sb.append("Sexo: ").append(sexo).append("\n");
-        sb.append("Endereço: ").append(endereco).append("\n");
-        sb.append("Telefone: ").append(telefone).append("\n");
-        sb.append("Email Institucional: ").append(this.emailInstitucional.getEmailAdress()).append("\n");
-        sb.append("Email Pessoal: ").append(emainPessoal).append("\n");
-        sb.append("Código Institucional: ").append(codigoInstituicional).append("\n");
-        sb.append("Ano de Ingresso: ").append(anoIngresso).append("\n");
-        sb.append("Senha: ").append(senha).append("\n");
-        sb.append("Status: ").append(status).append("\n");
+        sb.append("Nome: ").append(nome).append("\n")
+                .append("Data de Nascimento: ").append(dataNascimento.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))).append("\n")
+                .append("Número do BI: ").append(numeroBI).append("\n")
+                .append("Nuit: ").append(nuit).append("\n")
+                .append("Endereço: ").append(getEndereco()).append("\n")
+                .append("Telefone: ").append(telefone).append("\n")
+                .append("Email Institucional: ").append(emailInstitucional.getEmailAddress()).append("\n")
+                .append("Email Pessoal: ").append(emailPessoal.getEmailAddress()).append("\n")
+                .append("Código Institucional: ").append(codigoInstituicional).append("\n")
+                .append("Ano de Ingresso: ").append(anoIngresso).append("\n")
+                .append("Senha: ").append(senha).append("\n")
+                .append("Status: ").append(status).append("\n");
         return sb.toString();
     }
-
-
+    
 }

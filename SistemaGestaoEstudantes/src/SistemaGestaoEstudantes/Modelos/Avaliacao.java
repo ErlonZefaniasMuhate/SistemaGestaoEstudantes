@@ -4,6 +4,7 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.TipoAvaliacao;
 import java.time.LocalDateTime;
 
 /**
@@ -11,18 +12,19 @@ import java.time.LocalDateTime;
  * @author Leuso Nguenha
  */
 public class Avaliacao {
-    
+
     private String nome;
-    private String tipoAvaliacao;
+    private TipoAvaliacao tipoAvaliacao;
     private double peso;
     private double nota;
     private LocalDateTime dataMarcada;
-   
 
-    public Avaliacao(String nome, double peso, LocalDateTime dataMarcada) {
+    public Avaliacao(String nome, double peso, LocalDateTime dataMarcada, TipoAvaliacao tipoAvaliacao) {
         this.nome = nome;
         this.peso = peso;
         this.dataMarcada = dataMarcada;
+        this.tipoAvaliacao = tipoAvaliacao;
+        this.nota = -1;
     }
 
     public String getNome() {
@@ -33,11 +35,11 @@ public class Avaliacao {
         this.nome = nome;
     }
 
-    public String getTipoAvaliacao() {
+    public TipoAvaliacao getTipoAvaliacao() {
         return tipoAvaliacao;
     }
 
-    public void setTipoAvaliacao(String tipoAvaliacao) {
+    public void setTipoAvaliacao(TipoAvaliacao tipoAvaliacao) {
         this.tipoAvaliacao = tipoAvaliacao;
     }
 
@@ -68,13 +70,14 @@ public class Avaliacao {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Avaliacao{");
-        sb.append("nome=").append(nome);
-        sb.append(", tipoAvaliacao=").append(tipoAvaliacao);
-        sb.append(", peso=").append(peso);
-        sb.append(", nota=").append(nota);
-        sb.append(", dataMarcada=").append(dataMarcada);
-        sb.append('}');
+        sb.append("Avaliacao{")
+                .append("nome=").append(nome)
+                .append(", tipoAvaliacao=").append(tipoAvaliacao.getDescricao())
+                .append(tipoAvaliacao.getDetalhes())
+                .append(", peso=").append(peso)
+                .append(", nota=").append(nota)
+                .append(", dataMarcada=").append(dataMarcada)
+                .append('}');
         return sb.toString();
     }
 

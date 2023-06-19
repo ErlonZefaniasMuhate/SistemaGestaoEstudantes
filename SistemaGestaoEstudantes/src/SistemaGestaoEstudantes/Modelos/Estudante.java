@@ -4,6 +4,7 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.RegimeDeEstudo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,12 +17,12 @@ public final class Estudante extends User{
     
     private byte nivel;
     private Curso curso;
-    private String regime;
+    private RegimeDeEstudo regime;
     private boolean bolsista;
     private List<Disciplina> disciplinasInscritas;
     private List<Disciplina> disciplinasConcluidas;
 
-    public Estudante(Curso curso, String regime, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Estudante(Curso curso, RegimeDeEstudo regime, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.curso = curso;
         this.regime = regime;
@@ -47,11 +48,11 @@ public final class Estudante extends User{
         this.curso = curso;
     }
 
-    public final String getRegime() {
+    public final RegimeDeEstudo getRegime() {
         return regime;
     }
 
-    public final void setRegime(String regime) {
+    public final void setRegime(RegimeDeEstudo regime) {
         this.regime = regime;
     }
 
@@ -82,11 +83,12 @@ public final class Estudante extends User{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Estudante{\n");
+        sb.append("Detalhes do Adminstrador\n\n");
         sb.append(super.toString()).append("\n");
         sb.append("Nível: ").append(nivel).append("\n");
         sb.append("Curso: ").append(curso).append("\n");
-        sb.append("Regime: ").append(regime).append("\n");
+        sb.append("Regime: ").append(regime.getDescricao()).append("\n");
+        sb.append(regime.getDetalhes()).append("\n");
         sb.append("Bolsista: ").append(bolsista).append("\n");
         sb.append("Disciplinas Inscritas: \n");
         for (var disciplina : disciplinasInscritas) {
@@ -95,8 +97,7 @@ public final class Estudante extends User{
         sb.append("Disciplinas Concluídas: \n");
         for (var disciplina : disciplinasConcluidas) {
             sb.append("\t").append(disciplina).append("\n");
-        }
-        sb.append("}");
+        };
         return sb.toString();
     }
 

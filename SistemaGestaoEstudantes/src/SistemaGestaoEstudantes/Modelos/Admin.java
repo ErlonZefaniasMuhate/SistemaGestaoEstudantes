@@ -4,6 +4,7 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.NiveisDeAcesso;
 import java.time.LocalDate;
 
 /**
@@ -12,29 +13,30 @@ import java.time.LocalDate;
  */
 public final class Admin extends User {
 
-    private String nivelPermissao;
+    private NiveisDeAcesso nivelPermissao;
 
-    public Admin(String nivelPermissao, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Admin(NiveisDeAcesso nivelPermissao, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.nivelPermissao = nivelPermissao;
     }
 
-    public  final String getNivelPermissao() {
+    public  final NiveisDeAcesso getNivelPermissao() {
         return nivelPermissao;
     }
 
-    public  final void setNivelPermissao(String nivelPermissao) {
+    public  final void setNivelPermissao(NiveisDeAcesso nivelPermissao) {
         this.nivelPermissao = nivelPermissao;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Admin{")
+        sb.append("Detalhes do Adminstrador\n\n")
                 .append(super.toString())
-                .append(", Nível de Permissão: ")
-                .append(nivelPermissao)
-                .append('}');
+                .append("Nível de Permissão: ")
+                .append(nivelPermissao.getDescricao())
+                .append("Detalhes: ")
+                .append(nivelPermissao.getDetalhes());
         return sb.toString();
     }
 }
