@@ -5,6 +5,8 @@
 package SistemaGestaoEstudantes.Utilitarios;
 
 import SistemaGestaoEstudantes.Modelos.*;
+import SistemaGestaoEstudantes.Utilitarios.Constants.NiveisDeAcesso;
+import SistemaGestaoEstudantes.Utilitarios.Constants.RegimeDeEstudo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,7 +32,8 @@ public abstract class CRUD {
      */
     @SuppressWarnings("CallToPrintStackTrace, Local variable hides a field")
     public static final void registarEstudante(Admin actor) {
-        String nome, regimeEstudo, numeroBI, telefone, NUIT;
+        String nome, numeroBI, telefone, NUIT;
+        RegimeDeEstudo regimeEstudo;
         Curso cursoPretendido;
         
             nome = registarNome();
@@ -42,19 +45,19 @@ public abstract class CRUD {
             cursoPretendido = escolherCurso();
 
             Estudante novo = new Estudante(cursoPretendido, regimeEstudo, nome, nascimento, numeroBI, Integer.parseInt(NUIT), telefone);
-            novo.setSenha(Generator.gerarString(6));
             novo.setCodigoInstituicional(Generator.gerarCodigoInstitucional(Estudante.class.getSimpleName()));
             List<String> nomeApelido = new ArrayList(Arrays.asList(nome.split(" ")));
             novo.setEmailInstitucional(new Email(nomeApelido.get(1), nomeApelido.get(2)));
-
+            
             darBoasVindas(novo);
             
-            new DataManager<Estudante, Estudante>() {
+            new UserDataManager<Estudante>() {
                 {
                     saveUserToFile(novo, Estudante.class.getSimpleName());
+                    saveLoginInfo(novo.getCodigoInstituicional(), novo.getSenha(), Estudante.class.getSimpleName());
                 }
             };
-            actor.realizarActividade("Cadastrou o estudante: "+novo.getNome()+" ");
+            actor.realizarActividade("Cadastrou o estudante: " + novo.getNome() + " ");
     }
 
     public static final void atualizarEstudante() {
@@ -78,7 +81,8 @@ public abstract class CRUD {
     }
 
     public static final void registarAdmin(User actor) {
-        String nivelPermissao, nome, numeroBI, NUIT, telefone;
+        String nome, numeroBI, NUIT, telefone;
+        NiveisDeAcesso nivelPermissao;
         LocalDate dataNascimento;
 
         nome = registarNome();
@@ -96,9 +100,10 @@ public abstract class CRUD {
 
         darBoasVindas(novo);
 
-        new DataManager<Admin, Estudante>() {
+        new UserDataManager<Admin>() {
             {
                 saveUserToFile(novo, Admin.class.getSimpleName());
+                saveLoginInfo(novo.getCodigoInstituicional(), novo.getSenha(), "Admin");
             }
         };
         actor.realizarActividade("Cadastrou o administrador: " + novo.getNome() + " ");
@@ -172,7 +177,8 @@ public abstract class CRUD {
         //codigo por implementar
     }
     public static final void primeiroAdmin() {
-        String nivelPermissao, nome, numeroBI, NUIT, telefone;
+        String nome, numeroBI, NUIT, telefone;
+        NiveisDeAcesso nivelPermissao;
         LocalDate dataNascimento;
         //inicialiazando as variaveis
         nome = registarNome();
@@ -183,14 +189,13 @@ public abstract class CRUD {
         nivelPermissao = definirNivelAcesso();
         //instanciando o objecto
         var novo = new Admin(nivelPermissao, nome, dataNascimento, numeroBI, Integer.parseInt(NUIT), telefone);
-        novo.setSenha(Generator.gerarString(6));
         novo.setCodigoInstituicional(Generator.gerarCodigoInstitucional("Admin"));
         List<String> nomeApelido = new ArrayList(Arrays.asList(nome.split(" ")));
         novo.setEmailInstitucional(new Email(nomeApelido.get(1), nomeApelido.get(2)));
         //saudando
         darBoasVindas(novo);
         //salvando a instancia
-        new DataManager<Admin, Estudante>() {
+        new UserDataManager<Admin>() {
             {
                 saveUserToFile(novo, "Admin");
                 saveLoginInfo(novo.getCodigoInstituicional(), novo.getSenha(), "Admin");
@@ -312,9 +317,9 @@ public abstract class CRUD {
         }
         return telefone;
     }
-    private static String definirNivelAcesso() {
+    private static NiveisDeAcesso definirNivelAcesso() {
         try {
-            String nivelPermissao;
+            NiveisDeAcesso nivelPermissao;
             System.out.println("""
 
                 Selecione o nivel de permissao para o novo administrador.
@@ -343,13 +348,13 @@ public abstract class CRUD {
 
             switch (answer) {
                 case 1 ->
-                    nivelPermissao = Validate.Constantes.SUPER_ADMIN.name();
+                    nivelPermissao = Constants.NiveisDeAcesso.SUPER_ADMIN;
                 case 2 ->
-                    nivelPermissao = Validate.Constantes.DEPARTAMENTO.name();
+                    nivelPermissao = Constants.NiveisDeAcesso.DEPARTAMENTO;
                 case 3 ->
-                    nivelPermissao = Validate.Constantes.CURSO.name();
+                    nivelPermissao = Constants.NiveisDeAcesso.CURSO;
                 case 4 ->
-                    nivelPermissao = Validate.Constantes.TURMA.name();
+                    nivelPermissao = Constants.NiveisDeAcesso.TURMA;
             }
             
             return nivelPermissao;
@@ -364,31 +369,31 @@ public abstract class CRUD {
         System.out.println("---------------------------------");
         System.out.println("Guarde as informacoes, use as credenciais fornecidas para poder aceder ao sistema.");
     }
-    private static String definirRegime(){         
-        String regimeEstudo = null;
+    private static RegimeDeEstudo definirRegime(){         
+        RegimeDeEstudo regimeEstudo = null;
 
         try {
-                        System.out.println("/nEscolha o regime");
-            System.out.println("1. " + Validate.Constantes.DIURNO);
-            System.out.println("2. " + Validate.Constantes.NOCTURNO);
-            System.out.println("3. " + Validate.Constantes.A_DISTANCIA);
-            regimeEstudo = x.readLine();
+            System.out.println("/nEscolha o regime");
+            System.out.println("1. " + Constants.RegimeDeEstudo.DIURNO);
+            System.out.println("2. " + Constants.RegimeDeEstudo.NOCTURNO);
+            System.out.println("3. " + Constants.RegimeDeEstudo.A_DISTANCIA);
+            int opcao = Integer.parseInt(x.readLine());
 
-            while (!Validate.isValidOption(1, 3, Integer.parseInt(regimeEstudo))) {
+            while(!Validate.isValidOption(1, 3, opcao)) {
                 System.out.println("/nTente novamente.");
                 System.out.println("Escolha o regime");
-                System.out.println("1. " + Validate.Constantes.DIURNO);
-                System.out.println("2. " + Validate.Constantes.NOCTURNO);
-                System.out.println("3. " + Validate.Constantes.A_DISTANCIA);
-                regimeEstudo = x.readLine();
+                System.out.println("1. " + Constants.RegimeDeEstudo.DIURNO);
+                System.out.println("2. " + Constants.RegimeDeEstudo.NOCTURNO);
+                System.out.println("3. " + Constants.RegimeDeEstudo.A_DISTANCIA);
+                opcao = Integer.parseInt(x.readLine());
             }
-            switch (regimeEstudo) {
-                case "1" ->
-                    regimeEstudo = Validate.Constantes.DIURNO.name();
-                case "2" ->
-                    regimeEstudo = Validate.Constantes.NOCTURNO.name();
-                case "3" ->
-                    regimeEstudo = Validate.Constantes.A_DISTANCIA.name();
+            switch (opcao) {
+                case 1 ->
+                    regimeEstudo = Constants.RegimeDeEstudo.DIURNO;
+                case 2 ->
+                    regimeEstudo = Constants.RegimeDeEstudo.NOCTURNO;
+                case 3 ->
+                    regimeEstudo = Constants.RegimeDeEstudo.A_DISTANCIA;
             }
         } catch(IOException e){}
         
@@ -398,7 +403,7 @@ public abstract class CRUD {
         try {
             
             String nomeCurso;
-            var cursosExistentes = (List<Curso>) new DataManager<Estudante, Curso>() {
+            var cursosExistentes = new EntityDataManager<Curso>() {
             }.loadEntitiesFromFile("Curso.ser");
 
             Collections.sort(cursosExistentes, Comparator.comparing(Curso::getNome));
