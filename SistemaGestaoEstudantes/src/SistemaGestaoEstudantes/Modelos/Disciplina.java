@@ -4,10 +4,11 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.EstadoDaDisciplina;
 import java.util.List;
 
 /**
- *
+ * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
 public class Disciplina {
@@ -17,12 +18,13 @@ public class Disciplina {
     private String descricao;
     private String tipo;
     private List<Avaliacao> avaliacoes;
+    private EstadoDaDisciplina status;
 
     public Disciplina(String nome, String tipo) {
         this.nome = nome;
         this.tipo = tipo;
     }
-
+    
     public String getNome() {
         return nome;
     }
@@ -55,6 +57,27 @@ public class Disciplina {
         this.tipo = tipo;
     }
 
+    public EstadoDaDisciplina getStatus() {
+        return status;
+    }
+
+    public void setStatus(EstadoDaDisciplina status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(nome.toUpperCase()).append(" {\n");
+        sb.append("\tCódigo: ").append(codigo).append("\n");
+        sb.append("\tDescrição: ").append(descricao).append("\n");
+        sb.append("\tTipo: ").append(tipo).append("\n");
+        sb.append("\tAvaliações: ").append(avaliacoes).append("\n");
+        sb.append("\tStatus: ").append(status).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
     public List<Avaliacao> getAvaliacoes() {
         return avaliacoes;
     }
@@ -62,18 +85,5 @@ public class Disciplina {
     public void setAvaliacoes(List<Avaliacao> avaliacoes) {
         this.avaliacoes = avaliacoes;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Disciplina{");
-        sb.append("nome=").append(nome);
-        sb.append(", codigo=").append(codigo);
-        sb.append(", descricao=").append(descricao);
-        sb.append(", tipo=").append(tipo);
-        sb.append(", avaliacoes=").append(avaliacoes);
-        sb.append('}');
-        return sb.toString();
-    }
- 
+    
 }

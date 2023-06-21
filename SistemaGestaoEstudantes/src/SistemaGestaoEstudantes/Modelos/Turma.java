@@ -4,15 +4,18 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.RegimeDeEstudo;
+import java.time.Year;
 import java.util.List;
+
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
 public class Turma {
-    
+
     private String nomeTurma; //Turma_De_DISCIPLINA_do_ANO_REGIME
-    private String regime;
+    private RegimeDeEstudo regime;
     private Disciplina disciplina;
     private Curso curso;
     private List<Estudante> estudantes;
@@ -22,7 +25,28 @@ public class Turma {
     public Turma(Disciplina disciplina, Curso curso) {
         this.disciplina = disciplina;
         this.curso = curso;
-        
+        StringBuilder sb = new StringBuilder();
+        nomeTurma = sb.append("Turma de ")
+            .append(disciplina.getNome())
+            .append(" do ano ")
+            .append(String.valueOf(Year.now().getValue())).append(" ")
+            .append(regime.getDescricao()).toString();
+    }
+
+    public String getNomeTurma() {
+        return nomeTurma;
+    }
+
+    public void setNomeTurma(String nomeTurma) {
+        this.nomeTurma = nomeTurma;
+    }
+
+    public RegimeDeEstudo getRegime() {
+        return regime;
+    }
+
+    public void setRegime(RegimeDeEstudo regime) {
+        this.regime = regime;
     }
 
     public Disciplina getDisciplina() {
@@ -69,7 +93,9 @@ public class Turma {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Turma{");
-        sb.append("disciplina=").append(disciplina);
+        sb.append("nomeTurma=").append(nomeTurma);
+        sb.append(", regime=").append(regime);
+        sb.append(", disciplina=").append(disciplina);
         sb.append(", curso=").append(curso);
         sb.append(", estudantes=").append(estudantes);
         sb.append(", docentes=").append(docentes);

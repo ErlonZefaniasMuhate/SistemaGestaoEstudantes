@@ -4,6 +4,7 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.TipoDeAvaliacao;
 import java.time.LocalDateTime;
 
 /**
@@ -11,18 +12,21 @@ import java.time.LocalDateTime;
  * @author Leuso Nguenha
  */
 public class Avaliacao {
-    
+
     private String nome;
-    private String tipoAvaliacao;
+    private Disciplina disciplina;
+    private Docente docente;
+    private TipoDeAvaliacao tipoAvaliacao;
     private double peso;
     private double nota;
     private LocalDateTime dataMarcada;
-   
 
-    public Avaliacao(String nome, double peso, LocalDateTime dataMarcada) {
-        this.nome = nome;
+    public Avaliacao(double peso, LocalDateTime dataMarcada, TipoDeAvaliacao tipoAvaliacao) {
+        this.nome = tipoAvaliacao.getDescricao();
         this.peso = peso;
         this.dataMarcada = dataMarcada;
+        this.tipoAvaliacao = tipoAvaliacao;
+        this.nota = -1;
     }
 
     public String getNome() {
@@ -33,11 +37,11 @@ public class Avaliacao {
         this.nome = nome;
     }
 
-    public String getTipoAvaliacao() {
+    public TipoDeAvaliacao getTipoAvaliacao() {
         return tipoAvaliacao;
     }
 
-    public void setTipoAvaliacao(String tipoAvaliacao) {
+    public void setTipoAvaliacao(TipoDeAvaliacao tipoAvaliacao) {
         this.tipoAvaliacao = tipoAvaliacao;
     }
 
@@ -50,7 +54,7 @@ public class Avaliacao {
     }
 
     public double getNota() {
-        return nota;
+        return nota = (dataMarcada.isBefore(LocalDateTime.now())) ? -1 : nota;
     }
 
     public void setNota(double nota) {
@@ -68,14 +72,33 @@ public class Avaliacao {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Avaliacao{");
-        sb.append("nome=").append(nome);
-        sb.append(", tipoAvaliacao=").append(tipoAvaliacao);
-        sb.append(", peso=").append(peso);
-        sb.append(", nota=").append(nota);
-        sb.append(", dataMarcada=").append(dataMarcada);
-        sb.append('}');
+        sb.append("Avaliacao{\n");
+        sb.append("\tNome: ").append(nome).append("\n");
+        sb.append("\tDisciplina: ").append(disciplina).append("\n");
+        sb.append("\tDocente: ").append(docente.getNome()).append("\n");
+        sb.append("\tTipo de Avaliação: ").append(tipoAvaliacao).append("\n");
+        sb.append("\tPeso: ").append(peso).append("\n");
+        sb.append("\tNota: ").append(nota).append("\n");
+        sb.append("\tData Marcada: ").append(dataMarcada).append("\n");
+        sb.append("}");
         return sb.toString();
     }
+
+    public Disciplina getDisciplina() {
+        return disciplina;
+    }
+
+    public void setDisciplina(Disciplina disciplina) {
+        this.disciplina = disciplina;
+    }
+
+    public Docente getDocente() {
+        return docente;
+    }
+
+    public void setDocente(Docente docente) {
+        this.docente = docente;
+    }
+
 
 }

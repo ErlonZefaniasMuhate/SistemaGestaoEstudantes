@@ -4,16 +4,15 @@
  */
 package SistemaGestaoEstudantes.Utilitarios;
 
-import java.time.Year;
 import java.util.Random;
-import SistemaGestaoEstudantes.Modelos.User;
+import java.time.LocalDate;
 
 /**
  * Classe utilitária para gerar valores aleatórios e códigos institucionais.
  * 
  * @author Erlon Z. Muhate
  */
-public class Generator {
+public abstract class Generator {
 
     private static final String[] NOMES = {"Ana Maria Sousa", "Pedro Jose Mateus", "Mariana Carlos Almeida", "João Alberto Jonas", "Juliana de Sousa", "Lucas Daniel Matsinhe", "Camila Juliao Mangue",
         "Marcelo Rebelo Sousa", "Amanda Rafael Novela", "Rafael Armindo Mindo", "Gabriela Jose Carlos", "Felipe Ricardo Gomes", "Carla Franciso Gomes", "Ricardo Jose Pinho", "Renata Humberto Manguezy",
@@ -25,17 +24,18 @@ public class Generator {
     * @param size o tamanho da String a ser gerada
     * @return a String aleatória gerada
     */
-    public static String gerarString(int size) {// defines the method that generates a random String with 'size' of lenght
-        String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";//determines the universe of allowed characters to use
-        String aleatoria = null;
+    public static String gerarString(int size) {
+        String alphaNumericString = "c2RNOPfh6jL3mAHeo5vQwZtpbYXVKW8GqzxgfTClSB1DnJIU94u0Ey7skrdaixvF";
+        StringBuilder aleatoria = new StringBuilder();
 
         for (int i = 0; i < size; i++) {
-            int s = (int) (Math.random() * alphaNumericString.length());
-            aleatoria += alphaNumericString.charAt(s);
+            int randomIndex = (int) (Math.random() * alphaNumericString.length());
+            aleatoria.append(alphaNumericString.charAt(randomIndex));
         }
-        return aleatoria;
+
+        return aleatoria.toString();
     }
-    
+
     /**
      * Gera uma String aleatória contendo letras minúsculas e dígitos.
      *
@@ -43,7 +43,7 @@ public class Generator {
      * @return a String aleatória gerada
      */
     public static String gerarStringNumerosMinusculas(int size) {
-        String alphaNumericString = "abcdefghijklmnopqrstuvwxyz0123456789";//determines the universe of allowed characters to use
+        String alphaNumericString = "wh3s6vp2q4a0e7it1cdygjlnrfxz5u8o9bkvm";//determines the universe of allowed characters to use
         String aleatoria = null;
 
         for (int i = 0; i < size; i++) {
@@ -54,36 +54,41 @@ public class Generator {
     }
     
     /**
-     * Gera um número inteiro aleatório com um determinado tamanho.
+     * Generates a random integer with a specified size.
      *
-     * @param size o tamanho do número inteiro a ser gerado
-     * @return o número inteiro gerado
+     * @param size the size of the generated integer
+     * @return the generated random integer
      */
     public static int gerarNumeroAleatorio(int size) {
-        String alphaNumericString = "0123456789";//determines the universe of allowed characters to use
-        String aleatoria = null;
+        String alphaNumericString = "7693450128";
+        StringBuilder aleatoria = new StringBuilder();
 
+        Random random = new Random();
         for (int i = 0; i < size; i++) {
-            int s = (int) (Math.random() * alphaNumericString.length());
-            aleatoria += alphaNumericString.charAt(s);
+            int randomIndex = random.nextInt(alphaNumericString.length());
+            aleatoria.append(alphaNumericString.charAt(randomIndex));
         }
-        return Integer.parseInt(aleatoria);
+        return Integer.parseInt(aleatoria.toString());
     }
-    
+
     /**
-     * Gera um código institucional com base no ano atual e verifica se está associado a um usuário existente.
+     * Generates an institutional code based on the current year and checks if it is associated with an existing user.
      *
-     * @param userType o tipo de usuário para verificar a associação do código institucional
-     * @return o código institucional gerado, ou null se o código já estiver associado a um usuário existente
+     * @param userType the user type to check the association of the institutional code
+     * @return the generated institutional code, or null if the code is already associated with an existing user
      */
     public static Integer gerarCodigoInstitucional(String userType) {
-        int anoAtual = Year.now().getValue();
+        
         int numeroInteiro = gerarNumeroAleatorio(4);
 
-        String codigoInstituicional = String.valueOf(anoAtual) + String.valueOf(numeroInteiro);
-        User user = new SystemUtils() {}
-            .findUserByCode(Integer.parseInt(codigoInstituicional), userType);
-        return user == null ? Integer.parseInt(codigoInstituicional) : null;
+        String codigoInstitucional = String.valueOf(LocalDate.now().getYear()) + String.valueOf(numeroInteiro);
+        /*        try {
+        User user = new DataManager(){}.findUserByCode(Integer.parseInt(codigoInstitucional), userType);
+        return user == null ? Integer.parseInt(codigoInstitucional) : null;
+        }catch(NoSuchElementException e){
+        return Integer.parseInt(codigoInstitucional);
+        }*/
+        return Integer.parseInt(codigoInstitucional);
     }
     
     /**

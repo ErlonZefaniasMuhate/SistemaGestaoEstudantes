@@ -1,9 +1,8 @@
 package SistemaGestaoEstudantes.Utilitarios;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 
 /**
@@ -12,102 +11,8 @@ import java.util.Arrays;
  */
 public abstract class Validate {
 
-    /**
-     * Enumeração que representa as constantes do sistema.
-     * <p>
-     * As constantes são usadas para representar diferentes tipos de avaliação,
-     * docentes, disciplinas, regimes de estudo e níveis de acesso de
-     * administradores.
-     */
-    public enum Constantes {
-        /**
-         * Representa um tipo de avaliação de teste.
-         */
-        TESTE,
-        /**
-         * Representa um tipo de avaliação para trabalho em casa.
-         */
-        TRABALHO_CASA,
-        /**
-         * Representa um tipo de avaliação de exame normal.
-         */
-        EXAME_NORMAL,
-        /**
-         * Representa um tipo de avaliação de exame de recorrência.
-         */
-        EXAME_RECORRENCIA,
-        /**
-         * Representa um tipo de docente regente.
-         */
-        REGENTE,
-        /**
-         * Representa um tipo de docente assistente.
-         */
-        ASSISTENTE,
-        /**
-         * Representa uma disciplina nuclear.
-         *
-         * As disciplinas nucleares de um curso são aquelas fundamentais e
-         * obrigatórias para a formação acadêmica e profissional na área
-         * específica do curso.
-         */
-        NUCLEAR,
-        /**
-         * Representa uma disciplina livre. 
-         * 
-         * Disciplinas opcionais para o aluno, cuja certificação não depende delas.
-         */
-        LIVRE,
-        /**
-         * Representa uma disciplina complementar.  
-         * 
-         * Disciplinas complementares
-         * são disciplinas obrigatórias que abrangem áreas distintas do curso
-         * principal, proporcionando aos estudantes conhecimentos adicionais e
-         * aprofundamento em temas complementares ao campo de estudo principal.
-         */
-        COMPLEMENTAR,
-        /**
-         * Representa um regime de estudo noturno.          *
-         */
-        NOCTURNO,
-        /**
-         * Representa um regime de estudo diurno.
-         */
-        DIURNO,
-        /**
-         * Representa um regime de estudo a distância.
-         */
-        A_DISTANCIA,
-        /**
-         * Representa um nível de acesso de super administrador. 
-         * 
-         * Administradores com este nível de acesso terão acesso completo ao sistema.
-         */
-        SUPER_ADMIN,
-        /**
-         * Representa um nível de acesso de departamento. 
-         * 
-         * Os administradores com este nível de acesso poderão fazer alterações 
-         * ao nível do departamento que lhes foi designado.
-         */
-        DEPARTAMENTO,
-        /**
-         * Representa um nível de acesso de curso. 
-         * 
-         * Os administradores com este nível de acesso só poderão fazer alterações 
-         * a nível do curso que lhes foi designado.
-         */
-        CURSO,
-        /**
-         * Representa um nível de acesso de turma. 
-         * 
-         * Os administradores com este nível de acesso só poderão fazer alterações
-         * ao nível da turma que lhes foi designada.
-         */
-        TURMA
-    }
     
+
     /**
     * Valida um número de telefone, removendo espaços em branco e traços e verificando se está no formato correto.
     *
@@ -151,7 +56,7 @@ public abstract class Validate {
         }
 
         // verificar se o nome tem pelo menos duas partes (ex: "Maria Silva")
-        if (!nome.contains(" ")) {
+        if ((!nome.contains(" "))||(nome.split(" ").length<3)) {
             return false;
         }
 
@@ -237,42 +142,27 @@ public abstract class Validate {
     }
 
     /**
-    * Verifica se uma string representa uma data válida no formato "ddMMyyyy".
-    *
-    * @param date A string a ser verificada.
-    * @return true se a string representa uma data válida, false caso contrário.
-    */
-    public static boolean isDate(String date) {
-        if (date == null || date.length() != 8) {
-            return false;
-        }
-
-        final int MIN_DAY = 1;
-        final int MAX_DAY = 31;
-        final int MIN_MONTH = 1;
-        final int MAX_MONTH = 12;
-        final int MAX_YEAR_DIFF = 100;
-
+     * Verifica se uma string representa uma data válida no formato "ddmmyyyy".
+     *
+     * @param dateString a string a ser validada
+     * @return true se a string representa uma data válida, caso contrário, false
+     */
+    @Deprecated
+    public static boolean isDate(String dateString) {
         try {
-            int day = Integer.parseInt(date.substring(0, 2));
-            int month = Integer.parseInt(date.substring(2, 4));
-            int year = Integer.parseInt(date.substring(4));
-
-            if (day < MIN_DAY || day > MAX_DAY || month < MIN_MONTH || month > MAX_MONTH) {
-                return false;
-            }
-
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("ddMMuuuu");
-            LocalDate parsedDate = LocalDate.parse(date, dateFormatter);
-
-            LocalDate currentDate = LocalDate.now();
-            long yearDiff = ChronoUnit.YEARS.between(parsedDate, currentDate);
-
-            return yearDiff < MAX_YEAR_DIFF;
-        } catch (NumberFormatException | DateTimeParseException e) {
+            LocalDate date = LocalDate.parse(dateString, dateFormatter);
+            
+            // Verifica se a data é válida
+            return date.getDayOfMonth() == Integer.parseInt(dateString.substring(0, 2))
+                    && date.getMonthValue() == Integer.parseInt(dateString.substring(2, 4))
+                    && date.getYear() == Integer.parseInt(dateString.substring(4, 8));
+            
+        } catch (DateTimeException | NumberFormatException e) {
             return false;
         }
     }
+
 
     
     /**

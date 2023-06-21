@@ -4,7 +4,9 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.RegimeDeEstudo;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,97 +17,88 @@ public final class Estudante extends User{
     
     private byte nivel;
     private Curso curso;
-    private String regime;
+    private RegimeDeEstudo regime;
     private boolean bolsista;
-    private List<Historico> historico;
     private List<Disciplina> disciplinasInscritas;
     private List<Disciplina> disciplinasConcluidas;
 
-    public Estudante(Curso curso, String regime, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Estudante(Curso curso, RegimeDeEstudo regime, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.curso = curso;
         this.regime = regime;
         this.bolsista = false;
+        this.nivel = 1;
+        this.disciplinasInscritas = new ArrayList<>();
+        this.disciplinasConcluidas = new ArrayList<>();
     }
 
-    public List<Historico> getHistorico() {
-        return historico;
-    }
-
-    public void setHistorico(List<Historico> historico) {
-        this.historico = historico;
-    }
-
-    public byte getNivel() {
+    public final byte getNivel() {
         return nivel;
     }
 
-    public void setNivel(byte nivel) {
+    public final void setNivel(byte nivel) {
         this.nivel = nivel;
     }
 
-    public Curso getCurso() {
+    public final Curso getCurso() {
         return curso;
     }
 
-    public void setCurso(Curso curso) {
+    public final void setCurso(Curso curso) {
         this.curso = curso;
     }
 
-    public String getRegime() {
+    public final RegimeDeEstudo getRegime() {
         return regime;
     }
 
-    public void setRegime(String regime) {
+    public final void setRegime(RegimeDeEstudo regime) {
         this.regime = regime;
     }
 
-    public boolean isBolsista() {
+    public final boolean isBolsista() {
         return bolsista;
     }
 
-    public void setBolsista(boolean bolsista) {
+    public final void setBolsista(boolean bolsista) {
         this.bolsista = bolsista;
     }
 
-    public List<Disciplina> getDisciplinasInscritas() {
+    public final List<Disciplina> getDisciplinasInscritas() {
         return disciplinasInscritas;
     }
 
-    public void setDisciplinasInscritas(List<Disciplina> disciplinasInscritas) {
+    public final void setDisciplinasInscritas(List<Disciplina> disciplinasInscritas) {
         this.disciplinasInscritas = disciplinasInscritas;
     }
 
-    public List<Disciplina> getDisciplinasConcluidas() {
+    public final List<Disciplina> getDisciplinasConcluidas() {
         return disciplinasConcluidas;
     }
 
-    public void setDisciplinasConcluidas(List<Disciplina> disciplinasConcluidas) {
+    public final void setDisciplinasConcluidas(List<Disciplina> disciplinasConcluidas) {
         this.disciplinasConcluidas = disciplinasConcluidas;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Estudante{");
-        sb.append("nivel: ").append(nivel);
-        sb.append(", curso: ").append(curso);
-        sb.append(", regime: ").append(regime);
-        sb.append(", bolsista: ").append(bolsista);
-        sb.append(", disciplinasInscritas: ");
-        for (var temp : this.disciplinasInscritas){
-            sb.append(disciplinasInscritas);
+        sb.append("Detalhes do Adminstrador\n\n");
+        sb.append(super.toString()).append("\n");
+        sb.append("Nível: ").append(nivel).append("\n");
+        sb.append("Curso: ").append(curso).append("\n");
+        sb.append("Regime: ").append(regime.getDescricao()).append("\n");
+        sb.append(regime.getDetalhes()).append("\n");
+        sb.append("Bolsista: ").append(bolsista).append("\n");
+        sb.append("Disciplinas Inscritas: \n");
+        for (var disciplina : disciplinasInscritas) {
+            sb.append("\t").append(disciplina).append("\n");
         }
-        for (var temp : this.disciplinasConcluidas){
-            sb.append(disciplinasConcluidas);
-        }
-        sb.append('}');
+        sb.append("Disciplinas Concluídas: \n");
+        for (var disciplina : disciplinasConcluidas) {
+            sb.append("\t").append(disciplina).append("\n");
+        };
         return sb.toString();
     }
 
-    @Override
-    public void realizarActividade(String acao) {
-        this.historico.add(new Historico(acao, this));
-    }
-    
 }

@@ -4,21 +4,22 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class Curso {
-    
+public class Curso implements Serializable {
+
     private String nome;
     //Disciplinas obrigatórias: devem ser cursadas pelo estudante para completar o programa de estudos.
-    private List<Disciplina> disciplinasObrigotorias;
+    private List<Disciplina> disciplinasObrigatorias;
     //Disciplinas optativas com restrição: o estudante deve escolher uma dentre um conjunto de disciplinas pré-determinadas.
     private List<Disciplina> disciplinasOpcionais;
     //Disciplinas optativas livres: o estudante pode escolher livremente se quer cursá-las ou não. A certificação não depende delas.
-    private List <Disciplina> disciplinasLivres;
+    private List<Disciplina> disciplinasLivres;
 
     public Curso(String nome) {
         this.nome = nome;
@@ -32,12 +33,12 @@ public class Curso {
         this.nome = nome;
     }
 
-    public List<Disciplina> getDisciplinasObrigotorias() {
-        return disciplinasObrigotorias;
+    public List<Disciplina> getDisciplinasObrigatorias() {
+        return disciplinasObrigatorias;
     }
 
-    public void setDisciplinasObrigotorias(List<Disciplina> disciplinasObrigotorias) {
-        this.disciplinasObrigotorias = disciplinasObrigotorias;
+    public void setDisciplinasObrigatorias(List<Disciplina> disciplinasObrigatorias) {
+        this.disciplinasObrigatorias = disciplinasObrigatorias;
     }
 
     public List<Disciplina> getDisciplinasOpcionais() {
@@ -56,14 +57,47 @@ public class Curso {
         this.disciplinasLivres = disciplinasLivres;
     }
 
+    public void listarDisciplinasObrigatorias() {
+        var subjects = getDisciplinasObrigatorias();
+        if (subjects == null) {
+            System.out.println("Nenhuma informacao disponivel.");
+        } else {
+            for (var subjectToPrint : subjects) {
+                System.out.println(subjectToPrint.toString());
+            }
+        }
+    }
+
+    public void listarDisciplinasOpcionais() {
+        var subjects = getDisciplinasOpcionais();
+        if (subjects == null) {
+            System.out.println("Nenhuma informacao disponivel");
+        } else {
+            for (var subjectToPrint : subjects) {
+                System.out.println(subjectToPrint.toString());
+            }
+        }
+    }
+
+    public void listarDisciplinasLivres() {
+        var subjects = getDisciplinasLivres();
+        if (subjects == null) {
+            System.out.println("Nenhuma informacao disponivel.");
+        } else {
+            for (var subjectToPrint : subjects) {
+                System.out.println(subjectToPrint.toString());
+            }
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Curso{");
         sb.append("nome=").append(nome);
-        sb.append(", disciplinasObrigotorias=").append(disciplinasObrigotorias);
-        sb.append(", disciplinasOpcionais=").append(disciplinasOpcionais);
-        sb.append(", disciplinasLivres=").append(disciplinasLivres);
+        sb.append(", disciplinasObrigotorias=").append(disciplinasObrigatorias.size());
+        sb.append(", disciplinasOpcionais=").append(disciplinasOpcionais.size());
+        sb.append(", disciplinasLivres=").append(disciplinasLivres.size());
         sb.append('}');
         return sb.toString();
     }

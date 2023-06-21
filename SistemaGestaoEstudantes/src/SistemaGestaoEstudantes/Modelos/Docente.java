@@ -4,6 +4,7 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.TituloDoDocente;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -14,51 +15,40 @@ import java.util.List;
 public final class Docente extends User {
 
     private List<Disciplina> disciplinas;
-    private String titulo;
-    private List<Historico> actividades;
+    private TituloDoDocente titulo;
 
-    public Docente(List<Disciplina> disciplinas, String titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Docente(List<Disciplina> disciplinas, TituloDoDocente titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.disciplinas = disciplinas;
         this.titulo = titulo;
     }
 
-    public List<Disciplina> getDisciplinas() {
+    public final List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
 
-    public List<Historico> getActividades() {
-        return actividades;
-    }
-
-    public void setActividades(List<Historico> actividades) {
-        this.actividades = actividades;
-    }
-
-    public void setDisciplinas(List<Disciplina> disciplinas) {
+    public final void setDisciplinas(List<Disciplina> disciplinas) {
         this.disciplinas = disciplinas;
     }
 
-    public String getTitulo() {
+    public final TituloDoDocente getTitulo() {
         return titulo;
     }
 
-    public void setTitulo(String titulo) {
+    public final void setTitulo(TituloDoDocente titulo) {
         this.titulo = titulo;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Docente{");
-        sb.append("disciplinas=").append(disciplinas);
-        sb.append(", titulo=").append(titulo);
-        sb.append('}');
+        sb.append("Detalhes do Docente\n\n")
+            .append(super.toString());
+        for (var disciplina : disciplinas) {
+            sb.append("\t").append(disciplina).append("\n");
+        }
+        sb.append("Título: ").append(titulo.getDescricao()).append("\n\t")
+                .append(titulo.getDetalhes());
         return sb.toString();
-    }
-
-    @Override
-    public void realizarActividade(String acao) {
-        this.actividades.add(new Historico(acao, this));
     }
 }

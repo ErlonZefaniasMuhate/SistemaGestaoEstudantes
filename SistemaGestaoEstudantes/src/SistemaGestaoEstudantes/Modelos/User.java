@@ -4,29 +4,37 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants;
+import SistemaGestaoEstudantes.Utilitarios.Constants.EstadoUsuario;
 import java.time.LocalDate;
-import SistemaGestaoEstudantes.Utilitarios.Email;
+import SistemaGestaoEstudantes.Utilitarios.Generator;
 import java.io.Serializable;
+import java.time.Year;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public abstract class User implements Serializable{
+public abstract class User implements Serializable {
+
     protected String nome;
     protected LocalDate dataNascimento;
     protected String numeroBI;
     protected int nuit;
-    protected char sexo;
     protected String endereco;
     protected String telefone;
     protected Email emailInstitucional;
-    protected Email emainPessoal;
+    protected Email emailPessoal;
     protected Integer codigoInstituicional;
     protected String anoIngresso;
     protected String senha;
-    protected boolean status;
+    protected EstadoUsuario status;
     protected Departamento departamento;
+    private List<Historico> actividades;
 
     public User(String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         this.nome = nome;
@@ -34,143 +42,151 @@ public abstract class User implements Serializable{
         this.numeroBI = numeroBI;
         this.nuit = nuit;
         this.telefone = telefone;
+        this.senha = Generator.gerarString(6);
+        this.emailPessoal = new Email (Constants.TipoDeEmail.STANDARD_EMAIL.getEmail());
+        this.anoIngresso = String.valueOf(Year.now().getValue());
+        this.status = Constants.EstadoUsuario.ATIVO;
+        this.actividades = new ArrayList<>();
+        this.actividades.add(new Historico("Foi registado no sistema", this));
     }
 
     /**
      * @param acao
      */
-    public abstract void realizarActividade(String acao);
+    public void realizarActividade(String acao){
+        this.actividades.add(new Historico(acao, this));
+    }
 
-    public String getNome() {
+    public final String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public final void setNome(String nome) {
         this.nome = nome;
     }
 
-    public LocalDate getDataNascimento() {
+    public final LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(LocalDate dataNascimento) {
+    public final void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getNumeroBI() {
+    public final String getNumeroBI() {
         return numeroBI;
     }
 
-    public void setNumeroBI(String numeroBI) {
+    public final void setNumeroBI(String numeroBI) {
         this.numeroBI = numeroBI;
     }
 
-    public int getNuit() {
+    public final int getNuit() {
         return nuit;
     }
 
-    public void setNuit(int nuit) {
+    public final void setNuit(int nuit) {
         this.nuit = nuit;
     }
 
-    public char getSexo() {
-        return sexo;
+    public final String getEndereco() {
+        return endereco = (endereco == null) ? "undefined" : endereco;
     }
 
-    public void setSexo(char sexo) {
-        this.sexo = sexo;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
+    public final void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-    public String getTelefone() {
+    public final String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public final void setTelefone(String telefone) {
         this.telefone = telefone;
     }
 
-    public Email getEmailInstitucional() {
+    public final Email getEmailInstitucional() {
         return emailInstitucional;
     }
 
-    public void setEmailInstitucional(Email emailInstitucional) {
+    public final void setEmailInstitucional(Email emailInstitucional) {
         this.emailInstitucional = emailInstitucional;
     }
 
-    public Email getEmainPessoal() {
-        return emainPessoal;
+    public final Email getEmailPessoal() {
+        return emailPessoal;
     }
 
-    public void setEmainPessoal(Email emainPessoal) {
-        this.emainPessoal = emainPessoal;
+    public final void setEmailPessoal(Email emailPessoal) {
+        this.emailPessoal = emailPessoal;
     }
 
-    public Integer getCodigoInstituicional() {
+    public final Integer getCodigoInstituicional() {
         return codigoInstituicional;
     }
 
-    public void setCodigoInstituicional(Integer codigoInstituicional) {
+    public final void setCodigoInstituicional(Integer codigoInstituicional) {
         this.codigoInstituicional = codigoInstituicional;
     }
 
-    public String getAnoIngresso() {
+    public final String getAnoIngresso() {
         return anoIngresso;
     }
 
-    public void setAnoIngresso(String anoIngresso) {
+    public final void setAnoIngresso(String anoIngresso) {
         this.anoIngresso = anoIngresso;
     }
 
-    public String getSenha() {
+    public final String getSenha() {
         return senha;
     }
 
-    public void setSenha(String senha) {
+    public final void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public boolean isStatus() {
+    public final EstadoUsuario getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public final void setStatus(EstadoUsuario status) {
         this.status = status;
     }
 
-    public Departamento getDepartamento() {
+    public final Departamento getDepartamento() {
         return departamento;
     }
 
-    public void setDepartamento(Departamento departamento) {
+    public final void setDepartamento(Departamento departamento) {
         this.departamento = departamento;
+    }
+
+    public final List<Historico> getActividades() {
+        return actividades;
+    }
+    public final void verHistoricoCompleto() {
+        var historicoCompleto = getActividades();
+        for(var historico : historicoCompleto){
+            System.out.println(historico.toString());
+        }
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("User{");
-        sb.append("nome=").append(nome);
-        sb.append(", dataNascimento=").append(dataNascimento);
-        sb.append(", numeroBI=").append(numeroBI);
-        sb.append(", nuit=").append(nuit);
-        sb.append(", sexo=").append(sexo);
-        sb.append(", endereco=").append(endereco);
-        sb.append(", telefone=").append(telefone);
-        sb.append(", emailInstitucional=").append(emailInstitucional);
-        sb.append(", emainPessoal=").append(emainPessoal);
-        sb.append(", codigoInstituicional=").append(codigoInstituicional);
-        sb.append(", anoIngresso=").append(anoIngresso);
-        sb.append(", senha=").append(senha);
-        sb.append(", status=").append(status);
-        sb.append('}');
+        sb.append("Nome: ").append(nome).append("\n")
+                .append("Data de Nascimento: ").append(dataNascimento.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))).append("\n")
+                .append("Número do BI: ").append(numeroBI).append("\n")
+                .append("Nuit: ").append(nuit).append("\n")
+                .append("Endereço: ").append(getEndereco()).append("\n")
+                .append("Telefone: ").append(telefone).append("\n")
+                .append("Email Institucional: ").append(emailInstitucional.getEmailAddress()).append("\n")
+                .append("Email Pessoal: ").append(emailPessoal.getEmailAddress()).append("\n")
+                .append("Código Institucional: ").append(codigoInstituicional).append("\n")
+                .append("Ano de Ingresso: ").append(anoIngresso).append("\n")
+                .append("Senha: ").append(senha).append("\n")
+                .append("Status: ").append(status).append("\n");
         return sb.toString();
     }
+    
 }
