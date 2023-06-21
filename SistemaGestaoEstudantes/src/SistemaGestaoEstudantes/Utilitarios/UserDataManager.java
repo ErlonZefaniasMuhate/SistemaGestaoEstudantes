@@ -20,6 +20,8 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
     private final String currentProjectPath;
     private final Path filesDirectoryPath;
     private static BufferedReader x = new BufferedReader (new InputStreamReader (System.in));
+    private static String extension = ".ser";
+    public static String userType = null;
 
     /**
      * Construtor da classe SystemUtils. 
@@ -95,13 +97,11 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
     }
 
     private Path getFilePath(String fileName) {
-        Path filePath = filesDirectoryPath.resolve(fileName);
-        return filePath;
+        return filesDirectoryPath.resolve(fileName);
     }
 
     private String getFileName(String userType) {
-        String fileName = userType + ".ser";
-        return fileName;
+        return userType = (userType.contains(extension))? (userType.replaceAll(extension, "").trim() + extension) : (userType + extension);
     }
 
     /**
@@ -175,7 +175,6 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
             if (!welcomeMessagePrinted) {
                 throw new SecurityException("Access denied");
             } else {
-                String userType = getFileName(getUserType(Integer.parseInt(code), password));
                 return findUserByCode(Integer.parseInt(code), userType);
             }
         } catch (IOException e) {
@@ -225,6 +224,7 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
                 if (code.equals(codeCheck) && password.equals(passCheck)) {
                     System.out.println("Welcome!");
                     welcomeMessagePrinted = true;
+                    userType = tokenizer.nextToken();
                     break;
                 }
             }
@@ -232,31 +232,5 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
             throw e;
         }
         return welcomeMessagePrinted;
-    }
-    
-    /**
-    * Obtém o tipo de usuário com base no código institucional e senha fornecidos.
-    *
-    * @param codigoInstitucional o código institucional do usuário
-    * @param password a senha do usuário
-    * @return o tipo de usuário correspondente ao código e senha fornecidos, ou null se não for encontrado
-    */
-    private String getUserType(int codigoInstitucional, String password) {
-        Path filePath = getFilePath("login.txt");
-        try ( BufferedReader reader = new BufferedReader(Files.newBufferedReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split("||"); // Dividir a linha usando o separador "||"
-                int codigo = Integer.parseInt(parts[0]);
-                String senha = parts[1];
-                String tipoUsuario = parts[2];
-                // Encontrou o código e senha correspondentes, retorna o tipo de usuário, senao  retorna null
-                reader.close();
-                return tipoUsuario = (codigo == codigoInstitucional && senha.equals(password)) ? tipoUsuario+".serh" : null;  
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null; // Código e senha não encontrados
     }
 }

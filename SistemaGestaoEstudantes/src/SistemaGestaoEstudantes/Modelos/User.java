@@ -168,7 +168,7 @@ public abstract class User implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Nome: ").append(nome).append("\n")
-                .append("Data de Nascimento: ").append(dataNascimento.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM))).append("\n")
+                .append("Data de Nascimento: ").append(dataNascimento.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG))).append("\n")
                 .append("Número do BI: ").append(numeroBI).append("\n")
                 .append("Nuit: ").append(nuit).append("\n")
                 .append("Endereço: ").append(getEndereco()).append("\n")

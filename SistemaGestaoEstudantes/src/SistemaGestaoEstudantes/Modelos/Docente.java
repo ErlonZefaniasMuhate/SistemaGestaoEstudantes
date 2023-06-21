@@ -4,7 +4,7 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
-import SistemaGestaoEstudantes.Utilitarios.Constants.TipoDeDocente;
+import SistemaGestaoEstudantes.Utilitarios.Constants.TituloDoDocente;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -15,9 +15,9 @@ import java.util.List;
 public final class Docente extends User {
 
     private List<Disciplina> disciplinas;
-    private TipoDeDocente titulo;
+    private TituloDoDocente titulo;
 
-    public Docente(List<Disciplina> disciplinas, TipoDeDocente titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
+    public Docente(List<Disciplina> disciplinas, TituloDoDocente titulo, String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
         super(nome, dataNascimento, numeroBI, nuit, telefone);
         this.disciplinas = disciplinas;
         this.titulo = titulo;
@@ -31,11 +31,11 @@ public final class Docente extends User {
         this.disciplinas = disciplinas;
     }
 
-    public final TipoDeDocente getTitulo() {
+    public final TituloDoDocente getTitulo() {
         return titulo;
     }
 
-    public final void setTitulo(TipoDeDocente titulo) {
+    public final void setTitulo(TituloDoDocente titulo) {
         this.titulo = titulo;
     }
 

@@ -319,47 +319,28 @@ public abstract class CRUD {
     }
     private static NiveisDeAcesso definirNivelAcesso() {
         try {
-            NiveisDeAcesso nivelPermissao;
             System.out.println("""
 
-                Selecione o nivel de permissao para o novo administrador.
-
-                1. Acesso completo ao sistema.
-                2. Acesso nivel do departamento.
-                3. Acesso ao nivel de curso.
-                4. Acesso a nivel de turma.                
+                Selecione o nivel de permissao para o novo administrador.          
                                    
                 """);
+            NiveisDeAcesso.SUPER_ADMIN.printAll();
+            
             int answer = Integer.parseInt(x.readLine());
-            nivelPermissao = null;
+            
             while (!Validate.isValidOption(1, 4, answer)) {
                 System.out.println("""
                        Opcao invalida, tente novamente.            
                        Selecione o nivel de permissao para o novo administrador.
-                       
-                       1. Acesso completo ao sistema.
-                       2. Acesso nivel do departamento.
-                       3. Acesso ao nivel de curso.
-                       4. Acesso a nivel de turma.                
-                                   
+                                                                     
                 """);
+                NiveisDeAcesso.SUPER_ADMIN.printAll();
                 answer = Integer.parseInt(x.readLine());
             }
 
-            switch (answer) {
-                case 1 ->
-                    nivelPermissao = Constants.NiveisDeAcesso.SUPER_ADMIN;
-                case 2 ->
-                    nivelPermissao = Constants.NiveisDeAcesso.DEPARTAMENTO;
-                case 3 ->
-                    nivelPermissao = Constants.NiveisDeAcesso.CURSO;
-                case 4 ->
-                    nivelPermissao = Constants.NiveisDeAcesso.TURMA;
-            }
+            return NiveisDeAcesso.CURSO.getByIndex(answer);
             
-            return nivelPermissao;
-        } catch (IOException e) {
-        }
+        } catch (IOException e) {}
         return null;
     }
     private static void darBoasVindas(User novo){
@@ -370,34 +351,25 @@ public abstract class CRUD {
         System.out.println("Guarde as informacoes, use as credenciais fornecidas para poder aceder ao sistema.");
     }
     private static RegimeDeEstudo definirRegime(){         
-        RegimeDeEstudo regimeEstudo = null;
-
+        
         try {
             System.out.println("/nEscolha o regime");
-            System.out.println("1. " + Constants.RegimeDeEstudo.DIURNO);
-            System.out.println("2. " + Constants.RegimeDeEstudo.NOCTURNO);
-            System.out.println("3. " + Constants.RegimeDeEstudo.A_DISTANCIA);
+            RegimeDeEstudo.A_DISTANCIA.printAll();
+            
             int opcao = Integer.parseInt(x.readLine());
 
-            while(!Validate.isValidOption(1, 3, opcao)) {
+            while (!Validate.isValidOption(1, 3, opcao)) {
                 System.out.println("/nTente novamente.");
-                System.out.println("Escolha o regime");
-                System.out.println("1. " + Constants.RegimeDeEstudo.DIURNO);
-                System.out.println("2. " + Constants.RegimeDeEstudo.NOCTURNO);
-                System.out.println("3. " + Constants.RegimeDeEstudo.A_DISTANCIA);
+                System.out.println("/nEscolha o regime");
+                RegimeDeEstudo.A_DISTANCIA.printAll();
                 opcao = Integer.parseInt(x.readLine());
             }
-            switch (opcao) {
-                case 1 ->
-                    regimeEstudo = Constants.RegimeDeEstudo.DIURNO;
-                case 2 ->
-                    regimeEstudo = Constants.RegimeDeEstudo.NOCTURNO;
-                case 3 ->
-                    regimeEstudo = Constants.RegimeDeEstudo.A_DISTANCIA;
-            }
+            
+            return RegimeDeEstudo.A_DISTANCIA.getByIndex(opcao);
+            
         } catch(IOException e){}
         
-        return regimeEstudo;
+        return null;
     }
     private static Curso escolherCurso(){
         try {
