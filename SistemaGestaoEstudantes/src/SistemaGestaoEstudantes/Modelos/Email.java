@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package SistemaGestaoEstudantes.Utilitarios;
+package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants;
+import SistemaGestaoEstudantes.Utilitarios.Validate;
 import java.io.Serializable;
 
 /**

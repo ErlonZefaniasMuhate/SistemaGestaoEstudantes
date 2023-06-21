@@ -1,9 +1,10 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs:/\nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs:/\nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package SistemaGestaoEstudantes.Utilitarios;
 
+import SistemaGestaoEstudantes.Modelos.Email;
 import SistemaGestaoEstudantes.Modelos.*;
 import SistemaGestaoEstudantes.Utilitarios.Constants.NiveisDeAcesso;
 import SistemaGestaoEstudantes.Utilitarios.Constants.RegimeDeEstudo;
@@ -47,14 +48,14 @@ public abstract class CRUD {
             Estudante novo = new Estudante(cursoPretendido, regimeEstudo, nome, nascimento, numeroBI, Integer.parseInt(NUIT), telefone);
             novo.setCodigoInstituicional(Generator.gerarCodigoInstitucional(Estudante.class.getSimpleName()));
             List<String> nomeApelido = new ArrayList(Arrays.asList(nome.split(" ")));
-            novo.setEmailInstitucional(new Email(nomeApelido.get(1), nomeApelido.get(2)));
+            novo.setEmailInstitucional(new Email(nomeApelido.get(0), nomeApelido.get(2)));
             
             darBoasVindas(novo);
             
             new UserDataManager<Estudante>() {
                 {
                     saveUserToFile(novo, Estudante.class.getSimpleName());
-                    saveLoginInfo(novo.getCodigoInstituicional(), novo.getSenha(), Estudante.class.getSimpleName());
+                    saveLoginInfo(novo.getEmailInstitucional(), novo.getCodigoInstituicional(), novo.getSenha(), Estudante.class.getSimpleName());
                 }
             };
             actor.realizarActividade("Cadastrou o estudante: " + novo.getNome() + " ");
@@ -96,14 +97,14 @@ public abstract class CRUD {
         novo.setSenha(Generator.gerarString(6));
         novo.setCodigoInstituicional(Generator.gerarCodigoInstitucional(Admin.class.getSimpleName()));
         List<String> nomeApelido = new ArrayList(Arrays.asList(nome.split(" ")));
-        novo.setEmailInstitucional(new Email(nomeApelido.get(1), nomeApelido.get(2)));
+        novo.setEmailInstitucional(new Email(nomeApelido.get(0), nomeApelido.get(2)));
 
         darBoasVindas(novo);
 
         new UserDataManager<Admin>() {
             {
                 saveUserToFile(novo, Admin.class.getSimpleName());
-                saveLoginInfo(novo.getCodigoInstituicional(), novo.getSenha(), "Admin");
+                saveLoginInfo(novo.getEmailInstitucional(), novo.getCodigoInstituicional(), novo.getSenha(), "Admin");
             }
         };
         actor.realizarActividade("Cadastrou o administrador: " + novo.getNome() + " ");
@@ -191,14 +192,14 @@ public abstract class CRUD {
         var novo = new Admin(nivelPermissao, nome, dataNascimento, numeroBI, Integer.parseInt(NUIT), telefone);
         novo.setCodigoInstituicional(Generator.gerarCodigoInstitucional("Admin"));
         List<String> nomeApelido = new ArrayList(Arrays.asList(nome.split(" ")));
-        novo.setEmailInstitucional(new Email(nomeApelido.get(1), nomeApelido.get(2)));
+        novo.setEmailInstitucional(new Email(nomeApelido.get(0), nomeApelido.get(2)));
         //saudando
         darBoasVindas(novo);
         //salvando a instancia
         new UserDataManager<Admin>() {
             {
                 saveUserToFile(novo, "Admin");
-                saveLoginInfo(novo.getCodigoInstituicional(), novo.getSenha(), "Admin");
+                saveLoginInfo(novo.getEmailInstitucional(), novo.getCodigoInstituicional(), novo.getSenha(), "Admin");
             }
         };
         
@@ -324,11 +325,11 @@ public abstract class CRUD {
                 Selecione o nivel de permissao para o novo administrador.          
                                    
                 """);
-            NiveisDeAcesso.SUPER_ADMIN.printAll();
+            int highIndex = NiveisDeAcesso.SUPER_ADMIN.printAll();
             
             int answer = Integer.parseInt(x.readLine());
             
-            while (!Validate.isValidOption(1, 4, answer)) {
+            while (!Validate.isValidOption(1, highIndex, answer)) {
                 System.out.println("""
                        Opcao invalida, tente novamente.            
                        Selecione o nivel de permissao para o novo administrador.
@@ -353,14 +354,14 @@ public abstract class CRUD {
     private static RegimeDeEstudo definirRegime(){         
         
         try {
-            System.out.println("/nEscolha o regime");
-            RegimeDeEstudo.A_DISTANCIA.printAll();
+            System.out.println("\nEscolha o regime");
+            int highIndex = RegimeDeEstudo.A_DISTANCIA.printAll();
             
             int opcao = Integer.parseInt(x.readLine());
 
-            while (!Validate.isValidOption(1, 3, opcao)) {
-                System.out.println("/nTente novamente.");
-                System.out.println("/nEscolha o regime");
+            while (!Validate.isValidOption(1, highIndex, opcao)) {
+                System.out.println("\nTente novamente.");
+                System.out.println("\nEscolha o regime");
                 RegimeDeEstudo.A_DISTANCIA.printAll();
                 opcao = Integer.parseInt(x.readLine());
             }
@@ -381,7 +382,7 @@ public abstract class CRUD {
             Collections.sort(cursosExistentes, Comparator.comparing(Curso::getNome));
             int contador = 1;
 
-            System.out.println("/nEscolha o Curso: ");
+            System.out.println("\nEscolha o Curso: ");
             for (Curso curso : cursosExistentes) {
                 System.out.println(contador + ". " + curso.getNome());
                 contador++;
@@ -389,7 +390,7 @@ public abstract class CRUD {
             nomeCurso = x.readLine();
 
             while (!Validate.isValidOption(1, contador, Integer.parseInt(nomeCurso))) {
-                System.out.println("/nTente novamente");
+                System.out.println("\nTente novamente");
                 contador = 1;
 
                 for (Curso curso : cursosExistentes) {

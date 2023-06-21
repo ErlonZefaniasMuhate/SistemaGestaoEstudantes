@@ -4,6 +4,7 @@
  */
 package SistemaGestaoEstudantes.Utilitarios;
 
+import SistemaGestaoEstudantes.Modelos.Email;
 import SistemaGestaoEstudantes.Modelos.User;
 import java.io.*;
 import java.nio.file.*;
@@ -20,8 +21,10 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
     private final String currentProjectPath;
     private final Path filesDirectoryPath;
     private static BufferedReader x = new BufferedReader (new InputStreamReader (System.in));
-    private static String extension = ".ser";
-    public static String userType = null;
+    private static final String SERIALIZATION_EXTENSION = ".ser";
+    private static final String LOGIN_FILENAME = "Login.txt";
+    private static String USER_TYPE;//value found on a sucessful login process, reduces need of creating method.
+    private static int USER_CODE;//value found on a sucessful login process, reduces need of creating method.
 
     /**
      * Construtor da classe SystemUtils. 
@@ -99,9 +102,9 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
     private Path getFilePath(String fileName) {
         return filesDirectoryPath.resolve(fileName);
     }
-
+    //remove todas ocorrencias da extensao '.ser', concatena a extensao no final da (nome da class) String recebida e retorna-a
     private String getFileName(String userType) {
-        return userType = (userType.contains(extension))? (userType.replaceAll(extension, "").trim() + extension) : (userType + extension);
+        return userType = (userType.contains(SERIALIZATION_EXTENSION))? (userType.replaceAll(SERIALIZATION_EXTENSION, "").trim() + SERIALIZATION_EXTENSION) : (userType + SERIALIZATION_EXTENSION);
     }
 
     /**
@@ -135,14 +138,15 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
     /**
     * Salva as informações de login em um arquivo de texto.
     *
+    * @param email      o email institucional do usuário
     * @param userCode   o código institucional do usuário
     * @param password   a senha do usuário
     * @param userType   o tipo de usuário
     */
-    public void saveLoginInfo(Integer userCode, String password, String userType) {
-        Path filePath = getFilePath("login.txt");
+    public void saveLoginInfo(Email email, Integer userCode, String password, String userType) {
+        Path filePath = getFilePath(LOGIN_FILENAME);
         try ( BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE, StandardOpenOption.WRITE, StandardOpenOption.APPEND)) {
-            writer.write(userCode + "||" + password + "||" + userType);
+            writer.write(email + "||" + userCode + "||" + password + "||" + userType);
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
@@ -158,7 +162,7 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
     * @since 09/06/2023
     */
     public User login() throws SecurityException, NoSuchFileException {
-        Path filePath = getFilePath("login.txt");
+        Path filePath = getFilePath(LOGIN_FILENAME);
 
         if (!Files.exists(filePath)) {
             throw new NoSuchFileException("Login data is not available");
@@ -166,16 +170,16 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
 
         try ( BufferedReader reader = Files.newBufferedReader(filePath)) {
             
-            String code = readUserCode();
+            String codeOrEmail = readCodeOrEmail();
             String password = readPassword();
 
-            boolean welcomeMessagePrinted = validateUserCredentials(code, password, reader);
+            boolean welcomeMessagePrinted = validateUserCredentials(codeOrEmail, password, reader);
             reader.close();
 
             if (!welcomeMessagePrinted) {
                 throw new SecurityException("Access denied");
             } else {
-                return findUserByCode(Integer.parseInt(code), userType);
+                return findUserByCode(USER_CODE, USER_TYPE);
             }
         } catch (IOException e) {
             //handle the exception
@@ -193,40 +197,47 @@ public abstract class UserDataManager<Usuario extends User & Serializable> {
         return password;
     }
 
-    private String readUserCode() throws IOException {
-        System.out.println("Enter your institutional code: ");
-        String code = x.readLine();
-        while (!Validate.isInteger(code)) {
-            System.out.println("Invalid code, please try again: ");
-            code = x.readLine();
+    private String readCodeOrEmail() throws IOException {
+        System.out.println("Enter your institutional code or email: ");
+        String codeOrEmail = x.readLine();
+        while (true) {
+            if (codeOrEmail.matches("\\d+")) {
+                return codeOrEmail;
+            } else if (Validate.isEmail(codeOrEmail)) {
+                return codeOrEmail;
+            } else {
+                System.out.println("Invalid input, please try again: ");
+                codeOrEmail = x.readLine();
+            }
         }
-        return code;
     }
     
     /**
     * Valida as credenciais de um usuário.
     *
-    * @param code     o código institucional do usuário
+    * @param codeOrEmail     o código institucional ou email do usuário
     * @param password a senha do usuário
     * @param reader   o BufferedReader para leitura dos dados de login
     * @return true se as credenciais forem válidas e uma mensagem de boas-vindas for exibida, caso contrário, false
     * @throws IOException se ocorrer um erro durante a leitura dos dados de login
     */
-    private boolean validateUserCredentials(String code, String password, BufferedReader reader) throws IOException {
+    private boolean validateUserCredentials(String codeOrEmail, String password, BufferedReader reader) throws IOException {
         String line;
         boolean welcomeMessagePrinted = false;
 
         try {
             while ((line = reader.readLine()) != null) {
                 StringTokenizer tokenizer = new StringTokenizer(line, "||");
-                String codeCheck = tokenizer.nextToken();
+                String email = tokenizer.nextToken();
+                String code = tokenizer.nextToken();
                 String passCheck = tokenizer.nextToken();
-                if (code.equals(codeCheck) && password.equals(passCheck)) {
+                if ((codeOrEmail.equals(email) || (codeOrEmail.equals(code))) && password.equals(passCheck)) {
                     System.out.println("Welcome!");
                     welcomeMessagePrinted = true;
-                    userType = tokenizer.nextToken();
+                    USER_TYPE = tokenizer.nextToken();
+                    USER_CODE = Integer.parseInt(code);
                     break;
-                }
+                } 
             }
         } catch (IOException e) {
             throw e;

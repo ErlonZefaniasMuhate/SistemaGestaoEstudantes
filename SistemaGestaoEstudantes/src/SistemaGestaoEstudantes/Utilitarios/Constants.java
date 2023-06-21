@@ -13,7 +13,7 @@ package SistemaGestaoEstudantes.Utilitarios;
  * administradores.
  */
 public abstract class Constants {
-
+    
     /**
      * Enum que representa os tipos de docentes em um sistema de gestão de
      * estudantes.
@@ -67,10 +67,13 @@ public abstract class Constants {
             return "Titulo do Docente: " + descricao + "\n" + "Detalhes: " + detalhes;
         }
 
-        public void printAll() {
+        public int printAll() {
+            int highIndex = 0;
             for (var typeToPrint : TituloDoDocente.values()) {
                 System.out.println(typeToPrint.index + ". " + typeToPrint.descricao);
+                highIndex++;
             }
+            return highIndex;
         }
 
         public TituloDoDocente getByIndex(int index) {
@@ -143,10 +146,13 @@ public abstract class Constants {
             return "Tipo de avaliacao: " + getDescricao() + "\n" + "Detalhes: " + getDetalhes();
         }
 
-        public void printAll() {
+        public int printAll() {
+            int highIndex = 0;
             for (var examType : TipoDeAvaliacao.values()) {
                 System.out.println(examType.index + ". " + examType.descricao);
+                highIndex++;
             }
+            return highIndex;
         }
 
         public TipoDeAvaliacao getByIndex(int index) {
@@ -221,10 +227,13 @@ public abstract class Constants {
             return "Tipo de disciplina: " + getDescricao() + "\n" + "Detalhes: " + getDetalhes();
         }
 
-        public void printAll() {
+        public int printAll() {
+            int highIndex = 0;
             for (var subjectType : TipoDeDisciplina.values()) {
                 System.out.println(subjectType.index + ". " + subjectType.descricao);
+                highIndex++;
             }
+            return highIndex;
         }
 
         public TipoDeDisciplina getByIndex(int index) {
@@ -301,10 +310,13 @@ public abstract class Constants {
             return "Nivel de acesso: " + getDescricao() + "\n" + "Detalhes: " + getDetalhes();
         }
 
-        public void printAll() {
+        public int printAll() {
+            int highIndex = 0;
             for (var levelToPrint : NiveisDeAcesso.values()) {
                 System.out.println(levelToPrint.index + ". " + levelToPrint.descricao);
+                highIndex++;
             }
+            return highIndex;
         }
 
         public NiveisDeAcesso getByIndex(int index) {
@@ -373,19 +385,17 @@ public abstract class Constants {
             return "Regime de estudo: " + detalhes + "\n" + "Detalhes: " + descricao;
         }
 
-        public void printAll() {
+        public int printAll() {
+            int highIndex = 0;
             for (var periodToPrint : RegimeDeEstudo.values()) {
                 System.out.println(periodToPrint.indice + ". " + periodToPrint.descricao);
+                highIndex++;
             }
+            return highIndex;
         }
 
         public RegimeDeEstudo getByIndex(int index) {
-            for (var period : RegimeDeEstudo.values()) {
-                if (period.indice == index) {
-                    return period;
-                }
-            }
-            return null;
+            return values()[index];
         }
     }
 

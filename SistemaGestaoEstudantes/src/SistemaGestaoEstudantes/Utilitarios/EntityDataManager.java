@@ -4,10 +4,8 @@
  */
 package SistemaGestaoEstudantes.Utilitarios;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -27,10 +25,10 @@ import java.util.logging.Logger;
  * @author Erlon Z. Muhate
  * @param <Entity>
  */
-public class EntityDataManager <Entity extends Serializable> {
+public abstract class EntityDataManager <Entity extends Serializable> {
     private final String currentProjectPath;
     private final Path filesDirectoryPath;
-    private static BufferedReader x = new BufferedReader(new InputStreamReader(System.in));
+    private static final String SERIALIZATION_EXTENSION = ".ser";
 
     /**
      * Construtor da classe EntityDataManager. 
@@ -152,9 +150,7 @@ public class EntityDataManager <Entity extends Serializable> {
         return filePath;
     }
 
-    private String getFileName(String userType) {
-        String fileName = userType + ".ser";
-        return fileName;
+    private static String getFileName(String entityName) {
+        return entityName = (entityName.contains(SERIALIZATION_EXTENSION))? (entityName.replaceAll(SERIALIZATION_EXTENSION, "").trim() + SERIALIZATION_EXTENSION) : (entityName + SERIALIZATION_EXTENSION);
     }
-
 }

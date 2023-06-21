@@ -4,17 +4,21 @@
  */
 package SistemaGestaoEstudantes.Utilitarios;
 
+import SistemaGestaoEstudantes.Modelos.Admin;
+import SistemaGestaoEstudantes.Modelos.User;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.NoSuchFileException;
 
-public class Run {
+public abstract class Run {
+    
     private static BufferedReader reader = new BufferedReader (new InputStreamReader (System.in));
+    private static User actor = null;
     public static void main(String[] args) {
         try {
-            var userType = new UserDataManager(){}.login();
-            switch (userType.getClass().getSimpleName()) {
+            actor = new UserDataManager(){}.login();
+            switch (actor.getClass().getSimpleName()) {
                 case "Docente" -> showDocenteMenu();
                 case "Estudante" -> showEstudanteMenu();
                 case "Admin" -> showAdminMenu();
@@ -83,29 +87,32 @@ public class Run {
     }
 
     private static void showAdminMenu() throws IOException {
-       
+       var admin = (Admin)actor;
         int option;
         do {
             System.out.println("======== MENU DO ADMIN ========");
             System.out.println("1. Gerenciar estudantes");
             System.out.println("2. Gerenciar docentes");
-            System.out.println("3. Sair");
+            System.out.println("3. Gerenciar administradores");
+            System.out.println("4. Ver historico completo");
+            System.out.println("5. Sair");
             System.out.print("Escolha uma opção: ");
             option = Integer.parseInt(reader.readLine());
             switch (option) {
-                case 1:
-                    // Lógica para gerenciar estudantes
-                    break;
-                case 2:
-                    // Lógica para gerenciar docentes
-                    break;
-                case 3:
-                    System.out.println("Saindo do sistema...");
-                    break;
-                default:
-                    System.out.println("Opção inválida! Tente novamente.");
+                case 1 -> {
+                    CRUD.registarEstudante(admin);
+                }
+                case 2 -> {
+                    System.out.println("Em desenvolvimento.");
+                }
+                case 3 -> CRUD.registarAdmin(admin);
+                case 4 -> admin.verHistoricoCompleto();
+                case 5 -> System.out.println("Saindo do sistema...");
+                default -> System.out.println("Opção inválida! Tente novamente.");
             }
-        } while (option != 3);
+            // Lógica para gerenciar estudantes
+            // Lógica para gerenciar docentes
+                    } while (option != 3);
         reader.close();
     }
 }

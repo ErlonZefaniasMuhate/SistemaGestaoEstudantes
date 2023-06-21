@@ -7,12 +7,12 @@ package SistemaGestaoEstudantes.Modelos;
 import SistemaGestaoEstudantes.Utilitarios.Constants;
 import SistemaGestaoEstudantes.Utilitarios.Constants.EstadoUsuario;
 import java.time.LocalDate;
-import SistemaGestaoEstudantes.Utilitarios.Email;
 import SistemaGestaoEstudantes.Utilitarios.Generator;
 import java.io.Serializable;
 import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,6 +46,8 @@ public abstract class User implements Serializable {
         this.emailPessoal = new Email (Constants.TipoDeEmail.STANDARD_EMAIL.getEmail());
         this.anoIngresso = String.valueOf(Year.now().getValue());
         this.status = Constants.EstadoUsuario.ATIVO;
+        this.actividades = new ArrayList<>();
+        this.actividades.add(new Historico("Foi registado no sistema", this));
     }
 
     /**
@@ -162,7 +164,12 @@ public abstract class User implements Serializable {
     public final List<Historico> getActividades() {
         return actividades;
     }
-
+    public final void verHistoricoCompleto() {
+        var historicoCompleto = getActividades();
+        for(var historico : historicoCompleto){
+            System.out.println(historico.toString());
+        }
+    }
 
     @Override
     public String toString() {
