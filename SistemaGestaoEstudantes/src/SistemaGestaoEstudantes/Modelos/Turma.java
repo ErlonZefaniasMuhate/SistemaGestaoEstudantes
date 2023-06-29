@@ -5,14 +5,16 @@
 package SistemaGestaoEstudantes.Modelos;
 
 import SistemaGestaoEstudantes.Utilitarios.Constants.RegimeDeEstudo;
+import java.io.Serializable;
 import java.time.Year;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class Turma {
+public class Turma implements Serializable, Comparable<Turma> {
 
     private String nomeTurma; //Turma_De_DISCIPLINA_do_ANO_REGIME
     private RegimeDeEstudo regime;
@@ -20,7 +22,7 @@ public class Turma {
     private Curso curso;
     private List<Estudante> estudantes;
     private List<Docente> docentes;
-    private List<Sala> salas;
+    private List<Departamento.Sala> salas;
 
     public Turma(Disciplina disciplina, Curso curso) {
         this.disciplina = disciplina;
@@ -81,27 +83,94 @@ public class Turma {
         this.docentes = docentes;
     }
 
-    public List<Sala> getSalas() {
+    public List<Departamento.Sala> getSalas() {
         return salas;
     }
 
-    public void setSalas(List<Sala> salas) {
+    public void setSalas(List<Departamento.Sala> salas) {
         this.salas = salas;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Turma{");
-        sb.append("nomeTurma=").append(nomeTurma);
-        sb.append(", regime=").append(regime);
-        sb.append(", disciplina=").append(disciplina);
-        sb.append(", curso=").append(curso);
-        sb.append(", estudantes=").append(estudantes);
-        sb.append(", docentes=").append(docentes);
-        sb.append(", salas=").append(salas);
-        sb.append('}');
+        sb.append("Turma {\n");
+        sb.append("  Nome da Turma: ").append(nomeTurma).append("\n");
+        sb.append("  Regime: ").append(regime).append("\n");
+        sb.append("  Disciplina: ").append(disciplina).append("\n");
+        sb.append("  Curso: ").append(curso).append("\n");
+
+        sb.append("  Estudantes: ");
+        if (estudantes.isEmpty()) {
+            sb.append("Nenhum estudante cadastrado.\n");
+        } else {
+            sb.append("\n");
+            for (Estudante estudante : estudantes) {
+                sb.append("    - Nome: ").append(estudante.getNome())
+                        .append(", Código Institucional: ").append(estudante.getCodigoInstituicional()).append("\n");
+            }
+        }
+
+        sb.append("  Docentes: ");
+        if (docentes.isEmpty()) {
+            sb.append("Nenhum docente cadastrado.\n");
+        } else {
+            sb.append("\n");
+            for (Docente docente : docentes) {
+                sb.append("    - Nome: ").append(docente.getNome())
+                        .append(", Título: ").append(docente.getTitulo()).append("\n");
+            }
+        }
+
+        sb.append("  Salas: ");
+        if (salas.isEmpty()) {
+            sb.append("Nenhuma sala cadastrada.\n");
+        } else {
+            sb.append("\n");
+            for (Departamento.Sala sala : salas) {
+                sb.append("    - ").append(sala).append("\n");
+            }
+        }
+
+        sb.append("}\n");
         return sb.toString();
     }
 
+
+    @Override
+    public int compareTo(Turma outraTurma) {
+        return nomeTurma.compareToIgnoreCase(outraTurma.getNomeTurma());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.nomeTurma);
+        hash = 67 * hash + Objects.hashCode(this.regime);
+        hash = 67 * hash + Objects.hashCode(this.disciplina);
+        hash = 67 * hash + Objects.hashCode(this.curso);
+        hash = 67 * hash + Objects.hashCode(this.salas);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Turma other = (Turma) obj;
+        if (!Objects.equals(this.nomeTurma, other.nomeTurma)) {
+            return false;
+        }
+        if (!Objects.equals(this.disciplina, other.disciplina)) {
+            return false;
+        }
+        return Objects.equals(this.curso, other.curso);
+    }
 }

@@ -5,13 +5,15 @@
 package SistemaGestaoEstudantes.Modelos;
 
 import SistemaGestaoEstudantes.Utilitarios.Constants.TipoDeAvaliacao;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class Avaliacao {
+public class Avaliacao implements Comparable<Avaliacao>, Serializable{
 
     private String nome;
     private Disciplina disciplina;
@@ -100,5 +102,42 @@ public class Avaliacao {
         this.docente = docente;
     }
 
+    @Override
+    public int compareTo(Avaliacao outraAvaliacao) {
+        return this.nome.compareTo(outraAvaliacao.getNome());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.nome);
+        hash = 97 * hash + Objects.hashCode(this.disciplina);
+        hash = 97 * hash + Objects.hashCode(this.docente);
+        hash = 97 * hash + Objects.hashCode(this.tipoAvaliacao);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.peso) ^ (Double.doubleToLongBits(this.peso) >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Avaliacao other = (Avaliacao) obj;
+        if (!Objects.equals(this.nome, other.nome)) {
+            return false;
+        }
+        if (!Objects.equals(this.disciplina, other.disciplina)) {
+            return false;
+        }
+        return this.tipoAvaliacao == other.tipoAvaliacao;
+    }
+    
 
 }

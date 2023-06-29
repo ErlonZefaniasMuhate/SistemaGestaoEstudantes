@@ -111,14 +111,12 @@ public class Departamento implements Serializable, Comparable<Departamento> {
         private String nome;
         private TipoDeSala tipoDeSala;
         private int capacidade;
-        private boolean estaDisponivel;
         private List<PeriodoOcupado> agenda;
 
         public Sala(String nome,TipoDeSala tipoDeSala, int capacidade) {
             this.nome = nome;
             this.capacidade = capacidade;
             this.tipoDeSala = tipoDeSala;
-            this.estaDisponivel = true;
             this.agenda = new ArrayList<>();
         }
 
@@ -128,14 +126,6 @@ public class Departamento implements Serializable, Comparable<Departamento> {
 
         public int getCapacidade() {
             return capacidade;
-        }
-
-        public boolean estaDisponivel() {
-            return estaDisponivel;
-        }
-
-        public void setDisponibilidade(boolean disponibilidade) {
-            estaDisponivel = disponibilidade;
         }
 
         public List<PeriodoOcupado> getAgenda() {

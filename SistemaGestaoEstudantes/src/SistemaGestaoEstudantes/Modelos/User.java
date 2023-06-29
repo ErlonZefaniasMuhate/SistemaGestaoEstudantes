@@ -14,12 +14,13 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public abstract class User implements Serializable {
+public abstract class User implements Serializable, Comparable<User> {
 
     protected String nome;
     protected LocalDate dataNascimento;
@@ -33,7 +34,6 @@ public abstract class User implements Serializable {
     protected String anoIngresso;
     protected String senha;
     protected EstadoUsuario status;
-    protected Departamento departamento;
     private List<Historico> actividades;
 
     public User(String nome, LocalDate dataNascimento, String numeroBI, int nuit, String telefone) {
@@ -153,14 +153,6 @@ public abstract class User implements Serializable {
         this.status = status;
     }
 
-    public final Departamento getDepartamento() {
-        return departamento;
-    }
-
-    public final void setDepartamento(Departamento departamento) {
-        this.departamento = departamento;
-    }
-
     public final List<Historico> getActividades() {
         return actividades;
     }
@@ -187,6 +179,71 @@ public abstract class User implements Serializable {
                 .append("Senha: ").append(senha).append("\n")
                 .append("Status: ").append(status).append("\n");
         return sb.toString();
+    }  
+    @Override
+    public int compareTo(User otherUser) {
+        int result = this.nome.compareTo(otherUser.nome);
+        if (result != 0) {
+            return result;
+        }
+
+        result = this.dataNascimento.compareTo(otherUser.dataNascimento);
+        if (result != 0) {
+            return result;
+        }
+
+        result = this.numeroBI.compareTo(otherUser.numeroBI);
+        if (result != 0) {
+            return result;
+        }
+
+        result = Integer.compare(this.nuit, otherUser.nuit);
+        if (result != 0) {
+            return result;
+        }
+
+        result = this.telefone.compareTo(otherUser.telefone);
+        if (result != 0) {
+            return result;
+        }
+
+        result = this.emailInstitucional.compareTo(otherUser.emailInstitucional);
+        if (result != 0) {
+            return result;
+        }
+
+        result = this.codigoInstituicional.compareTo(otherUser.codigoInstituicional);
+        if (result != 0) {
+            return result;
+        }
+        
+        return 0;
     }
-    
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        User otherUser = (User) obj;
+        return Objects.equals(this.nome, otherUser.nome)
+                && Objects.equals(this.codigoInstituicional, otherUser.codigoInstituicional)
+                && Objects.equals(this.numeroBI, otherUser.numeroBI)
+                && this.nuit == otherUser.nuit
+                && Objects.equals(this.telefone, otherUser.telefone)
+                && Objects.equals(this.emailInstitucional, otherUser.emailInstitucional)
+                && Objects.equals(this.dataNascimento, otherUser.dataNascimento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome, dataNascimento, numeroBI, nuit, endereco, telefone,
+                emailInstitucional, emailPessoal, codigoInstituicional, anoIngresso,
+                senha, status, actividades);
+    }
+
 }
+

@@ -5,16 +5,17 @@
 package SistemaGestaoEstudantes.Modelos;
 
 import SistemaGestaoEstudantes.Utilitarios.Constants.EstadoDaDisciplina;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Erlon Z. Muhate
  * @author Leuso Nguenha
  */
-public class Disciplina {
+public class Disciplina implements Serializable, Comparable<Disciplina> {
     //adicionar tipo, complementar nuclear.
     private String nome;
-    private String codigo;
     private String descricao;
     private String tipo;
     private List<Avaliacao> avaliacoes;
@@ -31,14 +32,6 @@ public class Disciplina {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
     }
 
     public String getDescricao() {
@@ -69,14 +62,24 @@ public class Disciplina {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(nome.toUpperCase()).append(" {\n");
-        sb.append("\tCódigo: ").append(codigo).append("\n");
         sb.append("\tDescrição: ").append(descricao).append("\n");
         sb.append("\tTipo: ").append(tipo).append("\n");
-        sb.append("\tAvaliações: ").append(avaliacoes).append("\n");
+
+        sb.append("\tAvaliações: ");
+        if (avaliacoes.isEmpty()) {
+            sb.append("Nenhuma avaliação cadastrada.\n");
+        } else {
+            sb.append("\n");
+            for (Avaliacao avaliacao : avaliacoes) {
+                sb.append("\t- ").append(avaliacao).append("\n");
+            }
+        }
+
         sb.append("\tStatus: ").append(status).append("\n");
         sb.append("}");
         return sb.toString();
     }
+
 
     public List<Avaliacao> getAvaliacoes() {
         return avaliacoes;
@@ -84,6 +87,34 @@ public class Disciplina {
 
     public void setAvaliacoes(List<Avaliacao> avaliacoes) {
         this.avaliacoes = avaliacoes;
+    }
+    @Override
+    public int compareTo(Disciplina outraDisciplina) {
+        return nome.compareTo(outraDisciplina.getNome());
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.nome);
+        hash = 37 * hash + Objects.hashCode(this.descricao);
+        hash = 37 * hash + Objects.hashCode(this.tipo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Disciplina other = (Disciplina) obj;
+        return Objects.equals(this.nome, other.nome);
     }
     
 }
