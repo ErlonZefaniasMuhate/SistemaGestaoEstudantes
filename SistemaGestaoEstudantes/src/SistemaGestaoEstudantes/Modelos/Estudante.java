@@ -97,8 +97,7 @@ public final class Estudante extends User{
         sb.append("Disciplinas Concluídas: \n");
         for (var disciplina : disciplinasConcluidas) {
             sb.append("\t").append(disciplina).append("\n");
-        };
+        }
         return sb.toString();
     }
-
 }
