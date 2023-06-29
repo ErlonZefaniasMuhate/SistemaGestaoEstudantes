@@ -4,21 +4,60 @@
  */
 package SistemaGestaoEstudantes.Utilitarios;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  *
- * @author Erlon Z. Muhate Enumeração que representa as constantes do sistema.
+ * The Constants class represents a collection of enums separated by categories
+ * and provides methods for printing enum values and retrieving enums by index
+ * using the reflection API.
+ * <h2>Enums and Categories:</h2>
  * <p>
- * As constantes são usadas para representar diferentes tipos de avaliação,
- * docentes, disciplinas, regimes de estudo e níveis de acesso de
- * administradores.
+ * The class holds a collection of enums (inner classes) that are categorized
+ * based on their functionality and purpose. Some enums contain descriptions,
+ * details, and an index. Users can manually select values from these enums.</p>
+ * <h2>Enum Operations:</h2>
+ * <p>
+ * The inner class <code>EnumOperations</code> defines an interface that
+ * provides methods for printing all enum values along with their index and
+ * retrieving an enum by its index. The enums in Constants override these
+ * methods to implement the desired functionality.</p>
+ * <h2>Reflection API Usage:</h2>
+ * <p>
+ * The Constants class utilizes the reflection API to invoke the
+ * <code>printAll</code> and <code>getByIndex</code> methods defined in all the
+ * enums that implement the EnumOperations interface. These methods are executed
+ * dynamically at runtime, allowing for flexible handling of enum values.</p>
+ * <p>
+ * <strong>Note:</strong> The Constants class serves as a centralized repository
+ * for categorized enums and provides an inner interface with convenient methods
+ * for accessing and manipulating these enum values.</p>
+ * <h3>Usage:</h3>
+ * <pre>{@code
+ * 
+ * // Accessing enum values
+ * Category1Enum value1 = Constants.Category1Enum.ENUM1;
+ * Category2Enum value2 = Constants.Category2Enum.ENUM2;
+ * 
+ * // Printing all enum values and getting the highest index
+ * int highIndex = Constants.executePrintAllMethod(Category1Enum.class);
+ * int anotherHighIndex = Constants.executePrintAllMethod(Category2Enum.class);
+ * 
+ * // Retrieving enum by index
+ * Category1Enum retrievedEnum = Constants.executeGetByIndexMethod(Category1Enum.class, 2);
+ * }</pre>
+ * 
+ * @author Muhate, Erlon Zefanias
+ * @since 1.0
  */
 public abstract class Constants {
-    
+
     /**
      * Enum que representa os tipos de docentes em um sistema de gestão de
      * estudantes.
      */
-    public enum TituloDoDocente {
+    public enum TituloDoDocente implements EnumOperations {
         /**
          * Representa um tipo de docente regente.
          */
@@ -67,6 +106,7 @@ public abstract class Constants {
             return "Titulo do Docente: " + descricao + "\n" + "Detalhes: " + detalhes;
         }
 
+        @Override
         public int printAll() {
             int highIndex = 0;
             for (var typeToPrint : TituloDoDocente.values()) {
@@ -76,6 +116,7 @@ public abstract class Constants {
             return highIndex;
         }
 
+        @Override
         public TituloDoDocente getByIndex(int index) {
             for (TituloDoDocente docente : TituloDoDocente.values()) {
                 if (docente.index == index) {
@@ -89,7 +130,7 @@ public abstract class Constants {
     /**
      * Enumeração que representa os tipos de avaliação.
      */
-    public enum TipoDeAvaliacao {
+    public enum TipoDeAvaliacao implements EnumOperations {
         /**
          * Representa um tipo de avaliação de teste.
          */
@@ -146,6 +187,7 @@ public abstract class Constants {
             return "Tipo de avaliacao: " + getDescricao() + "\n" + "Detalhes: " + getDetalhes();
         }
 
+        @Override
         public int printAll() {
             int highIndex = 0;
             for (var examType : TipoDeAvaliacao.values()) {
@@ -155,6 +197,7 @@ public abstract class Constants {
             return highIndex;
         }
 
+        @Override
         public TipoDeAvaliacao getByIndex(int index) {
             for (var examType : TipoDeAvaliacao.values()) {
                 if (examType.index == index) {
@@ -168,7 +211,7 @@ public abstract class Constants {
     /**
      * Enum que representa os tipos de disciplina em um sistema educacional.
      */
-    public enum TipoDeDisciplina {
+    public enum TipoDeDisciplina implements EnumOperations {
         /**
          * Representa uma disciplina nuclear.
          *
@@ -227,6 +270,7 @@ public abstract class Constants {
             return "Tipo de disciplina: " + getDescricao() + "\n" + "Detalhes: " + getDetalhes();
         }
 
+        @Override
         public int printAll() {
             int highIndex = 0;
             for (var subjectType : TipoDeDisciplina.values()) {
@@ -236,6 +280,7 @@ public abstract class Constants {
             return highIndex;
         }
 
+        @Override
         public TipoDeDisciplina getByIndex(int index) {
             for (var subjectType : TipoDeDisciplina.values()) {
                 if (subjectType.index == index) {
@@ -249,7 +294,7 @@ public abstract class Constants {
     /**
      * Enum que representa os níveis de acesso dos administradores no sistema.
      */
-    public enum NiveisDeAcesso {
+    public enum NiveisDeAcesso implements EnumOperations {
         /**
          * Representa o nível de acesso de super administrador. Os
          * administradores com este nível de acesso têm acesso completo ao
@@ -310,6 +355,7 @@ public abstract class Constants {
             return "Nivel de acesso: " + getDescricao() + "\n" + "Detalhes: " + getDetalhes();
         }
 
+        @Override
         public int printAll() {
             int highIndex = 0;
             for (var levelToPrint : NiveisDeAcesso.values()) {
@@ -319,6 +365,7 @@ public abstract class Constants {
             return highIndex;
         }
 
+        @Override
         public NiveisDeAcesso getByIndex(int index) {
             for (var acessLevel : NiveisDeAcesso.values()) {
                 if (acessLevel.index == index) {
@@ -333,7 +380,7 @@ public abstract class Constants {
      * Enum que representa os regimes de estudo disponíveis no sistema
      * educacional.
      */
-    public enum RegimeDeEstudo {
+    public enum RegimeDeEstudo implements EnumOperations {
         NOCTURNO(1, "Regime Noturno", "Os estudantes frequentam as aulas predominantemente durante a noite, oferecendo flexibilidade para aqueles que trabalham durante o dia."),
         DIURNO(2, "Regime Diurno", "Os estudantes frequentam as aulas predominantemente durante o dia, permitindo maior interação presencial com professores e colegas."),
         A_DISTANCIA(3, "Regime a Distância", "Os estudantes têm a flexibilidade de estudar de forma remota, utilizando recursos online e materiais disponibilizados pela instituição, permitindo conciliar os estudos com outras responsabilidades.");
@@ -385,6 +432,7 @@ public abstract class Constants {
             return "Regime de estudo: " + detalhes + "\n" + "Detalhes: " + descricao;
         }
 
+        @Override
         public int printAll() {
             int highIndex = 0;
             for (var periodToPrint : RegimeDeEstudo.values()) {
@@ -394,8 +442,14 @@ public abstract class Constants {
             return highIndex;
         }
 
+        @Override
         public RegimeDeEstudo getByIndex(int index) {
-            return values()[index];
+            for (var regime : RegimeDeEstudo.values()) {
+                if (regime.getIndice() == index) {
+                    return regime;
+                }
+            }
+            return null;
         }
     }
 
@@ -554,5 +608,309 @@ public abstract class Constants {
         public String toString() {
             return "Estado do Usuario: " + status + "\n" + "Detalhes: " + detalhes;
         }
+    }
+     /**
+     * Enumeração que representa os tipos de aula ministrados em uma faculdade.
+     */
+    public enum TipoAula implements EnumOperations{
+        /**
+         * Aula Teórica: Aulas tradicionais em sala de aula com foco na apresentação de conceitos e teorias.
+         */
+        TEORICA(1, "Aula Teórica", "Aulas tradicionais em sala de aula com foco na apresentação de conceitos e teorias."),
+        /**
+         * Aula Prática: Aulas que oferecem aos alunos a oportunidade de aplicar na prática os conhecimentos adquiridos em aulas teóricas.
+         */
+        PRATICA(2, "Aula Prática", "Aulas que oferecem aos alunos a oportunidade de aplicar na prática os conhecimentos adquiridos em aulas teóricas."),
+        /**
+         * Aula Laboratorial: Aulas realizadas em laboratórios equipados com equipamentos especializados, permitindo experimentação e observação direta.
+         */
+        LABORATORIAL(3, "Aula Laboratorial", "Aulas realizadas em laboratórios equipados com equipamentos especializados, permitindo experimentação e observação direta."),
+        /**
+         * Aula Online: Aulas ministradas através de plataformas virtuais, que possibilitam aos alunos acessar materiais, assistir a palestras e interagir com professores e colegas pela internet.
+         */
+        ONLINE(4, "Aula Online", "Aulas ministradas através de plataformas virtuais, que possibilitam aos alunos acessar materiais, assistir a palestras e interagir com professores e colegas pela internet.");
+
+        private int indice;
+        private String descricao;
+        private String detalhes;
+
+        /**
+         * Construtor privado do enum TipoAula.
+         *
+         * @param indice    O índice do tipo de aula.
+         * @param descricao A descrição do tipo de aula.
+         * @param detalhes  Os detalhes do tipo de aula.
+         */
+        TipoAula(int indice, String descricao, String detalhes) {
+            this.indice = indice;
+            this.descricao = descricao;
+            this.detalhes = detalhes;
+        }
+
+        /**
+         * Obtém o índice do tipo de aula.
+         *
+         * @return O índice do tipo de aula.
+         */
+        public int getIndice() {
+            return indice;
+        }
+
+        /**
+         * Obtém a descrição do tipo de aula.
+         *
+         * @return A descrição do tipo de aula.
+         */
+        public String getDescricao() {
+            return descricao;
+        }
+
+        /**
+         * Obtém os detalhes do tipo de aula.
+         *
+         * @return Os detalhes do tipo de aula.
+         */
+        public String getDetalhes() {
+            return detalhes;
+        }
+
+        /**
+         * Imprime todos os tipos de aula no formato "Índice. Detalhes".
+         *
+         * @return O índice máximo encontrado no enum TipoAula.
+         */
+        @Override
+        public int printAll() {
+            int maxIndice = 0;
+            for (TipoAula tipo : TipoAula.values()) {
+                System.out.println(tipo.getIndice() + ". " + tipo.getDetalhes());
+                maxIndice = Math.max(maxIndice, tipo.getIndice());
+            }
+            return maxIndice;
+        }
+
+        /**
+         * Obtém o tipo de aula correspondente ao índice fornecido.
+         *
+         * @param index O índice do tipo de aula.
+         * @return O enum TipoAula correspondente ao índice.
+         * @throws IllegalArgumentException Se o índice fornecido for inválido.
+         */
+        @Override
+        public TipoAula getByIndex(int index) {
+            for (TipoAula tipo : TipoAula.values()) {
+                if (tipo.getIndice() == index) {
+                    return tipo;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Retorna a descrição do tipo de aula.
+         *
+         * @return A descrição do tipo de aula.
+         */
+        @Override
+        public String toString() {
+            return descricao;
+        }
+    }
+    /**
+     * Enumeração que representa os tipos de sala.
+     */
+    public enum TipoDeSala implements EnumOperations {
+        /**
+         * Representa uma sala de aula.
+         */
+        SALA_DE_AULA(1, "Sala de Aula", "Espaço destinado às atividades de ensino."),
+
+        /**
+         * Representa um laboratório.
+         */
+        LABORATORIO(2, "Laboratório", "Sala equipada para realização de experimentos e práticas."),
+
+        /**
+         * Representa uma sala de informática.
+         */
+        SALA_DE_INFORMATICA(3, "Sala de Informática", "Espaço com computadores e acesso à Internet."),
+
+        /**
+         * Representa um anfiteatro.
+         */
+        ANFITEATRO(4, "Anfiteatro", "Sala de grande capacidade para palestras e apresentações.");
+
+        private int indice;
+        private String descricao;
+        private String detalhes;
+
+        /**
+         * Construtor da enumeração TipoDeSala.
+         *
+         * @param indice     O índice da sala.
+         * @param descricao  A descrição da sala.
+         * @param detalhes   Os detalhes sobre a sala.
+         */
+        TipoDeSala(int indice, String descricao, String detalhes) {
+            this.indice = indice;
+            this.descricao = descricao;
+            this.detalhes = detalhes;
+        }
+
+        /**
+         * Retorna a representação textual da sala.
+         *
+         * @return A representação textual da sala.
+         */
+        @Override
+        public String toString() {
+            return "Tipo de Sala: " + descricao + "\nDetalhes: " + detalhes;
+        }
+
+        /**
+         * Obtém o índice da sala.
+         *
+         * @return O índice da sala.
+         */
+        public int getIndice() {
+            return indice;
+        }
+
+        /**
+         * Obtém a descrição da sala.
+         *
+         * @return A descrição da sala.
+         */
+        public String getDescricao() {
+            return descricao;
+        }
+
+        /**
+         * Obtém os detalhes sobre a sala.
+         *
+         * @return Os detalhes sobre a sala.
+         */
+        public String getDetalhes() {
+            return detalhes;
+        }
+
+        /**
+         * Retorna a instância de TipoDeSala correspondente ao índice fornecido.
+         *
+         * @param index O índice da sala.
+         * @return A instância de TipoDeSala correspondente ao índice, ou null se não for encontrado.
+         */
+        @Override
+        public TipoDeSala getByIndex(int index) {
+            for (TipoDeSala tipo : TipoDeSala.values()) {
+                if (tipo.getIndice() == index) {
+                    return tipo;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * Imprime todas as salas com seus respectivos índices e detalhes.
+         *
+         * @return O maior índice encontrado.
+         */
+        @Override
+        public int printAll() {
+            int maxIndice = 0;
+            for (TipoDeSala tipo : TipoDeSala.values()) {
+                System.out.println(tipo.getIndice() + ". " + tipo.getDetalhes());
+                maxIndice = Math.max(maxIndice, tipo.getIndice());
+            }
+            return maxIndice;
+        }
+    }
+
+
+    /**
+     * Represents some common operations found among the enum types.
+     */
+    public static interface EnumOperations {
+
+        /**
+         * Prints all enum values and returns the highest index value.
+         *
+         * @return the highest index value among the enum values
+         */
+        int printAll();
+
+        /**
+         * Retrieves the Enum object associated with the given index.
+         *
+         * @param index the index value to retrieve the Enum object
+         * @return the Enum object associated with the index, or null if not
+         * found
+         */
+        Enum<?> getByIndex(int index);
+    }
+
+    /**
+     * Executes the "printAll" method on the provided enum type and returns the
+     * highest index value.
+     *
+     * @param enumType the enum type on which the method should be executed
+     * @return the highest index value returned by the "printAll" method
+     */
+    public static int executePrintAllMethod(Class<?> enumType) {
+        int highIndex = 0;
+
+        try {
+            // Get all declared methods of the enumType
+            Method[] methods = enumType.getDeclaredMethods();
+            for (Method method : methods) {
+                // Check if the method name is "printAll"
+                if (method.getName().equals("printAll")) {
+                    Object[] args = {};  // No arguments required since printAll is non-static
+
+                    // Get the first enum constant of the enumType
+                    Object enumInstance = enumType.getEnumConstants()[0];
+
+                    // Invoke the printAll method on the enumInstance
+                    highIndex = (int) method.invoke(enumInstance, args);
+                    break;
+                }
+            }
+        } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            // Exception handling, do nothing in this case
+        }
+
+        return highIndex;
+    }
+
+    /**
+     * Executes the "getByIndex" method on the provided enum type with the given
+     * index and returns the corresponding enum instance.
+     *
+     * @param enumType the enum type on which the method should be executed
+     * @param index the index value to pass to the "getByIndex" method
+     * @return the enum instance returned by the "getByIndex" method, or null if
+     * an exception occurs
+     */
+    public static Enum<?> executeGetByIndexMethod(Class<?> enumType, int index) {
+        try {
+            // Get all declared methods of the enumType
+            Method[] methods = enumType.getDeclaredMethods();
+            for (Method method : methods) {
+                // Check if the method name is "getByIndex"
+                if (method.getName().equals("getByIndex")) {
+                    Object[] args = {index};  // Pass the index as an argument to the method
+
+                    // Get the first enum constant of the enumType
+                    Object enumInstance = enumType.getEnumConstants()[0];
+
+                    // Invoke the getByIndex method on the enumInstance
+                    Enum<?> enumToReturn = (Enum<?>) method.invoke(enumInstance, args);
+                    return enumToReturn;
+                }
+            }
+        } catch (IllegalAccessException | IllegalArgumentException | SecurityException | InvocationTargetException e) {
+            // Exception handling, do nothing in this case
+        }
+        return null;
     }
 }

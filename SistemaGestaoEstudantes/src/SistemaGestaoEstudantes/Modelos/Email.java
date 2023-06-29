@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @author Erlon Z. Muhate
  */
 
-public class Email implements Serializable{ 
+public class Email implements Serializable, Comparable<Email>{ 
     
     private final String DOMAIN ="@uem.ac.mz";
     private String emailAddress;
@@ -34,5 +34,10 @@ public class Email implements Serializable{
     @Override
     public String toString(){
         return getEmailAddress();
+    }
+
+    @Override
+    public int compareTo(Email otherEmail) {
+        return emailAddress.compareTo(otherEmail.getEmailAddress());
     }
 }
