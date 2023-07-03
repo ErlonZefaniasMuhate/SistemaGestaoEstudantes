@@ -101,4 +101,75 @@ public abstract class Generator {
         int indice = random.nextInt(NOMES.length);
         return NOMES[indice - 1];
     }
+    /**
+     * Gera o acrônimo correspondente à entrada fornecida.
+     * Desconsidera conjuntos de palavras com duas ou uma letra, a menos que seja um número arábico.
+     *
+     * @param input a string de entrada
+     * @return o acrônimo gerado a partir da entrada
+     */
+    public static String generateAcronym(String input) {
+        StringBuilder acronym = new StringBuilder();
+
+        String[] words = input.split("\\s+");
+        for (String word : words) {
+            if (shouldIncludeInAcronym(word)) {
+                acronym.append(getAcronymLetter(word));
+            }
+        }
+
+        return acronym.toString();
+    }
+
+    /**
+     * Verifica se a palavra fornecida deve ser incluída no acrônimo.
+     * Desconsidera palavras com duas ou uma letra, a menos que seja um número arábico ou romano.
+     *
+     * @param word a palavra a ser verificada
+     * @return true se a palavra deve ser incluída no acrônimo, false caso contrário
+     */
+    private static boolean shouldIncludeInAcronym(String word) {
+        if (word.length() > 3) {
+            return true;
+        } else if (word.length() == 3) {
+            return isNumber(word);
+        } else {
+            return isArabicNumber(word);
+        }
+    }
+
+    /**
+     * Verifica se a palavra fornecida é um número.
+     *
+     * @param word a palavra a ser verificada
+     * @return true se a palavra é um número, false caso contrário
+     */
+    private static boolean isNumber(String word) {
+        try {
+            Integer.parseInt(word);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Verifica se a palavra fornecida é um número arábico.
+     *
+     * @param word a palavra a ser verificada
+     * @return true se a palavra é um número arábico, false caso contrário
+     */
+    private static boolean isArabicNumber(String word) {
+        return isNumber(word);
+    }
+
+    /**
+     * Obtém a letra do acrônimo a partir da palavra fornecida.
+     *
+     * @param word a palavra
+     * @return a primeira letra da palavra em maiúscula
+     */
+    private static char getAcronymLetter(String word) {
+        return Character.toUpperCase(word.charAt(0));
+    }
 }
