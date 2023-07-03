@@ -4,6 +4,7 @@
  */
 package SistemaGestaoEstudantes.Utilitarios;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -675,7 +676,7 @@ public abstract class Constants {
         }
 
         /**
-         * Imprime todos os tipos de aula no formato "Índice. Detalhes".
+         * Imprime todos os tipos de aula no formato "Indice. Detalhes".
          *
          * @return O índice máximo encontrado no enum TipoAula.
          */
@@ -826,11 +827,118 @@ public abstract class Constants {
         }
     }
 
+    public enum GrauEstudo implements EnumOperations {
+        /**
+         * Representa o grau de estudo de Bacharelado.
+         */
+        BACHARELADO(1, "Bacharelado", "Curso de graduação que confere o título de bacharel."),
+        /**
+         * Representa o grau de estudo de Licenciatura.
+         */
+        LICENCIATURA(2, "Licenciatura", "Curso de graduação que confere o título de licenciado."),
+        /**
+         * Representa o grau de estudo de Especialização.
+         */
+        ESPECIALIZACAO(3, "Especialização", "Pós-graduação lato sensu que aprofunda conhecimentos em uma área específica."),
+        /**
+         * Representa o grau de estudo de Mestrado.
+         */
+        MESTRADO(4, "Mestrado", "Pós-graduação stricto sensu que confere o título de mestre."),
+        /**
+         * Representa o grau de estudo de Doutorado.
+         */
+        DOUTORADO(5, "Doutorado", "Pós-graduação stricto sensu que confere o título de doutor.");
 
+        private final int index;
+        private final String descricao;
+        private final String detalhes;
+
+        /**
+         * Construtor do grau de estudo.
+         *
+         * @param index O índice do grau de estudo.
+         * @param descricao A descrição do grau de estudo.
+         * @param detalhes Os detalhes do grau de estudo.
+         */
+        GrauEstudo(int index, String descricao, String detalhes) {
+            this.index = index;
+            this.descricao = descricao;
+            this.detalhes = detalhes;
+        }
+
+        /**
+         * Obtém o índice do grau de estudo.
+         *
+         * @return O índice do grau de estudo.
+         */
+        public int getIndex() {
+            return index;
+        }
+
+        /**
+         * Obtém a descrição do grau de estudo.
+         *
+         * @return A descrição do grau de estudo.
+         */
+        public String getDescricao() {
+            return descricao;
+        }
+
+        /**
+         * Obtém os detalhes do grau de estudo.
+         *
+         * @return Os detalhes do grau de estudo.
+         */
+        public String getDetalhes() {
+            return detalhes;
+        }
+
+        /**
+         * Retorna uma representação em formato de string do grau de estudo.
+         *
+         * @return A representação do grau de estudo.
+         */
+        @Override
+        public String toString() {
+            return "Grau de estudo: " + getDescricao() + "\n" + "Detalhes: " + getDetalhes();
+        }
+
+        /**
+         * Exibe todos os graus de estudo com seus índices.
+         *
+         * @return O valor do índice mais alto.
+         */
+        @Override
+        public int printAll() {
+            int highIndex = 0;
+            for (GrauEstudo grau : GrauEstudo.values()) {
+                System.out.println(grau.index + ". " + grau.descricao);
+                highIndex++;
+            }
+            return highIndex;
+        }
+
+        /**
+         * Obtém o grau de estudo correspondente a um índice.
+         *
+         * @param index O índice do grau de estudo desejado.
+         * @return O grau de estudo correspondente ao índice especificado, ou
+         * null se não for encontrado.
+         */
+        @Override
+        public GrauEstudo getByIndex(int index) {
+            for (GrauEstudo grau : GrauEstudo.values()) {
+                if (grau.index == index) {
+                    return grau;
+                }
+            }
+            return null;
+        }
+    }
     /**
      * Represents some common operations found among the enum types.
      */
-    public static interface EnumOperations {
+    public static interface EnumOperations extends Serializable{
 
         /**
          * Prints all enum values and returns the highest index value.

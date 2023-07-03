@@ -4,6 +4,8 @@
  */
 package SistemaGestaoEstudantes.Modelos;
 
+import SistemaGestaoEstudantes.Utilitarios.Constants.GrauEstudo;
+import SistemaGestaoEstudantes.Utilitarios.Generator;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -14,16 +16,17 @@ import java.util.Objects;
  */
 public class Curso implements Serializable, Comparable {
 
-    private String nome;
-    //Disciplinas obrigatórias: devem ser cursadas pelo estudante para completar o programa de estudos.
-    private List<Disciplina> disciplinasObrigatorias;
-    //Disciplinas optativas com restrição: o estudante deve escolher uma dentre um conjunto de disciplinas pré-determinadas.
-    private List<Disciplina> disciplinasOpcionais;
-    //Disciplinas optativas livres: o estudante pode escolher livremente se quer cursá-las ou não. A certificação não depende delas.
-    private List<Disciplina> disciplinasLivres;
+    private String nome; // Nome do programa de estudos
+    private String sigla; // Sigla do programa de estudos
+    private GrauEstudo grauEstudo; // Grau de estudo associado ao programa de estudos
+    private List<Disciplina> disciplinasObrigatorias; // Lista de disciplinas obrigatórias do programa de estudos
+    private List<Disciplina> disciplinasOpcionais; // Lista de disciplinas optativas com restrição do programa de estudos
+    private List<Disciplina> disciplinasLivres; // Lista de disciplinas optativas livres do programa de estudos
 
-    public Curso(String nome) {
+    public Curso(String nome, GrauEstudo grauEstudo) {
         this.nome = nome;
+        this.grauEstudo = grauEstudo;
+        sigla = Generator.generateAcronym(nome);
     }
 
     public String getNome() {
@@ -58,6 +61,14 @@ public class Curso implements Serializable, Comparable {
         this.disciplinasLivres = disciplinasLivres;
     }
 
+    public String getSigla() {
+        return sigla;
+    }
+
+    public GrauEstudo getGrauEstudo() {
+        return grauEstudo;
+    }
+    
     public void listarDisciplinasObrigatorias() {
         var subjects = getDisciplinasObrigatorias();
         if (subjects == null) {
@@ -128,12 +139,36 @@ public class Curso implements Serializable, Comparable {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Curso{");
-        sb.append("nome=").append(nome);
-        sb.append(", disciplinasObrigotorias=").append(disciplinasObrigatorias.size());
-        sb.append(", disciplinasOpcionais=").append(disciplinasOpcionais.size());
-        sb.append(", disciplinasLivres=").append(disciplinasLivres.size());
-        sb.append('}');
+        sb.append("Curso \n");
+        sb.append(nome.toUpperCase()).append(" (").append(sigla).append(")\n");
+        sb.append("  Disciplinas Obrigatórias: ");
+        if (disciplinasObrigatorias.isEmpty()) {
+            sb.append("Nenhuma disciplina obrigatória.\n");
+        } else {
+            sb.append("\n");
+            for (Disciplina disciplina : disciplinasObrigatorias) {
+                sb.append("    - ").append(disciplina).append("\n");
+            }
+        }
+        sb.append("  Disciplinas Opcionais: ");
+        if (disciplinasOpcionais.isEmpty()) {
+            sb.append("Nenhuma disciplina opcional.\n");
+        } else {
+            sb.append("\n");
+            for (Disciplina disciplina : disciplinasOpcionais) {
+                sb.append("    - ").append(disciplina).append("\n");
+            }
+        }
+        sb.append("  Disciplinas Livres: ");
+        if (disciplinasLivres.isEmpty()) {
+            sb.append("Nenhuma disciplina livre.\n");
+        } else {
+            sb.append("\n");
+            for (Disciplina disciplina : disciplinasLivres) {
+                sb.append("    - ").append(disciplina).append("\n");
+            }
+        }
+        sb.append("}\n");
         return sb.toString();
     }
 }

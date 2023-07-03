@@ -5,6 +5,7 @@
 package SistemaGestaoEstudantes.Modelos;
 
 import SistemaGestaoEstudantes.Utilitarios.Constants.EstadoDaDisciplina;
+import SistemaGestaoEstudantes.Utilitarios.Generator;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -16,6 +17,7 @@ import java.util.Objects;
 public class Disciplina implements Serializable, Comparable<Disciplina> {
     //adicionar tipo, complementar nuclear.
     private String nome;
+    private String sigla;
     private String descricao;
     private String tipo;
     private List<Avaliacao> avaliacoes;
@@ -24,6 +26,7 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
     public Disciplina(String nome, String tipo) {
         this.nome = nome;
         this.tipo = tipo;
+        sigla = Generator.generateAcronym(nome);
     }
     
     public String getNome() {
@@ -58,10 +61,14 @@ public class Disciplina implements Serializable, Comparable<Disciplina> {
         this.status = status;
     }
 
+    public String getSigla() {
+        return sigla;
+    }
+    
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(nome.toUpperCase()).append(" {\n");
+        sb.append(nome.toUpperCase()).append(" ").append(sigla).append(" {\n");
         sb.append("\tDescrição: ").append(descricao).append("\n");
         sb.append("\tTipo: ").append(tipo).append("\n");
 

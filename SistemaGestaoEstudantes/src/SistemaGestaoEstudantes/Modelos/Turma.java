@@ -5,6 +5,7 @@
 package SistemaGestaoEstudantes.Modelos;
 
 import SistemaGestaoEstudantes.Utilitarios.Constants.RegimeDeEstudo;
+import SistemaGestaoEstudantes.Utilitarios.Generator;
 import java.io.Serializable;
 import java.time.Year;
 import java.util.List;
@@ -16,7 +17,8 @@ import java.util.Objects;
  */
 public class Turma implements Serializable, Comparable<Turma> {
 
-    private String nomeTurma; //Turma_De_DISCIPLINA_do_ANO_REGIME
+    private String nome; //Turma_De_DISCIPLINA_do_ANO_REGIME
+    private String codigo;//siglaDisciplina-SiglaCurso-SiglaRegime-ano
     private RegimeDeEstudo regime;
     private Disciplina disciplina;
     private Curso curso;
@@ -24,23 +26,45 @@ public class Turma implements Serializable, Comparable<Turma> {
     private List<Docente> docentes;
     private List<Departamento.Sala> salas;
 
-    public Turma(Disciplina disciplina, Curso curso) {
+    public Turma(Disciplina disciplina, Curso curso, RegimeDeEstudo regime) {
         this.disciplina = disciplina;
         this.curso = curso;
-        StringBuilder sb = new StringBuilder();
-        nomeTurma = sb.append("Turma de ")
-            .append(disciplina.getNome())
-            .append(" do ano ")
-            .append(String.valueOf(Year.now().getValue())).append(" ")
-            .append(regime.getDescricao()).toString();
+        this.regime = regime;
+
+        // Constrói o nome da turma
+        StringBuilder nameBuilder = new StringBuilder();
+        //Ex: Turma de Engenharia de Software I - Engenharia Informática (Pós-laboral) - 2023
+        nameBuilder.append("Turma de ")
+                .append(disciplina.getNome()) // Nome da disciplina
+                .append(" - ")
+                .append(curso.getNome()) // Nome do curso
+                .append(" (")
+                .append(regime.getDescricao()) // Descrição do regime
+                .append(") - ")
+                .append(Year.now().getValue()); // Ano atual
+        nome = nameBuilder.toString();
+
+        // Constrói o código da turma
+        //Ex: ES1-LEI-PL-2023
+        StringBuilder codeBuilder = new StringBuilder();
+        codeBuilder.append(disciplina.getSigla()) // Sigla da disciplina
+                .append("-") // Hífen
+                .append(Generator.generateAcronym(curso.getGrauEstudo().getDescricao()))
+                .append(curso.getSigla()) // Sigla do curso
+                .append("-") // Hífen
+                .append(Generator.generateAcronym(regime.getDescricao())) // Sigla do regime
+                .append("-") // Hífen
+                .append(Year.now().getValue()); // Ano atual
+        codigo = codeBuilder.toString();
+
     }
 
-    public String getNomeTurma() {
-        return nomeTurma;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNomeTurma(String nomeTurma) {
-        this.nomeTurma = nomeTurma;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public RegimeDeEstudo getRegime() {
@@ -95,7 +119,8 @@ public class Turma implements Serializable, Comparable<Turma> {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Turma {\n");
-        sb.append("  Nome da Turma: ").append(nomeTurma).append("\n");
+        sb.append("  Nome da Turma: ").append(nome).append("\n");
+        sb.append("  Codigo da turma: ").append(codigo).append("\n");
         sb.append("  Regime: ").append(regime).append("\n");
         sb.append("  Disciplina: ").append(disciplina).append("\n");
         sb.append("  Curso: ").append(curso).append("\n");
@@ -139,13 +164,13 @@ public class Turma implements Serializable, Comparable<Turma> {
 
     @Override
     public int compareTo(Turma outraTurma) {
-        return nomeTurma.compareToIgnoreCase(outraTurma.getNomeTurma());
+        return nome.compareToIgnoreCase(outraTurma.getNome());
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 67 * hash + Objects.hashCode(this.nomeTurma);
+        hash = 67 * hash + Objects.hashCode(this.nome);
         hash = 67 * hash + Objects.hashCode(this.regime);
         hash = 67 * hash + Objects.hashCode(this.disciplina);
         hash = 67 * hash + Objects.hashCode(this.curso);
@@ -165,7 +190,7 @@ public class Turma implements Serializable, Comparable<Turma> {
             return false;
         }
         final Turma other = (Turma) obj;
-        if (!Objects.equals(this.nomeTurma, other.nomeTurma)) {
+        if (!Objects.equals(this.nome, other.nome)) {
             return false;
         }
         if (!Objects.equals(this.disciplina, other.disciplina)) {
